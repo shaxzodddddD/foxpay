@@ -1,7 +1,6 @@
-fastapi==0.115.0
-uvicorn[standard]==0.32.0
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
 sqlalchemy==2.0.36
-pydantic[email]==2.9.2
-PyJWT==2.9.0
-passlib==1.7.4
-python-multipart==0.0.12
+PyJWT==2.10.1
+pydantic[email]>=2.12
+httpx==0.28.0
