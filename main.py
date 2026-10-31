@@ -1,154 +1,82 @@
 """
 FoxPay Backend — main.py
-Stack: FastAPI + SQLAlchemy + SQLite + JWT + Passlib
-Port: 9988
-Run:  python main.py
-Docs: http://localhost:9988/docs
+Render-ready, single file, no external build deps.
+
+Run locally:  python main.py  →  http://localhost:9988
+On Render:    PORT env var avtomatik ishlatiladi
+Docs:         /docs
 """
 
 import os
 import secrets
-import random
+import hashlib
+import hmac as hmac_lib
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
-import uvicorn
-from fastapi import FastAPI, Depends, HTTPException, status, Query, Request
+import jwt
+from fastapi import (
+    FastAPI, Depends, HTTPException, Header, BackgroundTasks, Query, status,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, EmailStr, Field
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, Text
+from sqlalchemy import (
+    create_engine, Column, Integer, String, DateTime, Boolean, BigInteger,
+    ForeignKey, Text, UniqueConstraint,
+)
 from sqlalchemy.orm import sessionmaker, Session, declarative_base
-from jose import jwt, JWTError
-from passlib.context import CryptContext
 
 
 # ============================================================
 # CONFIG
 # ============================================================
 BASE_DIR = Path(__file__).resolve().parent
-DB_FILE = BASE_DIR / "foxpay.db"
+PORT = int(os.getenv("PORT", "9988"))
+HOST = os.getenv("HOST", "0.0.0.0")
 SECRET_KEY = os.getenv("FOXPAY_SECRET") or secrets.token_urlsafe(48)
-ALGORITHM = "HS256"
-TOKEN_EXPIRE_DAYS = 7
-PORT = 9988
-HOST = "0.0.0.0"
+JWT_ALG = "HS256"
+TOKEN_EXPIRE_HOURS = 24
+FEE_RATE_BPS = int(os.getenv("FOXPAY_FEE_BPS", "150"))  # 1.5%
+DEV_MODE = os.getenv("FOXPAY_DEV", "1") == "1"
+PSP_PROVIDER = os.getenv("FOXPAY_PSP", "mock")
+INDEX_HTML = BASE_DIR / "index.html"
 
-def utcnow() -> datetime:
+
+def utcnow():
     return datetime.now(timezone.utc).replace(tzinfo=None)
 
-def iso(dt: Optional[datetime]) -> Optional[str]:
+
+def iso(dt):
     return dt.isoformat() + "Z" if dt else None
 
 
 # ============================================================
-# DATABASE
+# DATABASE (SQLite, /tmp fallback agar cwd read-only bo'lsa)
 # ============================================================
-engine = create_engine(
-    f"sqlite:///{DB_FILE}",
-    connect_args={"check_same_thread": False},
-)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+def _make_engine(path):
+    eng = create_engine(
+        f"sqlite:///{path}",
+        connect_args={"check_same_thread": False},
+        pool_pre_ping=True,
+    )
+    return eng
+
+
+_db_default = os.getenv("FOXPAY_DB", str(BASE_DIR / "foxpay.db"))
+try:
+    engine = _make_engine(_db_default)
+    with engine.connect() as _c:
+        _c.exec_driver_sql("SELECT 1")
+    DB_PATH = _db_default
+except Exception as e:
+    print(f"[db] {_db_default} yozib bo'lmadi ({e}), /tmp/foxpay.db ga o'tamiz")
+    DB_PATH = "/tmp/foxpay.db"
+    engine = _make_engine(DB_PATH)
+
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
-
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(120), nullable=False)
-    email = Column(String(200), unique=True, index=True, nullable=False)
-    password_hash = Column(String(255), nullable=False)
-    company = Column(String(200), default="")
-    api_key = Column(String(100), unique=True, index=True)
-    joined_at = Column(DateTime, default=utcnow)
-
-
-class Transaction(Base):
-    __tablename__ = "transactions"
-    id = Column(Integer, primary_key=True)
-    tx_id = Column(String(32), unique=True, index=True)
-    user_id = Column(Integer, index=True)
-    customer = Column(String(120))
-    email = Column(String(200))
-    amount = Column(Float, default=0)
-    fee = Column(Float, default=0)
-    method = Column(String(32))
-    status = Column(String(16), default="pending")
-    date = Column(DateTime, default=utcnow)
-
-
-class Invoice(Base):
-    __tablename__ = "invoices"
-    id = Column(Integer, primary_key=True)
-    inv_id = Column(String(32), unique=True)
-    user_id = Column(Integer, index=True)
-    customer = Column(String(120))
-    email = Column(String(200))
-    amount = Column(Float, default=0)
-    status = Column(String(16), default="draft")
-    issue_date = Column(DateTime, default=utcnow)
-    due_date = Column(DateTime)
-    note = Column(Text, default="")
-
-
-class PaymentLink(Base):
-    __tablename__ = "links"
-    id = Column(Integer, primary_key=True)
-    link_id = Column(String(32), unique=True)
-    user_id = Column(Integer, index=True)
-    title = Column(String(120))
-    amount = Column(Float, default=0)
-    slug = Column(String(40), unique=True)
-    clicks = Column(Integer, default=0)
-    payments = Column(Integer, default=0)
-    active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=utcnow)
-
-
-class Merchant(Base):
-    __tablename__ = "merchants"
-    id = Column(Integer, primary_key=True)
-    merchant_id = Column(String(32), unique=True)
-    user_id = Column(Integer, index=True)
-    name = Column(String(120))
-    category = Column(String(64))
-    status = Column(String(16), default="active")
-    volume = Column(Float, default=0)
-    joined = Column(DateTime, default=utcnow)
-
-
-Base.metadata.create_all(bind=engine)
-
-
-# ============================================================
-# AUTH UTILS
-# ============================================================
-pwd_ctx = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
-
-
-def hash_password(raw: str) -> str:
-    return pwd_ctx.hash(raw)
-
-
-def verify_password(raw: str, hashed: str) -> bool:
-    try:
-        return pwd_ctx.verify(raw, hashed)
-    except Exception:
-        return False
-
-
-def create_token(user_id: int) -> str:
-    payload = {
-        "sub": str(user_id),
-        "exp": datetime.utcnow() + timedelta(days=TOKEN_EXPIRE_DAYS),
-        "iat": datetime.utcnow(),
-    }
-    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-
-
-def new_api_key() -> str:
-    return "fox_live_" + secrets.token_hex(24)
 
 
 def get_db():
@@ -159,18 +87,176 @@ def get_db():
         db.close()
 
 
-def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
-    auth = request.headers.get("Authorization", "")
-    if not auth.startswith("Bearer "):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Missing token")
-    token = auth[7:].strip()
+# ============================================================
+# MODELS
+# ============================================================
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    email = Column(String(200), unique=True, index=True, nullable=False)
+    name = Column(String(120), nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    phone = Column(String(32), index=True)
+    company = Column(String(200), default="")
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=utcnow)
+
+
+class ApiKey(Base):
+    __tablename__ = "api_keys"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    prefix = Column(String(20), index=True, nullable=False)
+    key_hash = Column(String(255), nullable=False)
+    label = Column(String(64), default="default")
+    scopes = Column(String(200), default="read,write,p2p,collect")
+    is_active = Column(Boolean, default=True)
+    last_used_at = Column(DateTime)
+    created_at = Column(DateTime, default=utcnow)
+
+
+class Wallet(Base):
+    __tablename__ = "wallets"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    currency = Column(String(8), default="UZS")
+    balance_tiyin = Column(BigInteger, default=0)
+    __table_args__ = (UniqueConstraint("user_id", "currency", name="uq_wallet"),)
+
+
+class LedgerEntry(Base):
+    __tablename__ = "ledger_entries"
+    id = Column(Integer, primary_key=True)
+    group_id = Column(String(40), index=True, nullable=False)
+    account = Column(String(80), index=True, nullable=False)
+    direction = Column(String(8), nullable=False)  # debit|credit
+    amount_tiyin = Column(BigInteger, nullable=False)
+    ref_type = Column(String(32), index=True)
+    ref_id = Column(String(64), index=True)
+    note = Column(Text, default="")
+    created_at = Column(DateTime, default=utcnow, index=True)
+
+
+class Transfer(Base):
+    __tablename__ = "transfers"
+    id = Column(Integer, primary_key=True)
+    transfer_id = Column(String(32), unique=True, index=True)
+    from_user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    to_user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    amount_tiyin = Column(BigInteger, nullable=False)
+    fee_tiyin = Column(BigInteger, default=0)
+    currency = Column(String(8), default="UZS")
+    status = Column(String(16), default="pending")
+    note = Column(String(255), default="")
+    idempotency_key = Column(String(64), unique=True, index=True)
+    created_at = Column(DateTime, default=utcnow, index=True)
+    completed_at = Column(DateTime)
+
+
+class PaymentIntent(Base):
+    __tablename__ = "payment_intents"
+    id = Column(Integer, primary_key=True)
+    intent_id = Column(String(32), unique=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    amount_tiyin = Column(BigInteger, nullable=False)
+    currency = Column(String(8), default="UZS")
+    status = Column(String(20), default="requires_payment")
+    description = Column(String(255), default="")
+    customer_name = Column(String(120))
+    customer_email = Column(String(200))
+    psp_provider = Column(String(32), default="mock")
+    psp_ref = Column(String(64))
+    fee_tiyin = Column(BigInteger, default=0)
+    idempotency_key = Column(String(64), unique=True, index=True)
+    created_at = Column(DateTime, default=utcnow, index=True)
+    completed_at = Column(DateTime)
+
+
+class WebhookEndpoint(Base):
+    __tablename__ = "webhook_endpoints"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    url = Column(String(500), nullable=False)
+    secret = Column(String(100), nullable=False)
+    events = Column(String(255), default="*")
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=utcnow)
+
+
+Base.metadata.create_all(bind=engine)
+
+
+# ============================================================
+# SECURITY (no passlib, no python-jose — pure builtin + PyJWT)
+# ============================================================
+def hash_password(raw: str) -> str:
+    salt = secrets.token_bytes(16)
+    dk = hashlib.pbkdf2_hmac("sha256", raw.encode(), salt, 100_000)
+    return f"pbkdf2_sha256$100000${salt.hex()}${dk.hex()}"
+
+
+def verify_password(raw: str, stored: str) -> bool:
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id = int(payload["sub"])
-    except (JWTError, KeyError, ValueError):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid token")
-    user = db.get(User, user_id)
-    if not user:
+        algo, iters, salt_hex, hash_hex = stored.split("$")
+        if algo != "pbkdf2_sha256":
+            return False
+        dk = hashlib.pbkdf2_hmac(
+            "sha256", raw.encode(), bytes.fromhex(salt_hex), int(iters)
+        )
+        return hmac_lib.compare_digest(dk.hex(), hash_hex)
+    except Exception:
+        return False
+
+
+def create_access_token(user_id: int) -> str:
+    now = datetime.utcnow()
+    return jwt.encode(
+        {"sub": str(user_id), "iat": now, "exp": now + timedelta(hours=TOKEN_EXPIRE_HOURS)},
+        SECRET_KEY, algorithm=JWT_ALG,
+    )
+
+
+def decode_token(token: str) -> int:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[JWT_ALG])
+        return int(payload["sub"])
+    except Exception:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
+
+
+def generate_api_key():
+    full = "fox_live_" + secrets.token_hex(24)
+    prefix = full[:20]
+    return full, prefix, hashlib.sha256(full.encode()).hexdigest()
+
+
+def hash_api_key(full: str) -> str:
+    return hashlib.sha256(full.encode()).hexdigest()
+
+
+def get_current_user(
+    authorization: Optional[str] = Header(None),
+    db: Session = Depends(get_db),
+) -> User:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Missing token")
+    token = authorization[7:].strip()
+
+    if token.startswith("fox_live_"):
+        k = db.query(ApiKey).filter(
+            ApiKey.prefix == token[:20],
+            ApiKey.key_hash == hash_api_key(token),
+            ApiKey.is_active == True,
+        ).first()
+        if not k:
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid API key")
+        k.last_used_at = utcnow()
+        db.commit()
+        user = db.get(User, k.user_id)
+    else:
+        user = db.get(User, decode_token(token))
+
+    if not user or not user.is_active:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "User not found")
     return user
 
@@ -182,6 +268,7 @@ class RegisterIn(BaseModel):
     name: str = Field(min_length=2, max_length=120)
     email: EmailStr
     password: str = Field(min_length=6, max_length=128)
+    phone: Optional[str] = None
     company: Optional[str] = ""
 
 
@@ -190,189 +277,357 @@ class LoginIn(BaseModel):
     password: str
 
 
-class InvoiceIn(BaseModel):
-    customer: str = Field(min_length=1)
-    email: EmailStr
-    amount: float = Field(gt=0)
-    due_date: Optional[str] = None
-    note: Optional[str] = ""
-
-
-class LinkIn(BaseModel):
-    title: str = Field(min_length=1, max_length=120)
-    amount: float = Field(gt=0)
-
-
 class ProfileIn(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
+    phone: Optional[str] = None
     company: Optional[str] = None
 
 
+class ApiKeyCreateIn(BaseModel):
+    label: str = "default"
+    scopes: str = "read,write,p2p,collect"
+
+
+class TransferIn(BaseModel):
+    to_email: Optional[EmailStr] = None
+    to_phone: Optional[str] = None
+    amount_tiyin: int = Field(gt=0)
+    note: str = ""
+    idempotency_key: Optional[str] = None
+
+
+class IntentIn(BaseModel):
+    amount_tiyin: int = Field(gt=0)
+    description: str = ""
+    customer_name: Optional[str] = None
+    customer_email: Optional[EmailStr] = None
+    idempotency_key: Optional[str] = None
+
+
+class ConfirmIn(BaseModel):
+    outcome: str = "succeed"
+
+
+class WebhookIn(BaseModel):
+    url: str
+    events: str = "*"
+
+
+class DepositIn(BaseModel):
+    amount_tiyin: int = Field(gt=0)
+
+
 # ============================================================
-# SERIALIZERS
+# SERIALIZERS (frontend kutayotgan formatlar — to'g'ridan-to'g'ri)
 # ============================================================
 def user_dict(u: User) -> dict:
     return {
-        "id": u.id,
-        "name": u.name,
-        "email": u.email,
-        "company": u.company,
-        "apiKey": u.api_key,
-        "joinedAt": iso(u.joined_at),
+        "id": u.id, "name": u.name, "email": u.email,
+        "phone": u.phone, "company": u.company or "",
+        "created_at": iso(u.created_at),
     }
 
 
-def tx_dict(t: Transaction) -> dict:
+def wallet_dict(db: Session, user: User) -> dict:
+    bal = get_balance(db, user.id)
     return {
-        "id": t.tx_id,
-        "customer": t.customer,
-        "email": t.email,
-        "amount": t.amount,
-        "fee": t.fee,
-        "method": t.method,
+        "currency": "UZS",
+        "balance_tiyin": bal,
+        "balance_uzs": bal / 100,
+        "balance_display": f"{bal/100:,.2f} so'm",
+    }
+
+
+def transfer_dict(t: Transfer) -> dict:
+    return {
+        "transfer_id": t.transfer_id,
+        "from_user_id": t.from_user_id,
+        "to_user_id": t.to_user_id,
+        "amount_tiyin": t.amount_tiyin,
+        "amount_uzs": t.amount_tiyin / 100,
+        "fee_tiyin": t.fee_tiyin,
         "status": t.status,
-        "date": iso(t.date),
+        "note": t.note,
+        "created_at": iso(t.created_at),
+        "completed_at": iso(t.completed_at),
     }
 
 
-def inv_dict(i: Invoice) -> dict:
+def intent_dict(i: PaymentIntent) -> dict:
     return {
-        "id": i.inv_id,
-        "customer": i.customer,
-        "email": i.email,
-        "amount": i.amount,
+        "intent_id": i.intent_id,
+        "user_id": i.user_id,
+        "amount_tiyin": i.amount_tiyin,
+        "amount_uzs": i.amount_tiyin / 100,
+        "currency": i.currency,
         "status": i.status,
-        "issueDate": iso(i.issue_date),
-        "dueDate": iso(i.due_date),
-        "note": i.note,
+        "description": i.description,
+        "fee_tiyin": i.fee_tiyin,
+        "psp_provider": i.psp_provider,
+        "psp_ref": i.psp_ref,
+        "customer_name": i.customer_name,
+        "customer_email": i.customer_email,
+        "created_at": iso(i.created_at),
+        "completed_at": iso(i.completed_at),
     }
 
 
-def link_dict(l: PaymentLink) -> dict:
+def key_dict(k: ApiKey) -> dict:
     return {
-        "id": l.link_id,
-        "title": l.title,
-        "amount": l.amount,
-        "slug": l.slug,
-        "clicks": l.clicks,
-        "payments": l.payments,
-        "active": l.active,
-        "createdAt": iso(l.created_at),
+        "id": k.id, "prefix": k.prefix, "label": k.label,
+        "scopes": k.scopes, "is_active": k.is_active,
+        "last_used_at": iso(k.last_used_at),
+        "created_at": iso(k.created_at),
     }
 
 
-def merchant_dict(m: Merchant) -> dict:
+def hook_dict(w: WebhookEndpoint) -> dict:
     return {
-        "id": m.merchant_id,
-        "name": m.name,
-        "category": m.category,
-        "status": m.status,
-        "volume": m.volume,
-        "joined": iso(m.joined),
+        "id": w.id, "url": w.url, "events": w.events,
+        "is_active": w.is_active, "created_at": iso(w.created_at),
     }
 
 
 # ============================================================
-# SEED
+# LEDGER (double-entry yadro)
 # ============================================================
-def seed_for_user(db: Session, user: User):
-    """Demo ma'lumotlarni yangi user uchun yaratish."""
-    names = [
-        "Aziz Karimov", "Malika Yusupova", "Jasur Toshmatov", "Dilnoza Aliyeva",
-        "Bekzod Rahimov", "Nilufar Sattorova", "Sardor Ismoilov", "Gulnora Nazarova",
-        "Farhod Yuldashev", "Zilola Kholmatova",
-    ]
-    methods = ["Uzcard", "Humo", "Payme", "Click", "Bank o'tkazma"]
-    statuses = ["success"] * 4 + ["pending", "failed", "refunded"]
-    now = utcnow()
+def post_entries(db: Session, entries: list, ref_type: str, ref_id: str, note: str = "") -> str:
+    group = "lg_" + secrets.token_hex(10)
+    debit = sum(e["amount_tiyin"] for e in entries if e["direction"] == "debit")
+    credit = sum(e["amount_tiyin"] for e in entries if e["direction"] == "credit")
+    if debit != credit:
+        raise ValueError(f"Unbalanced ledger: debit={debit} credit={credit}")
+    if debit <= 0:
+        raise ValueError("Ledger amount must be positive")
 
-    for i in range(48):
-        name = random.choice(names)
-        amount = random.randint(5, 500) * 1000
-        db.add(Transaction(
-            tx_id=f"TX-{100000 + i + user.id * 1000}",
-            user_id=user.id,
-            customer=name,
-            email=name.lower().replace(" ", ".") + "@mail.uz",
-            amount=amount,
-            fee=round(amount * 0.015),
-            method=random.choice(methods),
-            status=random.choice(statuses),
-            date=now - timedelta(days=random.randint(0, 30), seconds=random.randint(0, 86400)),
+    for e in entries:
+        db.add(LedgerEntry(
+            group_id=group, account=e["account"],
+            direction=e["direction"], amount_tiyin=e["amount_tiyin"],
+            ref_type=ref_type, ref_id=ref_id, note=note,
         ))
 
-    for i in range(14):
-        db.add(Invoice(
-            inv_id=f"INV-{2000 + i + user.id * 100}",
-            user_id=user.id,
-            customer=random.choice(names),
-            email=f"client{i}@company.uz",
-            amount=random.randint(100, 3000) * 1000,
-            status=random.choice(["paid", "sent", "draft", "overdue"]),
-            issue_date=now - timedelta(days=random.randint(0, 20)),
-            due_date=now + timedelta(days=random.randint(1, 30)),
-            note="Xizmatlar uchun to'lov",
-        ))
+    # Cached balance yangilash
+    for e in entries:
+        if e["account"].startswith("user:"):
+            _, uid, cur = e["account"].split(":")
+            w = db.query(Wallet).filter(
+                Wallet.user_id == int(uid), Wallet.currency == cur
+            ).first()
+            if not w:
+                w = Wallet(user_id=int(uid), currency=cur, balance_tiyin=0)
+                db.add(w)
+                db.flush()
+            delta = e["amount_tiyin"] if e["direction"] == "credit" else -e["amount_tiyin"]
+            w.balance_tiyin += delta
 
-    titles = ["Konsultatsiya", "Dizayn xizmati", "Kurs to'lovi", "Mahsulot #1",
-              "Mahsulot #2", "Landing page", "Logo dizayn", "Konsalting soat"]
-    for i, t in enumerate(titles):
-        db.add(PaymentLink(
-            link_id=f"PL-{3000 + i + user.id * 100}",
-            user_id=user.id,
-            title=t,
-            amount=random.randint(50, 800) * 1000,
-            slug=f"fox-{secrets.token_hex(3)}",
-            clicks=random.randint(10, 500),
-            payments=random.randint(0, 40),
-            active=random.random() > 0.2,
-            created_at=now - timedelta(days=random.randint(0, 40)),
-        ))
-
-    shops = ["Chorsu Market", "Silk Road Coffee", "Tashkent Books",
-             "Navoi Tech", "Samarkand Tour", "Bukhara Textile"]
-    cats = ["Retail", "Food", "Books", "Electronics", "Tourism", "Textile"]
-    for i, s in enumerate(shops):
-        db.add(Merchant(
-            merchant_id=f"M-{400 + i + user.id * 10}",
-            user_id=user.id,
-            name=s,
-            category=cats[i],
-            status="pending" if i % 4 == 3 else "active",
-            volume=random.randint(10, 500) * 1_000_000,
-            joined=now - timedelta(days=random.randint(30, 500)),
-        ))
-
-    db.commit()
+    db.flush()
+    return group
 
 
-def ensure_demo_user(db: Session):
-    demo = db.query(User).filter(User.email == "demo@foxpay.uz").first()
-    if demo:
-        return
-    demo = User(
-        name="Aziz Karimov",
-        email="demo@foxpay.uz",
-        password_hash=hash_password("demo123"),
-        company="FoxPay Demo",
-        api_key=new_api_key(),
-        joined_at=utcnow(),
+def get_balance(db: Session, user_id: int, currency: str = "UZS") -> int:
+    rows = db.query(LedgerEntry).filter(
+        LedgerEntry.account == f"user:{user_id}:{currency}"
+    ).all()
+    return (
+        sum(r.amount_tiyin for r in rows if r.direction == "credit")
+        - sum(r.amount_tiyin for r in rows if r.direction == "debit")
     )
-    db.add(demo)
+
+
+def ensure_wallet(db: Session, user_id: int, currency: str = "UZS") -> Wallet:
+    w = db.query(Wallet).filter(
+        Wallet.user_id == user_id, Wallet.currency == currency
+    ).first()
+    if not w:
+        w = Wallet(user_id=user_id, currency=currency, balance_tiyin=0)
+        db.add(w)
+        db.commit()
+        db.refresh(w)
+    return w
+
+
+def _fee(amount_tiyin: int) -> int:
+    return (amount_tiyin * FEE_RATE_BPS) // 10_000
+
+
+# ============================================================
+# PAYMENTS ORCHESTRATION
+# ============================================================
+def create_transfer(
+    db: Session, from_user: User,
+    to_email: Optional[str], to_phone: Optional[str],
+    amount_tiyin: int, note: str, idempotency_key: Optional[str],
+) -> Transfer:
+    if amount_tiyin <= 0:
+        raise HTTPException(400, "amount_tiyin > 0 bo'lishi kerak")
+    if not to_email and not to_phone:
+        raise HTTPException(400, "to_email yoki to_phone kerak")
+
+    if idempotency_key:
+        existing = db.query(Transfer).filter(
+            Transfer.idempotency_key == idempotency_key
+        ).first()
+        if existing:
+            return existing
+
+    to_user = None
+    if to_email:
+        to_user = db.query(User).filter(User.email == to_email.lower()).first()
+    else:
+        to_user = db.query(User).filter(User.phone == to_phone).first()
+
+    if not to_user:
+        raise HTTPException(404, "Qabul qiluvchi topilmadi")
+    if to_user.id == from_user.id:
+        raise HTTPException(400, "O'zingizga pul o'tkaza olmaysiz")
+
+    fee = _fee(amount_tiyin)
+    total = amount_tiyin + fee
+    bal = get_balance(db, from_user.id)
+    if bal < total:
+        raise HTTPException(400, f"Balans yetarli emas: bor {bal/100:,.2f} so'm, kerak {total/100:,.2f} so'm")
+
+    t = Transfer(
+        transfer_id="tr_" + secrets.token_hex(10),
+        from_user_id=from_user.id, to_user_id=to_user.id,
+        amount_tiyin=amount_tiyin, fee_tiyin=fee,
+        status="pending", note=note[:250],
+        idempotency_key=idempotency_key,
+    )
+    db.add(t)
+    db.flush()
+
+    post_entries(db, [
+        {"account": f"user:{from_user.id}:UZS", "direction": "debit", "amount_tiyin": total},
+        {"account": f"user:{to_user.id}:UZS",   "direction": "credit", "amount_tiyin": amount_tiyin},
+        {"account": "platform:fees:UZS",        "direction": "credit", "amount_tiyin": fee},
+    ], ref_type="p2p_transfer", ref_id=t.transfer_id, note=note)
+
+    t.status = "succeeded"
+    t.completed_at = utcnow()
     db.commit()
-    db.refresh(demo)
-    seed_for_user(db, demo)
+    db.refresh(t)
+    return t
+
+
+def create_intent(
+    db: Session, user: User,
+    amount_tiyin: int, description: str,
+    customer_name: Optional[str], customer_email: Optional[str],
+    idempotency_key: Optional[str],
+) -> PaymentIntent:
+    if amount_tiyin <= 0:
+        raise HTTPException(400, "amount_tiyin > 0 bo'lishi kerak")
+    if idempotency_key:
+        existing = db.query(PaymentIntent).filter(
+            PaymentIntent.idempotency_key == idempotency_key
+        ).first()
+        if existing:
+            return existing
+
+    i = PaymentIntent(
+        intent_id="pi_" + secrets.token_hex(10),
+        user_id=user.id, amount_tiyin=amount_tiyin,
+        status="requires_payment",
+        description=description[:250],
+        customer_name=customer_name, customer_email=customer_email,
+        psp_provider=PSP_PROVIDER,
+        psp_ref="mock_" + secrets.token_hex(8),
+        fee_tiyin=_fee(amount_tiyin),
+        idempotency_key=idempotency_key,
+    )
+    db.add(i)
+    db.commit()
+    db.refresh(i)
+    return i
+
+
+def confirm_intent(db: Session, intent_id: str, outcome: str) -> PaymentIntent:
+    i = db.query(PaymentIntent).filter(PaymentIntent.intent_id == intent_id).first()
+    if not i:
+        raise HTTPException(404, "Payment intent topilmadi")
+    if i.status in ("succeeded", "failed", "canceled"):
+        return i
+
+    if outcome == "fail":
+        i.status = "failed"
+        i.completed_at = utcnow()
+        db.commit()
+        db.refresh(i)
+        return i
+
+    i.status = "processing"
+    db.flush()
+
+    net = i.amount_tiyin - i.fee_tiyin
+    post_entries(db, [
+        {"account": "external:psp",              "direction": "debit",  "amount_tiyin": i.amount_tiyin},
+        {"account": f"user:{i.user_id}:UZS",     "direction": "credit", "amount_tiyin": net},
+        {"account": "platform:fees:UZS",         "direction": "credit", "amount_tiyin": i.fee_tiyin},
+    ], ref_type="payment_intent", ref_id=i.intent_id, note=i.description)
+
+    i.status = "succeeded"
+    i.completed_at = utcnow()
+    db.commit()
+    db.refresh(i)
+    return i
+
+
+def mock_deposit(db: Session, user: User, amount_tiyin: int) -> dict:
+    if amount_tiyin <= 0:
+        raise HTTPException(400, "amount_tiyin > 0 bo'lishi kerak")
+    group = post_entries(db, [
+        {"account": "external:psp",          "direction": "debit",  "amount_tiyin": amount_tiyin},
+        {"account": f"user:{user.id}:UZS",   "direction": "credit", "amount_tiyin": amount_tiyin},
+    ], ref_type="mock_deposit", ref_id="dep_" + secrets.token_hex(8), note="Dev funding")
+    db.commit()
+    return {"group_id": group, "amount_tiyin": amount_tiyin}
+
+
+# ============================================================
+# WEBHOOK DISPATCH
+# ============================================================
+def dispatch_webhook(user_id: int, event: str, data: dict):
+    try:
+        import httpx
+    except ImportError:
+        return
+    db = SessionLocal()
+    try:
+        endpoints = db.query(WebhookEndpoint).filter(
+            WebhookEndpoint.user_id == user_id,
+            WebhookEndpoint.is_active == True,
+        ).all()
+        if not endpoints:
+            return
+        import json
+        import time
+        payload = json.dumps({"event": event, "data": data}, separators=(",", ":")).encode()
+        t = str(int(time.time()))
+        for ep in endpoints:
+            if ep.events != "*" and event not in ep.events.split(","):
+                continue
+            sig = hmac_lib.new(
+                ep.secret.encode(), f"{t}.{payload.decode()}".encode(), hashlib.sha256
+            ).hexdigest()
+            try:
+                httpx.post(ep.url, content=payload, timeout=8, headers={
+                    "Content-Type": "application/json",
+                    "X-FoxPay-Signature": f"t={t},v1={sig}",
+                    "X-FoxPay-Event": event,
+                })
+            except Exception as e:
+                print(f"[webhook] {ep.url} failed: {e}")
+    finally:
+        db.close()
 
 
 # ============================================================
 # APP
 # ============================================================
-app = FastAPI(
-    title="FoxPay API",
-    description="FoxPay to'lov platformasi uchun backend",
-    version="1.0.0",
-)
+app = FastAPI(title="FoxPay API", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -383,262 +638,274 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-def _startup():
-    db = SessionLocal()
-    try:
-        ensure_demo_user(db)
-    finally:
-        db.close()
-    print(f"\n  FoxPay API  →  http://localhost:{PORT}")
-    print(f"  Docs        →  http://localhost:{PORT}/docs")
-    print(f"  Demo login  →  demo@foxpay.uz / demo123\n")
-
-
-# ---------- Health ----------
 @app.get("/api/health")
 def health():
-    return {"ok": True, "service": "foxpay", "port": PORT, "time": iso(utcnow())}
+    return {"ok": True, "service": "foxpay", "version": "2.0.0", "port": PORT}
 
 
-# ---------- Auth ----------
+# ---------- AUTH ----------
 @app.post("/api/auth/register")
 def register(body: RegisterIn, db: Session = Depends(get_db)):
-    exists = db.query(User).filter(User.email == body.email.lower()).first()
-    if exists:
+    if db.query(User).filter(User.email == body.email.lower()).first():
         raise HTTPException(400, "Bu email allaqachon ro'yxatdan o'tgan")
-    user = User(
+    u = User(
         name=body.name.strip(),
         email=body.email.lower(),
         password_hash=hash_password(body.password),
+        phone=body.phone,
         company=(body.company or "").strip(),
-        api_key=new_api_key(),
-        joined_at=utcnow(),
     )
-    db.add(user)
+    db.add(u)
     db.commit()
-    db.refresh(user)
-    seed_for_user(db, user)
-    return {"token": create_token(user.id), "user": user_dict(user)}
+    db.refresh(u)
+    ensure_wallet(db, u.id)
+    return {"token": create_access_token(u.id), "user": user_dict(u)}
 
 
 @app.post("/api/auth/login")
 def login(body: LoginIn, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == body.email.lower()).first()
-    if not user or not verify_password(body.password, user.password_hash):
+    u = db.query(User).filter(User.email == body.email.lower()).first()
+    if not u or not verify_password(body.password, u.password_hash):
         raise HTTPException(401, "Email yoki parol noto'g'ri")
-    return {"token": create_token(user.id), "user": user_dict(user)}
+    return {"token": create_access_token(u.id), "user": user_dict(u)}
 
 
 @app.get("/api/auth/me")
 def me(user: User = Depends(get_current_user)):
-    return {"user": user_dict(user)}
+    return user_dict(user)
 
 
-# ---------- Bootstrap (barcha ma'lumot bir so'rovda) ----------
-@app.get("/api/bootstrap")
-def bootstrap(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    txs = db.query(Transaction).filter(Transaction.user_id == user.id).order_by(Transaction.date.desc()).all()
-    invs = db.query(Invoice).filter(Invoice.user_id == user.id).order_by(Invoice.issue_date.desc()).all()
-    links = db.query(PaymentLink).filter(PaymentLink.user_id == user.id).order_by(PaymentLink.created_at.desc()).all()
-    mers = db.query(Merchant).filter(Merchant.user_id == user.id).order_by(Merchant.joined.desc()).all()
-    return {
-        "user": user_dict(user),
-        "transactions": [tx_dict(t) for t in txs],
-        "invoices": [inv_dict(i) for i in invs],
-        "links": [link_dict(l) for l in links],
-        "merchants": [merchant_dict(m) for m in mers],
-    }
+# ---------- WALLET ----------
+@app.get("/api/wallet")
+def wallet(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return wallet_dict(db, user)
 
 
-# ---------- Dashboard ----------
-@app.get("/api/dashboard")
-def dashboard(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    txs = db.query(Transaction).filter(Transaction.user_id == user.id).all()
-    success = [t for t in txs if t.status == "success"]
-    total_volume = sum(t.amount for t in success)
-    total_fees = sum(t.fee for t in success)
-    pending = len([t for t in txs if t.status == "pending"])
-    success_rate = round(len(success) / len(txs) * 100) if txs else 0
-
-    # Oxirgi 12 hafta bo'yicha guruh
-    buckets = [0.0] * 12
-    now = utcnow()
-    for t in success:
-        delta_days = (now - t.date).days
-        week = delta_days // 7
-        if 0 <= week < 12:
-            buckets[11 - week] += t.amount
-
-    methods = {}
-    for t in txs:
-        methods[t.method] = methods.get(t.method, 0) + 1
-
-    return {
-        "totalVolume": total_volume,
-        "totalFees": total_fees,
-        "pending": pending,
-        "successRate": success_rate,
-        "revenueSeries": buckets,
-        "methodDistribution": methods,
-        "recentTransactions": [tx_dict(t) for t in
-            sorted(txs, key=lambda x: x.date, reverse=True)[:6]],
-    }
-
-
-# ---------- Transactions ----------
-@app.get("/api/transactions")
-def list_transactions(
-    q: Optional[str] = Query(None),
-    status: Optional[str] = Query(None, alias="status"),
-    method: Optional[str] = Query(None),
-    page: int = Query(1, ge=1),
-    per: int = Query(10, ge=1, le=100),
+@app.get("/api/wallet/ledger")
+def ledger(
+    limit: int = Query(50, le=200),
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    query = db.query(Transaction).filter(Transaction.user_id == user.id)
-    if q:
-        like = f"%{q.lower()}%"
-        query = query.filter(
-            (Transaction.customer.ilike(like)) |
-            (Transaction.tx_id.ilike(like)) |
-            (Transaction.email.ilike(like))
-        )
-    if status and status != "all":
-        query = query.filter(Transaction.status == status)
-    if method and method != "all":
-        query = query.filter(Transaction.method == method)
-
-    total = query.count()
-    items = query.order_by(Transaction.date.desc()).offset((page - 1) * per).limit(per).all()
-    return {
-        "items": [tx_dict(t) for t in items],
-        "total": total,
-        "page": page,
-        "per": per,
-        "pages": max(1, (total + per - 1) // per),
-    }
+    rows = db.query(LedgerEntry).filter(
+        LedgerEntry.account == f"user:{user.id}:UZS"
+    ).order_by(LedgerEntry.created_at.desc()).limit(limit).all()
+    return [{
+        "group_id": r.group_id, "account": r.account,
+        "direction": r.direction, "amount_tiyin": r.amount_tiyin,
+        "ref_type": r.ref_type, "ref_id": r.ref_id,
+        "note": r.note, "created_at": iso(r.created_at),
+    } for r in rows]
 
 
-@app.get("/api/transactions/{tx_id}")
-def get_transaction(tx_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    t = db.query(Transaction).filter(Transaction.tx_id == tx_id, Transaction.user_id == user.id).first()
-    if not t:
-        raise HTTPException(404, "Tranzaksiya topilmadi")
-    return tx_dict(t)
-
-
-# ---------- Invoices ----------
-@app.get("/api/invoices")
-def list_invoices(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    items = db.query(Invoice).filter(Invoice.user_id == user.id).order_by(Invoice.issue_date.desc()).all()
-    return {"items": [inv_dict(i) for i in items], "total": len(items)}
-
-
-@app.post("/api/invoices", status_code=201)
-def create_invoice(body: InvoiceIn, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    due = utcnow() + timedelta(days=14)
-    if body.due_date:
-        try:
-            due = datetime.fromisoformat(body.due_date)
-        except ValueError:
-            raise HTTPException(400, "due_date noto'g'ri formatda")
-    inv = Invoice(
-        inv_id=f"INV-{2000 + user.id * 100 + int(utcnow().timestamp()) % 10000}",
-        user_id=user.id,
-        customer=body.customer,
-        email=body.email,
-        amount=body.amount,
-        status="sent",
-        issue_date=utcnow(),
-        due_date=due,
-        note=body.note or "",
+# ---------- P2P ----------
+@app.post("/api/p2p/transfers", status_code=201)
+def send_money(
+    body: TransferIn,
+    background: BackgroundTasks,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    idempotency_key: Optional[str] = Header(None, alias="Idempotency-Key"),
+):
+    t = create_transfer(
+        db, user,
+        to_email=body.to_email, to_phone=body.to_phone,
+        amount_tiyin=body.amount_tiyin, note=body.note,
+        idempotency_key=idempotency_key or body.idempotency_key,
     )
-    db.add(inv)
-    db.commit()
-    db.refresh(inv)
-    return inv_dict(inv)
+    payload = transfer_dict(t)
+    background.add_task(dispatch_webhook, user.id, "transfer.succeeded", payload)
+    return payload
 
 
-@app.delete("/api/invoices/{inv_id}", status_code=204)
-def delete_invoice(inv_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    inv = db.query(Invoice).filter(Invoice.inv_id == inv_id, Invoice.user_id == user.id).first()
-    if not inv:
-        raise HTTPException(404, "Invoice topilmadi")
-    db.delete(inv)
-    db.commit()
+@app.get("/api/p2p/transfers")
+def list_transfers(
+    limit: int = Query(50, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    rows = db.query(Transfer).filter(
+        (Transfer.from_user_id == user.id) | (Transfer.to_user_id == user.id)
+    ).order_by(Transfer.created_at.desc()).limit(limit).all()
+    return [transfer_dict(t) for t in rows]
 
 
-# ---------- Payment Links ----------
-@app.get("/api/links")
-def list_links(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    items = db.query(PaymentLink).filter(PaymentLink.user_id == user.id).order_by(PaymentLink.created_at.desc()).all()
-    return {"items": [link_dict(l) for l in items], "total": len(items)}
+@app.get("/api/p2p/transfers/{transfer_id}")
+def get_transfer(
+    transfer_id: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    t = db.query(Transfer).filter(Transfer.transfer_id == transfer_id).first()
+    if not t or user.id not in (t.from_user_id, t.to_user_id):
+        raise HTTPException(404, "Topilmadi")
+    return transfer_dict(t)
 
 
-@app.post("/api/links", status_code=201)
-def create_link(body: LinkIn, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    slug = "fox-" + secrets.token_hex(3)
-    while db.query(PaymentLink).filter(PaymentLink.slug == slug).first():
-        slug = "fox-" + secrets.token_hex(3)
-    link = PaymentLink(
-        link_id=f"PL-{3000 + user.id * 100 + int(utcnow().timestamp()) % 10000}",
-        user_id=user.id,
-        title=body.title,
-        amount=body.amount,
-        slug=slug,
-        active=True,
-        created_at=utcnow(),
+# ---------- PAYMENTS ----------
+@app.post("/api/pay/intents", status_code=201)
+def new_intent(
+    body: IntentIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    idempotency_key: Optional[str] = Header(None, alias="Idempotency-Key"),
+):
+    i = create_intent(
+        db, user,
+        amount_tiyin=body.amount_tiyin, description=body.description,
+        customer_name=body.customer_name, customer_email=body.customer_email,
+        idempotency_key=idempotency_key or body.idempotency_key,
     )
-    db.add(link)
+    return intent_dict(i)
+
+
+@app.post("/api/pay/intents/{intent_id}/confirm")
+def confirm(
+    intent_id: str,
+    body: ConfirmIn,
+    background: BackgroundTasks,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    i = db.query(PaymentIntent).filter(PaymentIntent.intent_id == intent_id).first()
+    if not i or i.user_id != user.id:
+        raise HTTPException(404, "Topilmadi")
+    i = confirm_intent(db, intent_id, body.outcome)
+    payload = intent_dict(i)
+    background.add_task(dispatch_webhook, user.id, f"payment_intent.{i.status}", payload)
+    return payload
+
+
+@app.get("/api/pay/intents")
+def list_intents(
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    rows = db.query(PaymentIntent).filter(
+        PaymentIntent.user_id == user.id
+    ).order_by(PaymentIntent.created_at.desc()).limit(50).all()
+    return [intent_dict(i) for i in rows]
+
+
+@app.get("/api/pay/intents/{intent_id}")
+def get_intent(
+    intent_id: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    i = db.query(PaymentIntent).filter(PaymentIntent.intent_id == intent_id).first()
+    if not i or i.user_id != user.id:
+        raise HTTPException(404, "Topilmadi")
+    return intent_dict(i)
+
+
+# ---------- API KEYS ----------
+@app.get("/api/keys")
+def list_keys(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    rows = db.query(ApiKey).filter(
+        ApiKey.user_id == user.id
+    ).order_by(ApiKey.created_at.desc()).all()
+    return [key_dict(k) for k in rows]
+
+
+@app.post("/api/keys", status_code=201)
+def create_key(
+    body: ApiKeyCreateIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    full, prefix, key_hash = generate_api_key()
+    k = ApiKey(
+        user_id=user.id, prefix=prefix, key_hash=key_hash,
+        label=body.label, scopes=body.scopes,
+    )
+    db.add(k)
     db.commit()
-    db.refresh(link)
-    return link_dict(link)
+    db.refresh(k)
+    d = key_dict(k)
+    d["full_key"] = full  # faqat bir marta!
+    return d
 
 
-@app.patch("/api/links/{link_id}/toggle")
-def toggle_link(link_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    link = db.query(PaymentLink).filter(PaymentLink.link_id == link_id, PaymentLink.user_id == user.id).first()
-    if not link:
-        raise HTTPException(404, "Link topilmadi")
-    link.active = not link.active
-    db.commit()
-    db.refresh(link)
-    return link_dict(link)
-
-
-@app.delete("/api/links/{link_id}", status_code=204)
-def delete_link(link_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    link = db.query(PaymentLink).filter(PaymentLink.link_id == link_id, PaymentLink.user_id == user.id).first()
-    if not link:
-        raise HTTPException(404, "Link topilmadi")
-    db.delete(link)
+@app.delete("/api/keys/{key_id}", status_code=204)
+def revoke_key(
+    key_id: int,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    k = db.query(ApiKey).filter(
+        ApiKey.id == key_id, ApiKey.user_id == user.id
+    ).first()
+    if not k:
+        raise HTTPException(404, "Topilmadi")
+    k.is_active = False
     db.commit()
 
 
-# ---------- Merchants ----------
-@app.get("/api/merchants")
-def list_merchants(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    items = db.query(Merchant).filter(Merchant.user_id == user.id).order_by(Merchant.joined.desc()).all()
-    return {"items": [merchant_dict(m) for m in items], "total": len(items)}
+# ---------- WEBHOOKS ----------
+@app.get("/api/hooks/endpoints")
+def list_hooks(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    rows = db.query(WebhookEndpoint).filter(
+        WebhookEndpoint.user_id == user.id
+    ).all()
+    return [hook_dict(w) for w in rows]
 
 
-# ---------- Settings ----------
+@app.post("/api/hooks/endpoints", status_code=201)
+def create_hook(
+    body: WebhookIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    w = WebhookEndpoint(
+        user_id=user.id, url=body.url,
+        secret="whsec_" + secrets.token_hex(20), events=body.events,
+    )
+    db.add(w)
+    db.commit()
+    db.refresh(w)
+    return hook_dict(w)
+
+
+@app.delete("/api/hooks/endpoints/{hook_id}", status_code=204)
+def delete_hook(
+    hook_id: int,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    w = db.query(WebhookEndpoint).filter(
+        WebhookEndpoint.id == hook_id,
+        WebhookEndpoint.user_id == user.id,
+    ).first()
+    if not w:
+        raise HTTPException(404, "Topilmadi")
+    db.delete(w)
+    db.commit()
+
+
+# ---------- SETTINGS ----------
 @app.get("/api/settings")
 def get_settings(user: User = Depends(get_current_user)):
     return user_dict(user)
 
 
 @app.put("/api/settings")
-def update_settings(body: ProfileIn, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def update_settings(
+    body: ProfileIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     if body.email and body.email.lower() != user.email:
-        clash = db.query(User).filter(User.email == body.email.lower(), User.id != user.id).first()
+        clash = db.query(User).filter(
+            User.email == body.email.lower(), User.id != user.id
+        ).first()
         if clash:
             raise HTTPException(400, "Bu email band")
         user.email = body.email.lower()
     if body.name:
         user.name = body.name.strip()
+    if body.phone is not None:
+        user.phone = body.phone.strip() or None
     if body.company is not None:
         user.company = body.company.strip()
     db.commit()
@@ -646,34 +913,53 @@ def update_settings(body: ProfileIn, user: User = Depends(get_current_user), db:
     return user_dict(user)
 
 
-@app.post("/api/settings/regenerate-key")
-def regen_api_key(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    user.api_key = new_api_key()
-    db.commit()
-    db.refresh(user)
-    return {"apiKey": user.api_key}
+# ---------- DEV ----------
+@app.post("/api/dev/fund")
+def fund(
+    body: DepositIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if not DEV_MODE:
+        raise HTTPException(403, "Dev mode o'chirilgan (FOXPAY_DEV=0)")
+    return mock_deposit(db, user, body.amount_tiyin)
+
+
+# ---------- BOOTSTRAP ----------
+@app.get("/api/bootstrap")
+def bootstrap(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    bal = get_balance(db, user.id)
+    transfers = db.query(Transfer).filter(
+        (Transfer.from_user_id == user.id) | (Transfer.to_user_id == user.id)
+    ).order_by(Transfer.created_at.desc()).limit(20).all()
+    intents = db.query(PaymentIntent).filter(
+        PaymentIntent.user_id == user.id
+    ).order_by(PaymentIntent.created_at.desc()).limit(20).all()
+    return {
+        "user": user_dict(user),
+        "wallet": {"currency": "UZS", "balance_tiyin": bal, "balance_uzs": bal / 100},
+        "transfers": [transfer_dict(t) for t in transfers],
+        "payment_intents": [intent_dict(i) for i in intents],
+    }
 
 
 # ============================================================
-# SERVE FRONTEND
+# FRONTEND SERVING
 # ============================================================
-INDEX_HTML = BASE_DIR / "index.html"
-
-
 @app.get("/")
-def serve_index():
+def index():
     if INDEX_HTML.exists():
         return FileResponse(INDEX_HTML)
-    return JSONResponse(
-        {"message": "FoxPay API ishlamoqda. index.html topilmadi."},
-        status_code=200,
-    )
+    return JSONResponse({
+        "message": "FoxPay API ishlamoqda",
+        "docs": "/docs",
+        "hint": "index.html papkada bo'lmasa, /docs orqali API sinab ko'ring",
+    })
 
 
-@app.get("/{full_path:path}")
-def catch_all(full_path: str):
-    # API yo'llarini ushlamaymiz
-    if full_path.startswith("api/"):
+@app.get("/{path:path}")
+def catch_all(path: str):
+    if path.startswith("api/"):
         raise HTTPException(404, "API endpoint topilmadi")
     if INDEX_HTML.exists():
         return FileResponse(INDEX_HTML)
@@ -681,14 +967,13 @@ def catch_all(full_path: str):
 
 
 # ============================================================
-# ENTRY POINT
+# ENTRYPOINT
 # ============================================================
 if __name__ == "__main__":
-    print(f"\n🦊  FoxPay backend ishga tushmoqda → http://localhost:{PORT}\n")
-    uvicorn.run(
-        "main:app",
-        host=HOST,
-        port=PORT,
-        reload=True,
-        log_level="info",
-    )
+    import uvicorn
+    print(f"\n  FoxPay API   →  http://localhost:{PORT}")
+    print(f"  Swagger      →  http://localhost:{PORT}/docs")
+    print(f"  DB path      →  {DB_PATH}")
+    print(f"  Dev mode     →  {'ON' if DEV_MODE else 'OFF'}")
+    print(f"  PSP          →  {PSP_PROVIDER}\n")
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=False, log_level="info")
