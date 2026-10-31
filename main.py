@@ -1,16 +1,24 @@
 """
-FoxPay Backend — main.py
-Render-ready, single file, no external build deps.
+FoxPay — Render-ready backend (single file)
 
-Run locally:  python main.py  →  http://localhost:9988
-On Render:    PORT env var avtomatik ishlatiladi
-Docs:         /docs
+Render Settings:
+  Build Command:  pip install -r requirements.txt
+  Start Command:  uvicorn main:app --host 0.0.0.0 --port $PORT
+  (yoki: python main.py)
+
+Ixtiyoriy env vars:
+  FOXPAY_SECRET   — JWT secret (prod da majburiy)
+  FOXPAY_DB       — SQLite yo'li (default: /tmp/foxpay.db yoki yonidagi papka)
+  FOXPAY_DEV      — "0" bo'lsa /api/dev/* o'chiriladi
+  PYTHON_VERSION  — "3.12.11" (runtime.txt bilan bir xil)
 """
 
 import os
 import secrets
 import hashlib
 import hmac as hmac_lib
+import json
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
@@ -30,11 +38,14 @@ from sqlalchemy.orm import sessionmaker, Session, declarative_base
 
 
 # ============================================================
-# CONFIG
+# CONFIG (Render-aware)
 # ============================================================
 BASE_DIR = Path(__file__).resolve().parent
+
+# Render $PORT ni beradi; lokal default 9988
 PORT = int(os.getenv("PORT", "9988"))
 HOST = os.getenv("HOST", "0.0.0.0")
+
 SECRET_KEY = os.getenv("FOXPAY_SECRET") or secrets.token_urlsafe(48)
 JWT_ALG = "HS256"
 TOKEN_EXPIRE_HOURS = 24
@@ -53,28 +64,42 @@ def iso(dt):
 
 
 # ============================================================
-# DATABASE (SQLite, /tmp fallback agar cwd read-only bo'lsa)
+# DATABASE — writable joyni topish
 # ============================================================
-def _make_engine(path):
-    eng = create_engine(
-        f"sqlite:///{path}",
-        connect_args={"check_same_thread": False},
-        pool_pre_ping=True,
-    )
-    return eng
+def _test_path(path: Path) -> bool:
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        test = path.parent / ".write_test"
+        test.write_text("x")
+        test.unlink()
+        return True
+    except Exception:
+        return False
 
 
-_db_default = os.getenv("FOXPAY_DB", str(BASE_DIR / "foxpay.db"))
-try:
-    engine = _make_engine(_db_default)
-    with engine.connect() as _c:
-        _c.exec_driver_sql("SELECT 1")
-    DB_PATH = _db_default
-except Exception as e:
-    print(f"[db] {_db_default} yozib bo'lmadi ({e}), /tmp/foxpay.db ga o'tamiz")
-    DB_PATH = "/tmp/foxpay.db"
-    engine = _make_engine(DB_PATH)
+def _resolve_db_path() -> str:
+    """Priority: env var > yonidagi papka > /tmp > cwd"""
+    candidates = []
+    if os.getenv("FOXPAY_DB"):
+        candidates.append(os.getenv("FOXPAY_DB"))
+    candidates.append(str(BASE_DIR / "foxpay.db"))
+    candidates.append("/tmp/foxpay.db")
+    candidates.append(str(Path.cwd() / "foxpay.db"))
 
+    for c in candidates:
+        if _test_path(Path(c)):
+            return c
+    return "/tmp/foxpay.db"  # oxirgi fallback
+
+
+DB_PATH = _resolve_db_path()
+print(f"[db] ishlatiladi: {DB_PATH}")
+
+engine = create_engine(
+    f"sqlite:///{DB_PATH}",
+    connect_args={"check_same_thread": False, "timeout": 30},
+    pool_pre_ping=True,
+)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
 
@@ -187,7 +212,7 @@ Base.metadata.create_all(bind=engine)
 
 
 # ============================================================
-# SECURITY (no passlib, no python-jose — pure builtin + PyJWT)
+# SECURITY (faqat builtin + PyJWT)
 # ============================================================
 def hash_password(raw: str) -> str:
     salt = secrets.token_bytes(16)
@@ -211,7 +236,8 @@ def verify_password(raw: str, stored: str) -> bool:
 def create_access_token(user_id: int) -> str:
     now = datetime.utcnow()
     return jwt.encode(
-        {"sub": str(user_id), "iat": now, "exp": now + timedelta(hours=TOKEN_EXPIRE_HOURS)},
+        {"sub": str(user_id), "iat": now,
+         "exp": now + timedelta(hours=TOKEN_EXPIRE_HOURS)},
         SECRET_KEY, algorithm=JWT_ALG,
     )
 
@@ -226,8 +252,7 @@ def decode_token(token: str) -> int:
 
 def generate_api_key():
     full = "fox_live_" + secrets.token_hex(24)
-    prefix = full[:20]
-    return full, prefix, hashlib.sha256(full.encode()).hexdigest()
+    return full, full[:20], hashlib.sha256(full.encode()).hexdigest()
 
 
 def hash_api_key(full: str) -> str:
@@ -319,23 +344,13 @@ class DepositIn(BaseModel):
 
 
 # ============================================================
-# SERIALIZERS (frontend kutayotgan formatlar — to'g'ridan-to'g'ri)
+# SERIALIZERS
 # ============================================================
 def user_dict(u: User) -> dict:
     return {
         "id": u.id, "name": u.name, "email": u.email,
         "phone": u.phone, "company": u.company or "",
         "created_at": iso(u.created_at),
-    }
-
-
-def wallet_dict(db: Session, user: User) -> dict:
-    bal = get_balance(db, user.id)
-    return {
-        "currency": "UZS",
-        "balance_tiyin": bal,
-        "balance_uzs": bal / 100,
-        "balance_display": f"{bal/100:,.2f} so'm",
     }
 
 
@@ -390,7 +405,7 @@ def hook_dict(w: WebhookEndpoint) -> dict:
 
 
 # ============================================================
-# LEDGER (double-entry yadro)
+# LEDGER
 # ============================================================
 def post_entries(db: Session, entries: list, ref_type: str, ref_id: str, note: str = "") -> str:
     group = "lg_" + secrets.token_hex(10)
@@ -408,7 +423,6 @@ def post_entries(db: Session, entries: list, ref_type: str, ref_id: str, note: s
             ref_type=ref_type, ref_id=ref_id, note=note,
         ))
 
-    # Cached balance yangilash
     for e in entries:
         if e["account"].startswith("user:"):
             _, uid, cur = e["account"].split(":")
@@ -453,7 +467,7 @@ def _fee(amount_tiyin: int) -> int:
 
 
 # ============================================================
-# PAYMENTS ORCHESTRATION
+# PAYMENTS
 # ============================================================
 def create_transfer(
     db: Session, from_user: User,
@@ -487,7 +501,10 @@ def create_transfer(
     total = amount_tiyin + fee
     bal = get_balance(db, from_user.id)
     if bal < total:
-        raise HTTPException(400, f"Balans yetarli emas: bor {bal/100:,.2f} so'm, kerak {total/100:,.2f} so'm")
+        raise HTTPException(
+            400,
+            f"Balans yetarli emas: bor {bal/100:,.2f} so'm, kerak {total/100:,.2f} so'm",
+        )
 
     t = Transfer(
         transfer_id="tr_" + secrets.token_hex(10),
@@ -587,7 +604,7 @@ def mock_deposit(db: Session, user: User, amount_tiyin: int) -> dict:
 
 
 # ============================================================
-# WEBHOOK DISPATCH
+# WEBHOOK
 # ============================================================
 def dispatch_webhook(user_id: int, event: str, data: dict):
     try:
@@ -602,15 +619,16 @@ def dispatch_webhook(user_id: int, event: str, data: dict):
         ).all()
         if not endpoints:
             return
-        import json
-        import time
-        payload = json.dumps({"event": event, "data": data}, separators=(",", ":")).encode()
+        payload = json.dumps({"event": event, "data": data},
+                              separators=(",", ":")).encode()
         t = str(int(time.time()))
         for ep in endpoints:
             if ep.events != "*" and event not in ep.events.split(","):
                 continue
             sig = hmac_lib.new(
-                ep.secret.encode(), f"{t}.{payload.decode()}".encode(), hashlib.sha256
+                ep.secret.encode(),
+                f"{t}.{payload.decode()}".encode(),
+                hashlib.sha256,
             ).hexdigest()
             try:
                 httpx.post(ep.url, content=payload, timeout=8, headers={
@@ -625,9 +643,13 @@ def dispatch_webhook(user_id: int, event: str, data: dict):
 
 
 # ============================================================
-# APP
+# FASTAPI APP
 # ============================================================
-app = FastAPI(title="FoxPay API", version="2.0.0")
+app = FastAPI(
+    title="FoxPay API",
+    version="2.0.0",
+    description="FoxPay — shaxsiy to'lovlar API",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -638,9 +660,14 @@ app.add_middleware(
 )
 
 
+# ---------- Health (Render health check uchun) ----------
 @app.get("/api/health")
+@app.get("/healthz")
 def health():
-    return {"ok": True, "service": "foxpay", "version": "2.0.0", "port": PORT}
+    return {
+        "ok": True, "service": "foxpay", "version": "2.0.0",
+        "port": PORT, "db": DB_PATH, "dev": DEV_MODE,
+    }
 
 
 # ---------- AUTH ----------
@@ -678,7 +705,13 @@ def me(user: User = Depends(get_current_user)):
 # ---------- WALLET ----------
 @app.get("/api/wallet")
 def wallet(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return wallet_dict(db, user)
+    bal = get_balance(db, user.id)
+    return {
+        "currency": "UZS",
+        "balance_tiyin": bal,
+        "balance_uzs": bal / 100,
+        "balance_display": f"{bal/100:,.2f} so'm",
+    }
 
 
 @app.get("/api/wallet/ledger")
@@ -777,10 +810,7 @@ def confirm(
 
 
 @app.get("/api/pay/intents")
-def list_intents(
-    user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
-):
+def list_intents(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     rows = db.query(PaymentIntent).filter(
         PaymentIntent.user_id == user.id
     ).order_by(PaymentIntent.created_at.desc()).limit(50).all()
@@ -823,7 +853,7 @@ def create_key(
     db.commit()
     db.refresh(k)
     d = key_dict(k)
-    d["full_key"] = full  # faqat bir marta!
+    d["full_key"] = full
     return d
 
 
@@ -913,7 +943,7 @@ def update_settings(
     return user_dict(user)
 
 
-# ---------- DEV ----------
+# ---------- DEV FUND ----------
 @app.post("/api/dev/fund")
 def fund(
     body: DepositIn,
@@ -953,13 +983,13 @@ def index():
     return JSONResponse({
         "message": "FoxPay API ishlamoqda",
         "docs": "/docs",
-        "hint": "index.html papkada bo'lmasa, /docs orqali API sinab ko'ring",
+        "health": "/api/health",
     })
 
 
 @app.get("/{path:path}")
 def catch_all(path: str):
-    if path.startswith("api/"):
+    if path.startswith("api/") or path == "healthz":
         raise HTTPException(404, "API endpoint topilmadi")
     if INDEX_HTML.exists():
         return FileResponse(INDEX_HTML)
@@ -973,7 +1003,14 @@ if __name__ == "__main__":
     import uvicorn
     print(f"\n  FoxPay API   →  http://localhost:{PORT}")
     print(f"  Swagger      →  http://localhost:{PORT}/docs")
-    print(f"  DB path      →  {DB_PATH}")
-    print(f"  Dev mode     →  {'ON' if DEV_MODE else 'OFF'}")
-    print(f"  PSP          →  {PSP_PROVIDER}\n")
-    uvicorn.run("main:app", host=HOST, port=PORT, reload=False, log_level="info")
+    print(f"  Health       →  http://localhost:{PORT}/api/health")
+    print(f"  DB           →  {DB_PATH}")
+    print(f"  Dev mode     →  {'ON' if DEV_MODE else 'OFF'}\n")
+    uvicorn.run(
+        "main:app",
+        host=HOST,
+        port=PORT,
+        reload=False,
+        log_level="info",
+        access_log=True,
+    )
