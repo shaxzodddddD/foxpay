@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "foxpay"
+version = "1.0.0"
+description = "FoxPay payment platform"
+authors = ["FoxPay"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
