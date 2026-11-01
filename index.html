@@ -1,2021 +1,939 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="FoxPay — O'zbekiston uchun tez va ishonchli to'lov platformasi.">
-<title>FoxPay — To'lov bir zumda</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF6B1A'/%3E%3Cpath d='M10 8l6 6 6-6v10a6 6 0 0 1-12 0V8z' fill='white'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>FoxPay — Global Payment Protocol</title>
+<meta name="description" content="FoxPay — AI-agent va B2B uchun zamonaviy to'lov infratuzilmasi.">
+<meta name="theme-color" content="#FF6B00">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B1120'/%3E%3Cpath d='M30 30l20 20 20-20v30a20 20 0 0 1-40 0V30z' fill='%23FF6B00'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
 /* ============================================================
-   FOXPAY — RESET & DESIGN TOKENS
+   1. CSS RESET & VARIABLES
    ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-img,svg{display:block;max-width:100%}
-button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
-input,select,textarea{font:inherit;color:inherit}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden;font-size:14px;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit;background:none;border:0;outline:none}
 ul,ol{list-style:none}
+img,svg{display:block;max-width:100%}
 
-:root{
-  --fox:#FF6B1A;
-  --fox-600:#E85D0F;
-  --fox-400:#FF8A3D;
-  --fox-100:#FFE8D6;
-  --cream:#FFF5EE;
-  --ink:#1A1A1A;
-  --ink-2:#2A2A2A;
-  --gray-50:#F9FAFB;
-  --gray-100:#F3F4F6;
-  --gray-200:#E5E7EB;
-  --gray-300:#D1D5DB;
-  --gray-400:#9CA3AF;
-  --gray-500:#6B7280;
-  --gray-600:#4B5563;
-  --gray-700:#374151;
-  --gray-900:#111827;
-  --green:#10B981;
-  --green-50:#ECFDF5;
-  --red:#EF4444;
-  --red-50:#FEF2F2;
-  --amber:#F59E0B;
-  --amber-50:#FFFBEB;
-  --blue:#3B82F6;
-  --blue-50:#EFF6FF;
-  --r-sm:8px;
-  --r:12px;
-  --r-lg:16px;
-  --r-xl:20px;
-  --r-2xl:24px;
-  --sh-sm:0 1px 2px rgba(0,0,0,.04);
-  --sh:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
-  --sh-md:0 8px 24px rgba(0,0,0,.08);
-  --sh-lg:0 16px 48px rgba(0,0,0,.12);
-  --sidebar-w:250px;
-  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+:root {
+  --bg:#0B1120; --panel:#0F172A; --panel2:#141E33; --border:#1E293B;
+  --fox:#FF6B00; --fox2:#E64A00; --cyan:#00F2FE;
+  --text:#F8FAFC; --muted:#94A3B8;
+  --green:#10B981; --green-bg:rgba(16,185,129,.12);
+  --red:#EF4444; --red-bg:rgba(239,68,68,.12);
+  --amber:#F59E0B; --amber-bg:rgba(245,158,11,.12);
+  --blue:#3B82F6; --blue-bg:rgba(59,130,246,.12);
+  --r:10px; --r-lg:14px; --r-xl:18px;
+  --sh:0 2px 8px rgba(0,0,0,.3); --sh-lg:0 12px 40px rgba(0,0,0,.5);
+  --sidebar-w:260px;
 }
-
-[data-theme="dark"]{
-  --cream:#0B0B0D;
-  --ink:#F5F5F6;
-  --ink-2:#E5E5E7;
-  --gray-50:#121215;
-  --gray-100:#17171B;
-  --gray-200:#242429;
-  --gray-300:#33333A;
-  --gray-400:#7C7C86;
-  --gray-500:#9C9CA5;
-  --gray-600:#C0C0C8;
-  --gray-700:#DCDCE2;
-  --gray-900:#F5F5F7;
-  --fox-100:#3D1F0A;
-  --green-50:#062E20;
-  --red-50:#3A0F0F;
-  --amber-50:#3A2408;
-  --blue-50:#0A1E38;
-  --sh:0 2px 8px rgba(0,0,0,.4),0 1px 2px rgba(0,0,0,.3);
-  --sh-md:0 8px 24px rgba(0,0,0,.5);
-  --sh-lg:0 16px 48px rgba(0,0,0,.6);
-}
-
-body{
-  font-family:var(--font);
-  background:var(--cream);
-  color:var(--ink);
-  line-height:1.55;
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  transition:background .25s,color .25s;
+[data-theme="light"] {
+  --bg:#F8FAFC; --panel:#FFFFFF; --panel2:#F1F5F9; --border:#E2E8F0;
+  --text:#0F172A; --muted:#475569;
+  --sh:0 2px 8px rgba(0,0,0,.05); --sh-lg:0 12px 40px rgba(0,0,0,.1);
 }
 
 /* ============================================================
-   UTILITIES
+   2. UTILITIES
    ============================================================ */
-.flex{display:flex}
-.flex-col{flex-direction:column}
-.items-center{align-items:center}
-.items-start{align-items:flex-start}
-.items-end{align-items:flex-end}
-.justify-between{justify-content:space-between}
-.justify-center{justify-content:center}
-.justify-end{justify-content:flex-end}
-.gap-1{gap:4px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
-.gap-5{gap:20px}.gap-6{gap:24px}.gap-8{gap:32px}
-.grow{flex:1}
-.wrap{flex-wrap:wrap}
-.hide{display:none !important}
-.text-sm{font-size:13px}
-.text-xs{font-size:12px}
-.text-base{font-size:15px}
-.text-lg{font-size:17px}
-.text-xl{font-size:20px}
-.text-2xl{font-size:24px}
-.text-3xl{font-size:30px}
-.text-4xl{font-size:38px}
-.text-5xl{font-size:52px}
-.text-6xl{font-size:64px}
-.font-medium{font-weight:500}
-.font-semibold{font-weight:600}
-.font-bold{font-weight:700}
-.font-extrabold{font-weight:800}
-.font-black{font-weight:900}
-.muted{color:var(--gray-500)}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.text-right{text-align:right}
-.text-center{text-align:center}
-.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pointer{cursor:pointer}
-.w-full{width:100%}
-.relative{position:relative}
-.absolute{position:absolute}
-.rounded{border-radius:var(--r)}
-.rounded-lg{border-radius:var(--r-lg)}
-.rounded-full{border-radius:999px}
-.border{border:1px solid var(--gray-200)}
-.divider{height:1px;background:var(--gray-200)}
-.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-4{margin-top:16px}
-.mt-6{margin-top:24px}.mt-8{margin-top:32px}.mt-12{margin-top:48px}
-.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
-.mb-6{margin-bottom:24px}.mb-8{margin-bottom:32px}
+.flex{display:flex} .fcol{flex-direction:column} .ai-c{align-items:center} .jc-b{justify-content:space-between} .jc-c{justify-content:center}
+.g1{gap:4px} .g2{gap:8px} .g3{gap:12px} .g4{gap:16px} .g6{gap:24px}
+.grow{flex:1;min-width:0} .wrap{flex-wrap:wrap} .hide{display:none!important}
+.t-xs{font-size:11px} .t-sm{font-size:12px} .t-md{font-size:13px} .t-lg{font-size:15px} .t-xl{font-size:18px} .t-2xl{font-size:24px} .t-3xl{font-size:32px}
+.fw5{font-weight:500} .fw6{font-weight:600} .fw7{font-weight:700} .fw8{font-weight:800} .fw9{font-weight:900}
+.muted{color:var(--muted)} .text-r{text-align:right} .text-c{text-align:center}
+.trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mono{font-family:ui-monospace,SFMono-Regular,monospace}
+.mt2{margin-top:8px} .mt4{margin-top:16px} .mb2{margin-bottom:8px} .mb4{margin-bottom:16px}
+.w100{width:100%} .rel{position:relative}
 
 /* ============================================================
-   BUTTONS
+   3. COMPONENTS
    ============================================================ */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:10px 18px;border-radius:var(--r);font-weight:600;font-size:14px;
-  transition:all .18s ease;white-space:nowrap;user-select:none;
-  border:1px solid transparent;
-}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--r);font-weight:600;font-size:13px;transition:all .15s;border:1px solid transparent;white-space:nowrap}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-primary{
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  color:#fff;box-shadow:0 2px 8px rgba(255,107,26,.25);
-}
-.btn-primary:hover:not(:disabled){box-shadow:0 6px 20px rgba(255,107,26,.35);transform:translateY(-1px)}
-.btn-primary:active{transform:translateY(0)}
-.btn-dark{background:var(--ink);color:var(--cream)}
-.btn-dark:hover{background:var(--ink-2)}
-.btn-outline{border-color:var(--gray-200);background:transparent;color:var(--ink)}
-.btn-outline:hover{background:var(--gray-100);border-color:var(--gray-300)}
-.btn-ghost{background:transparent;color:var(--gray-600)}
-.btn-ghost:hover{background:var(--gray-100);color:var(--ink)}
-.btn-danger{background:var(--red);color:#fff}
-.btn-danger:hover{background:#DC2626}
-.btn-sm{padding:7px 12px;font-size:13px}
-.btn-xs{padding:5px 10px;font-size:12px}
-.btn-lg{padding:14px 26px;font-size:15px;border-radius:14px}
-.btn-block{width:100%}
-.btn-icon{width:38px;height:38px;padding:0;border-radius:var(--r)}
-.btn-icon.btn-sm{width:32px;height:32px}
+.btn-primary{background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;box-shadow:0 2px 8px rgba(255,107,0,.25)}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(255,107,0,.4)}
+.btn-outline{border-color:var(--border);background:var(--panel);color:var(--text)}
+.btn-outline:hover{background:var(--panel2)}
+.btn-ghost{color:var(--muted)} .btn-ghost:hover{color:var(--text);background:var(--panel2)}
+.btn-sm{padding:6px 12px;font-size:12px} .btn-block{width:100%}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--r)}
+
+.input{width:100%;padding:10px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;transition:all .15s}
+.input:focus{border-color:var(--fox);box-shadow:0 0 0 3px rgba(255,107,0,.15)}
+.field{margin-bottom:16px} .field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.err{color:var(--red);font-size:11px;margin-top:4px;min-height:14px}
+
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600}
+.bd{width:6px;height:6px;border-radius:50%;background:currentColor}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-cyan{background:rgba(0,242,254,.12);color:var(--cyan)}
+.b-fox{background:rgba(255,107,0,.12);color:var(--fox)}
+
+.toast-host{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{padding:12px 18px;border-radius:var(--r);background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;box-shadow:var(--sh-lg);animation:slideIn .3s}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.error{border-color:var(--red);color:var(--red)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:none;opacity:1}}
 
 /* ============================================================
-   BADGES
+   4. LAYOUT & VIEWS
    ============================================================ */
-.badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:3px 9px;border-radius:999px;
-  font-size:12px;font-weight:600;line-height:1.4;
-}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.badge-green{background:var(--green-50);color:var(--green)}
-.badge-red{background:var(--red-50);color:var(--red)}
-.badge-amber{background:var(--amber-50);color:var(--amber)}
-.badge-blue{background:var(--blue-50);color:var(--blue)}
-.badge-gray{background:var(--gray-100);color:var(--gray-600)}
-.badge-fox{background:var(--fox-100);color:var(--fox-600)}
-
-/* ============================================================
-   CARDS
-   ============================================================ */
-.card{
-  background:var(--gray-50);
-  border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);
-  padding:20px;
-}
-[data-theme="dark"] .card{background:var(--gray-100)}
-.card-elevated{box-shadow:var(--sh)}
-.card-pad-lg{padding:28px}
-.card-title{font-size:15px;font-weight:700;color:var(--ink)}
-.card-sub{font-size:13px;color:var(--gray-500);margin-top:2px}
-
-/* ============================================================
-   INPUTS
-   ============================================================ */
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.field label{font-size:13px;font-weight:600;color:var(--gray-700)}
-.input, .select, .textarea{
-  width:100%;padding:11px 14px;border-radius:var(--r);
-  border:1px solid var(--gray-200);
-  background:var(--cream);
-  font-size:14px;color:var(--ink);
-  transition:border-color .15s, box-shadow .15s;
-  outline:none;
-}
-.input:focus, .select:focus, .textarea:focus{
-  border-color:var(--fox);
-  box-shadow:0 0 0 3px rgba(255,107,26,.15);
-}
-.input::placeholder{color:var(--gray-400)}
-.textarea{resize:vertical;min-height:90px;font-family:var(--font)}
-.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
-.input-group{position:relative}
-.input-group .input{padding-left:42px}
-.input-group .ig-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray-400);pointer-events:none}
-.field-error{color:var(--red);font-size:12px;margin-top:2px;min-height:16px}
-.field-hint{color:var(--gray-500);font-size:12px}
-
-/* ============================================================
-   TOASTS
-   ============================================================ */
-.toast-host{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-.toast{
-  display:flex;align-items:center;gap:10px;
-  padding:12px 16px;border-radius:var(--r);
-  background:var(--ink);color:var(--cream);
-  box-shadow:var(--sh-lg);font-size:14px;font-weight:500;
-  pointer-events:auto;
-  animation:toastIn .25s cubic-bezier(.2,.9,.3,1.2);
-  min-width:240px;max-width:380px;
-}
-.toast.success{background:var(--green)}
-.toast.error{background:var(--red)}
-.toast.info{background:var(--blue)}
-.toast-icon{width:20px;height:20px;flex-shrink:0}
-.toast.out{animation:toastOut .2s ease forwards}
-@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
-@keyframes toastOut{to{opacity:0;transform:translateX(20px)}}
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-.modal-back{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);
-  backdrop-filter:blur(4px);
-  display:flex;align-items:center;justify-content:center;
-  z-index:9000;padding:20px;
-  animation:fadeIn .18s ease;
-}
-.modal{
-  background:var(--gray-50);
-  border-radius:var(--r-xl);
-  width:100%;max-width:480px;
-  max-height:90vh;overflow-y:auto;
-  box-shadow:var(--sh-lg);
-  animation:modalIn .22s cubic-bezier(.2,.9,.3,1.2);
-}
-[data-theme="dark"] .modal{background:var(--gray-100)}
-.modal-lg{max-width:640px}
-.modal-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px;border-bottom:1px solid var(--gray-200);
-}
-.modal-title{font-size:17px;font-weight:700}
-.modal-body{padding:24px}
-.modal-foot{
-  display:flex;gap:10px;justify-content:flex-end;
-  padding:16px 24px;border-top:1px solid var(--gray-200);
-}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
-
-/* ============================================================
-   LANDING
-   ============================================================ */
-.landing{min-height:100vh;background:var(--cream)}
-
-.top-nav{
-  position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(16px);
-  background:rgba(255,245,238,.75);
-  border-bottom:1px solid var(--gray-200);
-}
-[data-theme="dark"] .top-nav{background:rgba(11,11,13,.75)}
-.top-nav-inner{
-  max-width:1200px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 24px;
-}
-.logo{
-  display:flex;align-items:center;gap:10px;
-  font-weight:800;font-size:20px;letter-spacing:-.02em;
-}
-.logo-mark{
-  width:36px;height:36px;border-radius:10px;
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  display:grid;place-items:center;color:#fff;
-  box-shadow:0 4px 12px rgba(255,107,26,.3);
-}
-.nav-links{display:flex;gap:32px;align-items:center}
-.nav-link{font-size:14px;font-weight:500;color:var(--gray-600);transition:color .15s}
-.nav-link:hover{color:var(--ink)}
-.nav-actions{display:flex;gap:8px;align-items:center}
-
-.hero{
-  max-width:1200px;margin:0 auto;
-  padding:80px 24px 100px;
-  display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 14px;border-radius:999px;
-  background:var(--fox-100);color:var(--fox-600);
-  font-size:13px;font-weight:600;margin-bottom:24px;
-}
-.hero h1{
-  font-size:64px;line-height:1.02;letter-spacing:-.03em;
-  font-weight:900;color:var(--ink);margin-bottom:22px;
-}
-.hero h1 .grad{
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.hero p.lead{
-  font-size:18px;line-height:1.6;color:var(--gray-600);
-  margin-bottom:32px;max-width:520px;
-}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
-.hero-stats{display:flex;gap:36px;flex-wrap:wrap}
-.hero-stat-num{font-size:26px;font-weight:800;letter-spacing:-.02em}
-.hero-stat-label{font-size:13px;color:var(--gray-500);margin-top:2px}
-
-.hero-visual{position:relative}
-.hero-card{
-  background:var(--gray-50);border:1px solid var(--gray-200);
-  border-radius:var(--r-2xl);padding:24px;
-  box-shadow:var(--sh-lg);
-}
-[data-theme="dark"] .hero-card{background:var(--gray-100)}
-.hero-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.hero-amount{font-size:36px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
-.hero-mini-list{margin-top:20px;display:flex;flex-direction:column;gap:12px}
-.hero-mini-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:var(--r);background:var(--cream)}
-[data-theme="dark"] .hero-mini-item{background:var(--gray-200)}
-.hero-mini-avatar{width:36px;height:36px;border-radius:10px;background:var(--fox-100);display:grid;place-items:center;color:var(--fox-600);font-weight:700;font-size:14px}
-
-.section{max-width:1200px;margin:0 auto;padding:80px 24px}
-.section-head{text-align:center;max-width:640px;margin:0 auto 56px}
-.section-eyebrow{font-size:13px;font-weight:700;color:var(--fox);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-.section-head h2{font-size:42px;line-height:1.1;letter-spacing:-.02em;font-weight:800;margin-bottom:16px}
-.section-head p{font-size:17px;color:var(--gray-600);line-height:1.6}
-
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.feature{
-  background:var(--gray-50);border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);padding:28px;
-  transition:transform .2s, box-shadow .2s;
-}
-[data-theme="dark"] .feature{background:var(--gray-100)}
-.feature:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
-.feature-icon{
-  width:48px;height:48px;border-radius:var(--r);
-  background:var(--fox-100);color:var(--fox-600);
-  display:grid;place-items:center;margin-bottom:16px;
-}
-.feature h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.feature p{font-size:14px;color:var(--gray-600);line-height:1.6}
-
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.step{text-align:center;padding:16px}
-.step-num{
-  width:56px;height:56px;border-radius:16px;
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  color:#fff;font-weight:800;font-size:22px;
-  display:grid;place-items:center;margin:0 auto 16px;
-  box-shadow:0 6px 20px rgba(255,107,26,.3);
-}
-.step h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.step p{font-size:14px;color:var(--gray-600);line-height:1.6}
-
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-.price-card{
-  background:var(--gray-50);border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);padding:32px;
-  display:flex;flex-direction:column;
-}
-[data-theme="dark"] .price-card{background:var(--gray-100)}
-.price-card.featured{
-  border:2px solid var(--fox);
-  box-shadow:0 12px 40px rgba(255,107,26,.15);
-  position:relative;
-}
-.price-badge{
-  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
-  background:var(--fox);color:#fff;padding:4px 14px;
-  border-radius:999px;font-size:12px;font-weight:700;
-}
-.price-name{font-size:14px;font-weight:600;color:var(--gray-600);margin-bottom:8px}
-.price-amount{font-size:36px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
-.price-amount span{font-size:15px;font-weight:500;color:var(--gray-500)}
-.price-desc{font-size:13px;color:var(--gray-500);margin-bottom:22px;min-height:40px}
-.price-list{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;flex:1}
-.price-item{display:flex;gap:10px;font-size:14px;color:var(--gray-700)}
-.price-item svg{flex-shrink:0;color:var(--green);margin-top:3px}
-
-.cta-section{
-  max-width:1200px;margin:0 auto;padding:20px 24px 100px;
-}
-.cta-box{
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  border-radius:var(--r-2xl);
-  padding:64px 40px;text-align:center;color:#fff;
-  box-shadow:0 20px 60px rgba(255,107,26,.3);
-}
-.cta-box h2{font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
-.cta-box p{font-size:17px;opacity:.9;margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto}
-.cta-box .btn{background:#fff;color:var(--fox-600);font-weight:700}
-.cta-box .btn:hover{background:var(--cream);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
-
-.site-footer{
-  border-top:1px solid var(--gray-200);
-  padding:40px 24px;max-width:1200px;margin:0 auto;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
-}
-.footer-links{display:flex;gap:24px}
-.footer-links a{font-size:13px;color:var(--gray-500);transition:color .15s}
-.footer-links a:hover{color:var(--ink)}
-
-/* ============================================================
-   AUTH
-   ============================================================ */
-.auth-wrap{
-  min-height:100vh;
-  display:grid;grid-template-columns:1fr 1fr;
-  background:var(--cream);
-}
-.auth-side{
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  color:#fff;padding:48px;
-  display:flex;flex-direction:column;justify-content:space-between;
-  position:relative;overflow:hidden;
-}
-.auth-side::before{
-  content:'';position:absolute;width:400px;height:400px;
-  border-radius:50%;background:rgba(255,255,255,.08);
-  top:-100px;right:-100px;
-}
-.auth-side::after{
-  content:'';position:absolute;width:300px;height:300px;
-  border-radius:50%;background:rgba(255,255,255,.06);
-  bottom:-100px;left:-100px;
-}
-.auth-side .logo{color:#fff;position:relative;z-index:1}
-.auth-side .logo-mark{background:rgba(255,255,255,.2);box-shadow:none}
-.auth-side h2{font-size:32px;line-height:1.15;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1}
-.auth-side p{font-size:15px;opacity:.9;margin-top:12px;line-height:1.6;position:relative;z-index:1}
-.auth-side-foot{font-size:13px;opacity:.8;position:relative;z-index:1}
-.auth-main{
-  padding:48px;
-  display:flex;align-items:center;justify-content:center;
-}
+.auth-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-side{background:radial-gradient(circle at 50% 50%,#0F172A 0%,#020617 100%);padding:48px;display:flex;flex-direction:column;justify-content:space-between;color:#F8FAFC}
+.auth-main{padding:48px;display:flex;align-items:center;justify-content:center;background:var(--bg)}
 .auth-box{width:100%;max-width:400px}
-.auth-box h1{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
-.auth-box .sub{font-size:14px;color:var(--gray-500);margin-bottom:28px}
-.auth-tabs{display:flex;gap:4px;background:var(--gray-100);padding:4px;border-radius:var(--r);margin-bottom:24px}
-.auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:var(--gray-500);border-radius:8px;transition:all .15s}
-.auth-tab.active{background:var(--gray-50);color:var(--ink);box-shadow:var(--sh-sm)}
-[data-theme="dark"] .auth-tab.active{background:var(--gray-200)}
-.auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--gray-400);font-size:12px}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--gray-200)}
-.auth-demo{font-size:12px;color:var(--gray-500);text-align:center;margin-top:20px;padding:12px;background:var(--gray-100);border-radius:var(--r)}
+.auth-tabs{display:flex;gap:4px;background:var(--panel);padding:4px;border-radius:var(--r);margin-bottom:24px;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);border-radius:8px;cursor:pointer}
+.auth-tab.active{background:var(--panel2);color:var(--text)}
 
-/* ============================================================
-   DASHBOARD
-   ============================================================ */
-.dash{
-  display:grid;grid-template-columns:var(--sidebar-w) 1fr;
-  min-height:100vh;background:var(--gray-50);
-}
-[data-theme="dark"] .dash{background:var(--gray-50)}
-.sidebar{
-  background:var(--gray-50);
-  border-right:1px solid var(--gray-200);
-  padding:20px 14px;
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
-  overflow-y:auto;
-}
-[data-theme="dark"] .sidebar{background:var(--gray-100)}
-.sidebar .logo{padding:6px 8px;margin-bottom:24px}
+.dash{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
+.sidebar{background:var(--panel);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-.side-item{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 12px;border-radius:10px;
-  font-size:14px;font-weight:500;color:var(--gray-600);
-  transition:all .15s;
-}
-.side-item:hover{background:var(--gray-100);color:var(--ink)}
-[data-theme="dark"] .side-item:hover{background:var(--gray-200)}
-.side-item.active{
-  background:var(--fox-100);color:var(--fox-600);font-weight:600;
-}
-[data-theme="dark"] .side-item.active{background:var(--fox-100)}
-.side-item svg{width:18px;height:18px;flex-shrink:0}
-.side-sep{height:1px;background:var(--gray-200);margin:12px 8px}
-.side-foot{padding-top:16px}
-.side-user{
-  display:flex;align-items:center;gap:10px;
-  padding:10px;border-radius:10px;background:var(--gray-100);
-  margin-bottom:8px;
-}
-[data-theme="dark"] .side-user{background:var(--gray-200)}
-.avatar{
-  width:34px;height:34px;border-radius:50%;
-  background:linear-gradient(135deg,var(--fox-400),var(--fox));
-  color:#fff;font-weight:700;font-size:13px;
-  display:grid;place-items:center;flex-shrink:0;
-}
-.avatar.lg{width:44px;height:44px;font-size:16px}
-.avatar.sm{width:28px;height:28px;font-size:11px}
+.si{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
+.si:hover{background:var(--panel2);color:var(--text)}
+.si.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600;border-left:3px solid var(--fox)}
+.si svg{width:16px;height:16px}
 
-.main{min-width:0;display:flex;flex-direction:column}
-.topbar{
-  background:var(--gray-50);border-bottom:1px solid var(--gray-200);
-  padding:14px 28px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  position:sticky;top:0;z-index:50;
-}
-[data-theme="dark"] .topbar{background:var(--gray-100)}
-.topbar-title{font-size:20px;font-weight:700;letter-spacing:-.02em}
-.topbar-sub{font-size:13px;color:var(--gray-500);margin-top:1px}
-.topbar-actions{display:flex;gap:8px;align-items:center}
+.main{display:flex;flex-direction:column}
+.topbar{background:rgba(15,23,42,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
+.content{padding:24px;max-width:1300px;margin:0 auto;width:100%}
 
-.content{padding:24px 28px 60px;max-width:1400px;width:100%;margin:0 auto;flex:1}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.kpi-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.kpi-l{font-size:12px;color:var(--muted);font-weight:600}
+.kpi-v{font-size:24px;font-weight:800}
 
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
-.kpi{
-  background:var(--cream);border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);padding:18px;
-}
-[data-theme="dark"] .kpi{background:var(--gray-100)}
-.kpi-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.kpi-label{font-size:13px;color:var(--gray-500);font-weight:500}
-.kpi-icon{width:36px;height:36px;border-radius:10px;background:var(--fox-100);color:var(--fox-600);display:grid;place-items:center}
-.kpi-value{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
-.kpi-delta{display:flex;align-items:center;gap:4px;font-size:12px;margin-top:6px;font-weight:600}
-.kpi-delta.up{color:var(--green)}
-.kpi-delta.down{color:var(--red)}
-.kpi-delta .muted{font-weight:500;margin-left:2px}
+.wallet-banner{background:linear-gradient(135deg,var(--fox) 0%,var(--fox2) 100%);border-radius:var(--r-xl);padding:28px;color:#fff;box-shadow:0 12px 32px rgba(255,107,0,.25);margin-bottom:24px;position:relative;overflow:hidden}
+.wallet-banner::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);top:-60px;right:-60px}
+.wallet-amount{font-size:36px;font-weight:800;margin-top:6px;position:relative;z-index:1}
+.wallet-actions{display:flex;gap:12px;margin-top:20px;position:relative;z-index:1}
+.wallet-actions .btn{background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)}
+.wallet-actions .btn:hover{background:rgba(255,255,255,.25)}
 
-.charts-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
-.chart-card{
-  background:var(--cream);border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);padding:20px;
-}
-[data-theme="dark"] .chart-card{background:var(--gray-100)}
-.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.chart-head h3{font-size:15px;font-weight:700}
-.chart-tabs{display:flex;gap:2px;background:var(--gray-100);padding:3px;border-radius:8px}
-[data-theme="dark"] .chart-tabs{background:var(--gray-200)}
-.chart-tab{padding:5px 11px;font-size:12px;font-weight:600;color:var(--gray-500);border-radius:6px;transition:all .15s}
-.chart-tab.active{background:var(--cream);color:var(--ink);box-shadow:var(--sh-sm)}
-[data-theme="dark"] .chart-tab.active{background:var(--gray-100)}
-canvas{width:100%;display:block}
+.table-wrap{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:12px 20px;background:rgba(255,255,255,.02);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.02)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 
-/* Table */
-.table-wrap{
-  background:var(--cream);border:1px solid var(--gray-200);
-  border-radius:var(--r-lg);overflow:hidden;
-}
-[data-theme="dark"] .table-wrap{background:var(--gray-100)}
-.table-head{
-  padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
-  border-bottom:1px solid var(--gray-200);flex-wrap:wrap;
-}
-.table-head h3{font-size:15px;font-weight:700}
-.table-filters{display:flex;gap:8px;flex-wrap:wrap}
-table{width:100%;border-collapse:collapse;font-size:14px}
-thead th{
-  text-align:left;padding:11px 20px;
-  font-size:12px;font-weight:600;color:var(--gray-500);
-  text-transform:uppercase;letter-spacing:.04em;
-  background:var(--gray-100);border-bottom:1px solid var(--gray-200);
-}
-[data-theme="dark"] thead th{background:var(--gray-200)}
-tbody td{padding:14px 20px;border-bottom:1px solid var(--gray-200);color:var(--gray-700)}
-tbody tr:hover{background:var(--gray-100)}
-[data-theme="dark"] tbody tr:hover{background:var(--gray-200)}
-tbody tr:last-child td{border-bottom:0}
-.td-user{display:flex;align-items:center;gap:10px}
-.td-user-info{min-width:0}
-.td-name{font-weight:600;color:var(--ink);font-size:13px}
-.td-sub{font-size:12px;color:var(--gray-500);margin-top:1px}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:20px}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:480px;overflow:hidden;animation:scaleIn .2s}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
+.modal-head{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-body{padding:20px}
+.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
 
-.table-empty{padding:60px 20px;text-align:center;color:var(--gray-500)}
-.table-empty svg{margin:0 auto 12px;color:var(--gray-400)}
-.table-empty h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
-.table-empty p{font-size:13px}
-
-.pagination{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 20px;border-top:1px solid var(--gray-200);font-size:13px;color:var(--gray-500);
-}
-
-/* Code block for API key */
-.code-block{
-  background:var(--ink);color:#E5E5E5;
-  padding:14px 16px;border-radius:var(--r);
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:13px;overflow-x:auto;
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-}
-.code-block .mono{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-/* Settings */
-.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.setting-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 0;border-bottom:1px solid var(--gray-200);
-}
-.setting-row:last-child{border-bottom:0}
-.setting-info h4{font-size:14px;font-weight:600;margin-bottom:2px}
-.setting-info p{font-size:12px;color:var(--gray-500)}
-
-.switch{
-  position:relative;width:42px;height:24px;
-  background:var(--gray-300);border-radius:999px;
-  transition:background .2s;flex-shrink:0;cursor:pointer;
-}
-.switch.on{background:var(--fox)}
-.switch::after{
-  content:'';position:absolute;top:3px;left:3px;
-  width:18px;height:18px;border-radius:50%;background:#fff;
-  transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);
-}
-.switch.on::after{transform:translateX(18px)}
-
-/* Responsive */
-@media (max-width:1024px){
-  .hero{grid-template-columns:1fr;padding:48px 20px 64px}
-  .hero h1{font-size:44px}
-  .hero-visual{display:none}
-  .features-grid,.steps,.pricing-grid{grid-template-columns:1fr}
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .charts-grid{grid-template-columns:1fr}
+@media(max-width:1024px){
+  .dash{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-100%;top:0;bottom:0;z-index:200;transition:left .3s;width:280px;box-shadow:var(--sh-lg)}
+  .sidebar.open{left:0}
   .auth-wrap{grid-template-columns:1fr}
   .auth-side{display:none}
-  .auth-main{padding:24px}
-  .settings-grid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .grid-2,.grid-3{grid-template-columns:1fr}
 }
-@media (max-width:768px){
-  .dash{grid-template-columns:1fr}
-  .sidebar{
-    position:fixed;left:-100%;top:0;bottom:0;width:var(--sidebar-w);
-    z-index:200;transition:left .25s;
-    background:var(--gray-50);
-    box-shadow:var(--sh-lg);
-  }
-  .sidebar.open{left:0}
-  .sidebar-back{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:199;display:none}
-  .sidebar-back.open{display:block}
-  .topbar{padding:12px 16px}
+@media(max-width:600px){
+  .kpis{grid-template-columns:1fr}
   .content{padding:16px}
-  .topbar-title{font-size:17px}
-  .kpi-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .section-head h2{font-size:30px}
-  .hero h1{font-size:38px}
-  .hero p.lead{font-size:16px}
-  .cta-box h2{font-size:28px}
-  .cta-box{padding:40px 24px}
-  .hero-stat-num{font-size:22px}
-  .hero-stats{gap:24px}
-  table{font-size:13px}
-  thead th,tbody td{padding:10px 12px}
-  .hide-sm{display:none}
+  .wallet-actions{flex-direction:column}
 }
 </style>
 </head>
 <body>
+
+<!-- Asosiy App Container -->
 <div id="app"></div>
-<div id="toast-host" class="toast-host"></div>
+
+<!-- Global Xabarlar va Modallar -->
+<div id="toast-host" class="toast-host" aria-live="polite"></div>
 <div id="modal-host"></div>
 
 <script>
-/* ============================================================
-   FOXPAY — CORE UTILS
-   ============================================================ */
-const $  = (sel, el = document) => el.querySelector(sel);
-const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
-const el = (tag, attrs = {}, children = []) => {
-  const n = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs)) {
-    if (k === 'class') n.className = v;
-    else if (k === 'html') n.innerHTML = v;
-    else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2).toLowerCase(), v);
-    else if (v !== undefined && v !== null && v !== false) n.setAttribute(k, v);
-  }
-  (Array.isArray(children) ? children : [children]).forEach(c => {
-    if (c == null) return;
-    n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
-  });
-  return n;
-};
-const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const uid = (p = 'id') => p + '_' + Math.random().toString(36).slice(2, 10);
-const fmtUZS = n => (Math.round(n)).toLocaleString('uz-UZ') + " so'm";
-const fmtShort = n => n >= 1e9 ? (n/1e9).toFixed(1)+'B' : n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(0)+'K' : n;
-const fmtDate = iso => new Date(iso).toLocaleDateString('uz-UZ', {day:'2-digit', month:'short', year:'numeric'});
-const fmtTime = iso => new Date(iso).toLocaleTimeString('uz-UZ', {hour:'2-digit', minute:'2-digit'});
-const fmtDateTime = iso => new Date(iso).toLocaleString('uz-UZ', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const debounce = (fn, ms=250) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+'use strict';
 
 /* ============================================================
-   ICONS
+   SVG ICONS & LOGO
    ============================================================ */
-const ICONS = {
-  home:      '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-  list:      '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
-  file:      '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
-  link:      '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
-  users:     '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-  settings:  '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
-  plus:      '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
-  search:    '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
-  filter:    '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
-  copy:      '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
-  check:     '<polyline points="20 6 9 17 4 12"/>',
-  x:         '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
-  sun:       '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
-  moon:      '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
-  logout:    '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
-  arrowUp:   '<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>',
-  arrowDown: '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>',
-  arrowRight:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
-  wallet:    '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',
-  trendUp:   '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
-  trendDown: '<polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>',
-  zap:       '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-  shield:    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-  globe:     '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
-  code:      '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  download:  '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
-  eye:       '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
-  menu:      '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
-  creditCard:'<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
-  bell:      '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
-  refresh:   '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
-  chevronD:  '<polyline points="6 9 12 15 18 9"/>',
-  trash:     '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'
+const Icons = {
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  wallet: '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',
+  send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+  card: '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+  link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  bot: '<rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>',
+  repeat: '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+  code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+  sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>',
+  moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+  plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  x: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  refresh: '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+  trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  menu: '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>'
 };
 
-function icon(name, size = 20) {
-  const path = ICONS[name] || '';
+const getIcon = (name, size = 16) => {
+  const path = Icons[name] || '';
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
-}
+};
+
+const LogoSVG = (size = 36) => `
+<svg width="${size}" height="${size}" viewBox="0 0 100 100">
+  <defs><linearGradient id="foxGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6B00"/><stop offset="100%" stop-color="#E64A00"/></linearGradient></defs>
+  <rect width="100" height="100" rx="18" fill="#0B1120"/>
+  <g transform="translate(10, 8)">
+    <path d="M 26 21 A 18 18 0 0 1 54 21 L 59 15 A 24 24 0 0 0 21 15 Z" fill="#0B2545"/>
+    <path d="M 30 26 A 12 12 0 0 1 50 26 L 54 21 A 18 18 0 0 0 26 21 Z" fill="#133863"/>
+    <circle cx="40" cy="31" r="3.2" fill="#0B2545"/><circle cx="40" cy="31" r="1.6" fill="url(#foxGrad)"/>
+    <path d="M 18 33 C 10 40 8 52 17 61 C 26 70 39 70 46 62 C 53 54 51 44 46 39 C 42 35 37 36 37 36 C 37 36 42 44 38 49 C 34 54 26 54 22 49 C 18 44 20 37 24 33 Z" fill="url(#foxGrad)"/>
+    <path d="M 44 40 C 48 41 55 45 62 50 C 64 52 61 52 60 52 C 55 52 50 49 46 47 C 44 46 42 45 44 40 Z" fill="url(#foxGrad)"/>
+    <path d="M 46 47 C 50 49 55 52 60 52 C 61 52 64 52 62 50 C 58 47 53 44 49 42 C 48 41 47 43 46 47 Z" fill="#0B2545"/>
+    <path d="M 53 33 L 56 40 L 51 39 Z" fill="#0B2545"/>
+  </g>
+</svg>`;
+
+const LogoFull = (size = 36) => `
+<div style="display:inline-flex;align-items:center;gap:10px">
+  ${LogoSVG(size)}
+  <span style="font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--text)">FOX<span style="color:var(--cyan)">PAY</span></span>
+</div>`;
 
 /* ============================================================
-   FOXPAY STORE
+   STATE MANAGEMENT & CONFIG
    ============================================================ */
-const Store = {
-  KEY: 'foxpay.v1',
-  state: {
-    user: null,
-    theme: 'light',
-    tx: [],
-    invoices: [],
-    links: [],
-    merchants: [],
-    seeded: false
-  },
-  load() {
+const Config = {
+  tokenKey: 'foxpay.token',
+  userKey: 'foxpay.user',
+  themeKey: 'foxpay.theme'
+};
+
+const State = {
+  token: localStorage.getItem(Config.tokenKey) || null,
+  user: JSON.parse(localStorage.getItem(Config.userKey) || 'null'),
+  wallet: { balance_tiyin: 0, currency: 'UZS' },
+  ledger: [],
+  transfers: [],
+  intents: [],
+  keys: [],
+  hooks: [],
+  activeView: '/'
+};
+
+/* ============================================================
+   UTILITY FUNCTIONS
+   ============================================================ */
+const $ = (s, e = document) => e.querySelector(s);
+const $$ = (s, e = document) => [...e.querySelectorAll(s)];
+
+const formatUZS = (tiyin) => tiyin == null ? '—' : (tiyin / 100).toLocaleString('uz-UZ', { maximumFractionDigits: 2 }) + " so'm";
+const formatDate = (iso) => iso ? new Date(iso).toLocaleString('uz-UZ', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+const initials = (name) => name ? name.trim().split(/\s+/).map(n => n[0]).join('').slice(0, 2).toUpperCase() : '?';
+const isValidEmail = (email) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+const escapeHTML = (str) => String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ============================================================
+   THEME ENGINE
+   ============================================================ */
+const initTheme = () => {
+  const t = localStorage.getItem(Config.themeKey) || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+};
+const toggleTheme = () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem(Config.themeKey, next);
+  renderDashboard(State.activeView); // Re-render to update icon
+};
+initTheme();
+
+/* ============================================================
+   TOAST & MODAL ENGINE
+   ============================================================ */
+const toast = (msg, type = 'success') => {
+  const host = $('#toast-host');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${getIcon(type === 'success' ? 'check' : 'x', 16)} <span>${escapeHTML(msg)}</span>`;
+  host.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3000);
+};
+
+const openModal = (title, bodyHtml, footerHtml) => {
+  const host = $('#modal-host');
+  const back = document.createElement('div');
+  back.className = 'modal-back';
+  back.innerHTML = `
+    <div class="modal">
+      <div class="modal-head">
+        <div class="t-lg fw7">${escapeHTML(title)}</div>
+        <button onclick="closeModal()" class="btn-ghost btn-icon">${getIcon('x', 18)}</button>
+      </div>
+      <div class="modal-body">${bodyHtml}</div>
+      ${footerHtml ? `<div class="modal-foot">${footerHtml}</div>` : ''}
+    </div>`;
+  back.onclick = (e) => { if (e.target === back) closeModal(); };
+  host.appendChild(back);
+};
+
+const closeModal = () => { $('#modal-host').innerHTML = ''; };
+
+/* ============================================================
+   API CLIENT
+   ============================================================ */
+const api = {
+  async req(path, method = 'GET', body = null) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (State.token) headers['Authorization'] = `Bearer ${State.token}`;
+    
     try {
-      const raw = localStorage.getItem(this.KEY);
-      if (raw) Object.assign(this.state, JSON.parse(raw));
-    } catch (e) { console.warn('Store load failed', e); }
-    document.documentElement.dataset.theme = this.state.theme;
-  },
-  save() {
-    localStorage.setItem(this.KEY, JSON.stringify(this.state));
-  },
-  reset() {
-    localStorage.removeItem(this.KEY);
-    location.reload();
-  },
-  seed() {
-    if (this.state.seeded) return;
-    const names = ['Aziz Karimov','Malika Yusupova','Jasur Toshmatov','Dilnoza Aliyeva','Bekzod Rahimov','Nilufar Sattorova','Sardor Ismoilov','Gulnora Nazarova','Farhod Yuldashev','Zilola Kholmatova'];
-    const methods = ['Uzcard','Humo','Payme','Click','Bank o\'tkazma'];
-    const statuses = ['success','success','success','success','pending','failed','refunded'];
-    const now = Date.now();
-
-    // Transactions
-    for (let i = 0; i < 48; i++) {
-      const name = names[rnd(0, names.length - 1)];
-      this.state.tx.push({
-        id: 'TX-' + (100000 + i),
-        customer: name,
-        email: name.toLowerCase().replace(/\s/g, '.') + '@mail.uz',
-        amount: rnd(5, 500) * 1000,
-        method: methods[rnd(0, methods.length - 1)],
-        status: statuses[rnd(0, statuses.length - 1)],
-        date: new Date(now - rnd(0, 30) * 86400000 - rnd(0, 86400000)).toISOString(),
-        fee: 0
-      });
-      this.state.tx[this.state.tx.length - 1].fee = Math.round(this.state.tx[this.state.tx.length - 1].amount * 0.015);
+      const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+      if (res.status === 401) {
+        logout();
+        throw new Error('Sessiya tugadi. Qayta kiring.');
+      }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.detail || `Xato: ${res.status}`);
+      }
+      if (res.status === 204) return null;
+      return await res.json();
+    } catch (err) {
+      throw new Error(err.message === 'Failed to fetch' ? 'Server bilan aloqa yo\'q' : err.message);
     }
+  },
+  get(p) { return this.req(p, 'GET'); },
+  post(p, b) { return this.req(p, 'POST', b); },
+  put(p, b) { return this.req(p, 'PUT', b); },
+  del(p) { return this.req(p, 'DELETE'); }
+};
 
-    // Invoices
-    const invStatuses = ['paid','sent','draft','overdue'];
-    for (let i = 0; i < 14; i++) {
-      this.state.invoices.push({
-        id: 'INV-' + (2000 + i),
-        customer: names[rnd(0, names.length - 1)],
-        email: 'client' + i + '@company.uz',
-        amount: rnd(100, 3000) * 1000,
-        status: invStatuses[rnd(0, invStatuses.length - 1)],
-        issueDate: new Date(now - rnd(0, 20) * 86400000).toISOString(),
-        dueDate: new Date(now + rnd(1, 30) * 86400000).toISOString(),
-        note: 'Xizmatlar uchun to\'lov'
-      });
-    }
+/* ============================================================
+   AUTHENTICATION
+   ============================================================ */
+const handleAuth = async (e, mode) => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  const email = form.get('email').trim();
+  const password = form.get('password');
+  const name = form.get('name')?.trim();
+  
+  if (!isValidEmail(email)) return toast('Email formati noto\'g\'ri', 'error');
+  if (password.length < 6) return toast('Parol kamida 6 belgi bo\'lishi kerak', 'error');
+  if (mode === 'register' && (!name || name.length < 2)) return toast('Ismingizni to\'liq kiriting', 'error');
 
-    // Payment links
-    const titles = ['Konsultatsiya','Dizayn xizmati','Kurs to\'lovi','Mahsulot #1','Mahsulot #2','Landing page','Logo dizayn','Konsalting soat'];
-    for (let i = 0; i < 8; i++) {
-      this.state.links.push({
-        id: 'PL-' + (3000 + i),
-        title: titles[i % titles.length],
-        amount: rnd(50, 800) * 1000,
-        slug: 'fox-' + Math.random().toString(36).slice(2, 8),
-        clicks: rnd(10, 500),
-        payments: rnd(0, 40),
-        active: Math.random() > 0.2,
-        createdAt: new Date(now - rnd(0, 40) * 86400000).toISOString()
-      });
-    }
+  const btn = e.target.querySelector('button[type="submit"]');
+  const origText = btn.innerHTML;
+  btn.innerHTML = 'Yuklanmoqda...';
+  btn.disabled = true;
 
-    // Merchants
-    const shops = ['Chorsu Market','Silk Road Coffee','Tashkent Books','Navoi Tech','Samarkand Tour','Bukhara Textile'];
-    shops.forEach((s, i) => {
-      this.state.merchants.push({
-        id: 'M-' + (400 + i),
-        name: s,
-        category: ['Retail','Food','Books','Electronics','Tourism','Textile'][i],
-        status: i % 4 === 3 ? 'pending' : 'active',
-        volume: rnd(10, 500) * 1000000,
-        joined: new Date(now - rnd(30, 500) * 86400000).toISOString()
-      });
-    });
+  try {
+    const payload = mode === 'register' ? { name, email, password } : { email, password };
+    const data = await api.post(`/api/auth/${mode}`, payload);
+    
+    State.token = data.token;
+    State.user = data.user;
+    localStorage.setItem(Config.tokenKey, State.token);
+    localStorage.setItem(Config.userKey, JSON.stringify(State.user));
+    
+    toast(`Xush kelibsiz, ${data.user.name}!`);
+    window.location.hash = '#/';
+  } catch (err) {
+    toast(err.message, 'error');
+    btn.innerHTML = origText;
+    btn.disabled = false;
+  }
+};
 
-    this.state.seeded = true;
-    this.save();
+const logout = () => {
+  State.token = null; State.user = null;
+  localStorage.removeItem(Config.tokenKey);
+  localStorage.removeItem(Config.userKey);
+  window.location.hash = '#/login';
+};
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+const router = () => {
+  const hash = window.location.hash.replace('#', '') || '/';
+  
+  if (!State.token) {
+    if (hash === '/register') renderAuth('register');
+    else renderAuth('login');
+    return;
+  }
+
+  if (hash === '/login' || hash === '/register' || hash === '/') {
+    renderDashboard('/');
+  } else {
+    renderDashboard(hash);
   }
 };
 
 /* ============================================================
-   TOAST & MODAL
+   VIEW: AUTH (Login & Register)
    ============================================================ */
-function toast(msg, type = 'info', ms = 3200) {
-  const host = $('#toast-host');
-  const icons = { success: 'check', error: 'x', info: 'bell' };
-  const t = el('div', { class: `toast ${type}` });
-  t.innerHTML = `<span class="toast-icon">${icon(icons[type] || 'bell', 18)}</span><span>${escapeHtml(msg)}</span>`;
-  host.appendChild(t);
-  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 250); }, ms);
-}
-
-function openModal({ title, body, footer, size = '' }) {
-  const host = $('#modal-host');
-  const back = el('div', { class: 'modal-back' });
-  const box = el('div', { class: `modal ${size}` });
-  const head = el('div', { class: 'modal-head' });
-  head.innerHTML = `<div class="modal-title">${escapeHtml(title)}</div><button class="btn-ghost btn-icon" data-close>${icon('x', 18)}</button>`;
-  const bodyEl = el('div', { class: 'modal-body' });
-  if (typeof body === 'string') bodyEl.innerHTML = body;
-  else if (body) bodyEl.appendChild(body);
-  box.appendChild(head);
-  box.appendChild(bodyEl);
-  if (footer) {
-    const foot = el('div', { class: 'modal-foot' });
-    if (typeof footer === 'string') foot.innerHTML = footer;
-    else foot.appendChild(footer);
-    box.appendChild(foot);
-  }
-  back.appendChild(box);
-  host.appendChild(back);
-  const close = () => back.remove();
-  back.addEventListener('click', e => { if (e.target === back) close(); });
-  head.querySelector('[data-close]').addEventListener('click', close);
-  return { close, box, body: bodyEl };
-}
-
-/* ============================================================
-   CHART (canvas line/bar)
-   ============================================================ */
-function drawLineChart(canvas, data, opts = {}) {
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  const W = rect.width || 600, H = opts.height || 240;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.height = H + 'px';
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
-  const pad = { top: 20, right: 12, bottom: 28, left: 40 };
-  const cw = W - pad.left - pad.right;
-  const ch = H - pad.top - pad.bottom;
-  const max = Math.max(...data, 1) * 1.15;
-  const min = 0;
-  const stepX = cw / (data.length - 1);
-
-  const css = getComputedStyle(document.documentElement);
-  const fox = css.getPropertyValue('--fox').trim() || '#FF6B1A';
-  const gray300 = css.getPropertyValue('--gray-300').trim() || '#D1D5DB';
-  const gray500 = css.getPropertyValue('--gray-500').trim() || '#6B7280';
-
-  // Grid
-  ctx.strokeStyle = gray300;
-  ctx.lineWidth = 1;
-  ctx.font = '11px Inter';
-  ctx.fillStyle = gray500;
-  ctx.textAlign = 'right';
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.top + (ch / 4) * i;
-    ctx.beginPath();
-    ctx.moveTo(pad.left, y);
-    ctx.lineTo(W - pad.right, y);
-    ctx.stroke();
-    const val = max - (max - min) * (i / 4);
-    ctx.fillText(fmtShort(val), pad.left - 6, y + 4);
-  }
-
-  // Points
-  const pts = data.map((v, i) => ({
-    x: pad.left + stepX * i,
-    y: pad.top + ch - ((v - min) / (max - min)) * ch
-  }));
-
-  // Area
-  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
-  grad.addColorStop(0, 'rgba(255,107,26,.35)');
-  grad.addColorStop(1, 'rgba(255,107,26,0)');
-  ctx.beginPath();
-  ctx.moveTo(pts[0].x, pad.top + ch);
-  pts.forEach(p => ctx.lineTo(p.x, p.y));
-  ctx.lineTo(pts[pts.length - 1].x, pad.top + ch);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
-  ctx.strokeStyle = fox;
-  ctx.lineWidth = 2.5;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-
-  // Points dots
-  pts.forEach((p, i) => {
-    if (i === pts.length - 1 || i % Math.ceil(data.length / 6) === 0) {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = '#fff';
-      ctx.fill();
-      ctx.strokeStyle = fox;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-  });
-
-  // Labels
-  ctx.fillStyle = gray500;
-  ctx.textAlign = 'center';
-  const labels = opts.labels || [];
-  labels.forEach((lb, i) => {
-    if (i % Math.ceil(labels.length / 6) === 0 || i === labels.length - 1) {
-      ctx.fillText(lb, pad.left + stepX * i, H - 8);
-    }
-  });
-}
-
-function drawBarChart(canvas, data, opts = {}) {
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  const W = rect.width || 400, H = opts.height || 200;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.height = H + 'px';
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
-  const pad = { top: 12, right: 8, bottom: 24, left: 8 };
-  const cw = W - pad.left - pad.right;
-  const ch = H - pad.top - pad.bottom;
-  const max = Math.max(...data, 1);
-  const barW = cw / data.length * 0.6;
-  const gap = cw / data.length;
-  const fox = getComputedStyle(document.documentElement).getPropertyValue('--fox').trim() || '#FF6B1A';
-
-  data.forEach((v, i) => {
-    const h = (v / max) * ch;
-    const x = pad.left + gap * i + (gap - barW) / 2;
-    const y = pad.top + ch - h;
-    const r = Math.min(6, barW / 2);
-    ctx.beginPath();
-    ctx.moveTo(x, y + r);
-    ctx.arcTo(x, y, x + r, y, r);
-    ctx.lineTo(x + barW - r, y);
-    ctx.arcTo(x + barW, y, x + barW, y + r, r);
-    ctx.lineTo(x + barW, y + h);
-    ctx.lineTo(x, y + h);
-    ctx.closePath();
-    ctx.fillStyle = i === data.length - 1 ? fox : 'rgba(255,107,26,.35)';
-    ctx.fill();
-  });
-}
-
-/* ============================================================
-   ROUTER & APP
-   ============================================================ */
-const App = {
-  currentRoute: '/',
-
-  init() {
-    Store.load();
-    Store.seed();
-    window.addEventListener('hashchange', () => this.route());
-    window.addEventListener('resize', debounce(() => {
-      if (this.currentRoute.startsWith('/app')) this.renderDashboardContent();
-    }, 200));
-    this.route();
-  },
-
-  route() {
-    const hash = location.hash.slice(1) || '/';
-    this.currentRoute = hash;
-    const protected_ = hash.startsWith('/app');
-    if (protected_ && !Store.state.user) {
-      location.hash = '/login';
-      return;
-    }
-    if (hash === '/' || hash === '') this.renderLanding();
-    else if (hash === '/login') this.renderAuth('login');
-    else if (hash === '/register') this.renderAuth('register');
-    else if (hash.startsWith('/app')) this.renderDashboard(hash.replace('/app', '') || '/');
-    else this.renderLanding();
-    window.scrollTo(0, 0);
-  },
-
-  navigate(path) { location.hash = path; },
-
-  toggleTheme() {
-    Store.state.theme = Store.state.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = Store.state.theme;
-    Store.save();
-    if (this.currentRoute.startsWith('/app')) {
-      this.renderDashboardContent();
-    }
-  },
-
-  /* ============================================================
-     LANDING PAGE
-     ============================================================ */
-  renderLanding() {
-    const user = Store.state.user;
-    $('#app').innerHTML = `
-    <div class="landing">
-      <header class="top-nav">
-        <div class="top-nav-inner">
-          <a href="#/" class="logo">
-            <span class="logo-mark">${icon('zap', 20)}</span>
-            FoxPay
-          </a>
-          <nav class="nav-links">
-            <a class="nav-link" href="#features">Imkoniyatlar</a>
-            <a class="nav-link" href="#how">Qanday ishlaydi</a>
-            <a class="nav-link" href="#pricing">Narxlar</a>
-          </nav>
-          <div class="nav-actions">
-            <button class="btn btn-ghost btn-icon" data-theme-toggle title="Tema">${icon(Store.state.theme === 'light' ? 'moon' : 'sun', 18)}</button>
-            ${user
-              ? `<a href="#/app" class="btn btn-primary">Dashboard <span style="display:inline">${icon('arrowRight', 16)}</span></a>`
-              : `<a href="#/login" class="btn btn-ghost hide-sm">Kirish</a>
-                 <a href="#/register" class="btn btn-primary">Boshlash</a>`
-            }
-          </div>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div>
-          <div class="hero-eyebrow">${icon('zap', 14)} O'zbekiston uchun yangi to'lov platformasi</div>
-          <h1>To'lovni <span class="grad">bir zumda</span> qabul qiling.</h1>
-          <p class="lead">FoxPay — freelancerlar, onlayn do'konlar va kichik biznes uchun tez, ishonchli va arzon to'lov infratuzilmasi. 1.5% komissiya, 0 so'm boshlang'ich to'lov.</p>
-          <div class="hero-cta">
-            <a href="#/register" class="btn btn-primary btn-lg">Bepul boshlash ${icon('arrowRight', 16)}</a>
-            <a href="#features" class="btn btn-outline btn-lg">Batafsil</a>
-          </div>
-          <div class="hero-stats">
-            <div>
-              <div class="hero-stat-num">12,400+</div>
-              <div class="hero-stat-label">Faol merchant</div>
-            </div>
-            <div>
-              <div class="hero-stat-num">₣ 4.2 mlrd</div>
-              <div class="hero-stat-label">Oylik aylanma</div>
-            </div>
-            <div>
-              <div class="hero-stat-num">99.98%</div>
-              <div class="hero-stat-label">Uptime</div>
-            </div>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-card">
-            <div class="hero-card-head">
-              <div>
-                <div class="text-xs muted">Bugungi tushum</div>
-                <div class="hero-amount">₣ 8,240,000</div>
-              </div>
-              <span class="badge badge-green"><span class="badge-dot"></span>+18.2%</span>
-            </div>
-            <canvas id="heroChart" style="height:120px"></canvas>
-            <div class="hero-mini-list" id="heroMiniList"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="features">
-        <div class="section-head">
-          <div class="section-eyebrow">Imkoniyatlar</div>
-          <h2>Hammasi bitta joyda</h2>
-          <p>To'lov qabul qilishdan tortib, hisobot va API integratsiyasigacha — biznesingiz uchun zarur bo'lgan barcha vositalar.</p>
-        </div>
-        <div class="features-grid">
-          <div class="feature">
-            <div class="feature-icon">${icon('zap', 24)}</div>
-            <h3>Tez to'lov</h3>
-            <p>Uzcard, Humo, Payme, Click — barchasi bir tugmada. O'rtacha tranzaksiya vaqti 1.2 soniya.</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">${icon('shield', 24)}</div>
-            <h3>Xavfsiz</h3>
-            <p>PCI DSS standartlari, 2FA, fraud-monitoring va har bir tranzaksiya uchun audit log.</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">${icon('code', 24)}</div>
-            <h3>Oson integratsiya</h3>
-            <p>REST API, webhook va tayyor SDK. 15 daqiqada to'lovni qabul qilishni boshlang.</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">${icon('file', 24)}</div>
-            <h3>Invoice</h3>
-            <p>Freelancerlar va agentliklar uchun professional hisob-fakturalar va avtomatik eslatmalar.</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">${icon('link', 24)}</div>
-            <h3>Payment Link</h3>
-            <p>Ijtimoiy tarmoq, Telegram yoki email orqali to'lov havolasini ulashing. Darhol to'lov qabul qiling.</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">${icon('trendUp', 24)}</div>
-            <h3>Analitika</h3>
-            <p>Real vaqtdagi dashboard, KPI ko'rsatkichlar va avtomatik hisobotlar.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="how">
-        <div class="section-head">
-          <div class="section-eyebrow">Qanday ishlaydi</div>
-          <h2>3 qadamda boshlang</h2>
-          <p>Ro'yxatdan o'tishdan birinchi to'lovni qabul qilishgacha — 5 daqiqadan ko'p vaqt ketmaydi.</p>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <h3>Ro'yxatdan o'ting</h3>
-            <p>Email va telefon raqamingiz bilan hisob yarating. KYC 2 daqiqada tasdiqlanadi.</p>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <h3>Integratsiya qiling</h3>
-            <p>Payment link yarating yoki API kalitini oling. Kod yozish shart emas.</p>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <h3>To'lov qabul qiling</h3>
-            <p>Mijoz to'laydi, pul 1 kunda kartangizga tushadi. Hammasi shu.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="pricing">
-        <div class="section-head">
-          <div class="section-eyebrow">Narxlar</div>
-          <h2>Halol va shaffof narxlar</h2>
-          <p>Yashirin to'lovlar yo'q. Faqat muvaffaqiyatli tranzaksiyadan komissiya.</p>
-        </div>
-        <div class="pricing-grid">
-          <div class="price-card">
-            <div class="price-name">Start</div>
-            <div class="price-amount">1.8% <span>/ tranzaksiya</span></div>
-            <div class="price-desc">Yangi boshlovchilar va freelancerlar uchun</div>
-            <ul class="price-list">
-              <li class="price-item">${icon('check', 16)} Oylik to'lov yo'q</li>
-              <li class="price-item">${icon('check', 16)} Payment link</li>
-              <li class="price-item">${icon('check', 16)} Invoice (10 ta/oy)</li>
-              <li class="price-item">${icon('check', 16)} Email qo'llab-quvvatlash</li>
-            </ul>
-            <a href="#/register" class="btn btn-outline btn-block">Boshlash</a>
-          </div>
-          <div class="price-card featured">
-            <div class="price-badge">Ommabop</div>
-            <div class="price-name">Business</div>
-            <div class="price-amount">1.5% <span>/ tranzaksiya</span></div>
-            <div class="price-desc">O'sib borayotgan biznes uchun</div>
-            <ul class="price-list">
-              <li class="price-item">${icon('check', 16)} Barcha Start xususiyatlari</li>
-              <li class="price-item">${icon('check', 16)} Cheksiz invoice</li>
-              <li class="price-item">${icon('check', 16)} REST API + Webhook</li>
-              <li class="price-item">${icon('check', 16)} Analitika va hisobotlar</li>
-              <li class="price-item">${icon('check', 16)} Ustuvor qo'llab-quvvatlash</li>
-            </ul>
-            <a href="#/register" class="btn btn-primary btn-block">Boshlash</a>
-          </div>
-          <div class="price-card">
-            <div class="price-name">Enterprise</div>
-            <div class="price-amount">Kelishiladi</div>
-            <div class="price-desc">Yirik kompaniyalar uchun</div>
-            <ul class="price-list">
-              <li class="price-item">${icon('check', 16)} Individual komissiya</li>
-              <li class="price-item">${icon('check', 16)} SLA 99.99%</li>
-              <li class="price-item">${icon('check', 16)} Dedikatsiyalangan menejer</li>
-              <li class="price-item">${icon('check', 16)} On-premise imkoniyat</li>
-            </ul>
-            <a href="#/register" class="btn btn-outline btn-block">Bog'lanish</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta-section">
-        <div class="cta-box">
-          <h2>Bugun birinchi to'lovni qabul qiling</h2>
-          <p>Ro'yxatdan o'tish bepul. Karta talab qilinmaydi. 5 daqiqada boshlang.</p>
-          <a href="#/register" class="btn btn-lg">Bepul boshlash ${icon('arrowRight', 16)}</a>
-        </div>
-      </section>
-
-      <footer class="site-footer">
-        <div class="logo">
-          <span class="logo-mark">${icon('zap', 18)}</span>
-          FoxPay
-        </div>
-        <div class="footer-links">
-          <a href="#features">Imkoniyatlar</a>
-          <a href="#pricing">Narxlar</a>
-          <a href="#/login">Kirish</a>
-          <a href="https://t.me" target="_blank" rel="noopener">Telegram</a>
-        </div>
-        <div class="text-xs muted">© ${new Date().getFullYear()} FoxPay. Barcha huquqlar himoyalangan.</div>
-      </footer>
-    </div>`;
-
-    $('[data-theme-toggle]').addEventListener('click', () => this.toggleTheme());
-
-    // hero chart
-    requestAnimationFrame(() => {
-      const c = $('#heroChart');
-      if (c) drawLineChart(c, [12,18,15,25,22,30,28,35,32,42,38,48], { height: 120, labels: Array.from({length:12},(_,i)=>'') });
-      const mini = $('#heroMiniList');
-      if (mini) {
-        const recent = Store.state.tx.slice(0, 3);
-        recent.forEach(t => {
-          const initials = t.customer.split(' ').map(s => s[0]).join('').slice(0,2);
-          mini.appendChild(el('div', { class: 'hero-mini-item', html: `
-            <div class="hero-mini-avatar">${initials}</div>
-            <div class="grow">
-              <div class="text-sm font-semibold">${escapeHtml(t.customer)}</div>
-              <div class="text-xs muted">${t.method} · ${fmtTime(t.date)}</div>
-            </div>
-            <div class="text-sm font-semibold">${fmtUZS(t.amount)}</div>
-          `}));
-        });
-      }
-    });
-  },
-
-  /* ============================================================
-     AUTH
-     ============================================================ */
-  renderAuth(mode) {
-    const isLogin = mode === 'login';
-    $('#app').innerHTML = `
+const renderAuth = (mode) => {
+  const isLogin = mode === 'login';
+  $('#app').innerHTML = `
     <div class="auth-wrap">
       <div class="auth-side">
-        <a href="#/" class="logo">
-          <span class="logo-mark">${icon('zap', 20)}</span>
-          FoxPay
-        </a>
+        <div>${LogoFull(44)}</div>
         <div>
-          <h2>${isLogin ? 'Xush kelibsiz qaytdingiz.' : "Biznesingizni keyingi bosqichga olib chiqing."}</h2>
-          <p>${isLogin ? "Hisobingizga kiring va to'lovlaringizni boshqaring." : "12,000+ merchant allaqachon FoxPay bilan to'lov qabul qilmoqda."}</p>
+          <h1 class="t-3xl fw9" style="margin-bottom:16px;line-height:1.1">Kelajak to'lov tizimi.<br><span style="color:var(--fox)">Bir zumda.</span></h1>
+          <p class="muted" style="max-width:400px;line-height:1.6">AI-agentlar va B2B uchun mo'ljallangan, yuqori tezlikda ishlaydigan global moliyaviy infratuzilma.</p>
         </div>
-        <div class="auth-side-foot">© ${new Date().getFullYear()} FoxPay · To'lov bir zumda.</div>
+        <div class="t-sm" style="opacity:.6">© 2025 FoxPay Inc.</div>
       </div>
       <div class="auth-main">
         <div class="auth-box">
-          <h1>${isLogin ? 'Kirish' : "Ro'yxatdan o'tish"}</h1>
-          <div class="sub">${isLogin ? 'Hisobingizga kiring' : "Bepul hisob yarating — karta talab qilinmaydi"}</div>
-
+          <h2 class="t-2xl fw8" style="margin-bottom:8px">${isLogin ? 'Xush kelibsiz' : 'Hisob yaratish'}</h2>
+          <p class="muted t-sm" style="margin-bottom:24px">${isLogin ? 'Tizimga kirish uchun ma\'lumotlarni kiriting' : 'Bepul hisob yarating va API oling'}</p>
+          
           <div class="auth-tabs">
             <a href="#/login" class="auth-tab ${isLogin ? 'active' : ''}">Kirish</a>
             <a href="#/register" class="auth-tab ${!isLogin ? 'active' : ''}">Ro'yxatdan o'tish</a>
           </div>
 
-          <form id="authForm" novalidate>
-            ${!isLogin ? `
-              <div class="field">
-                <label>To'liq ism</label>
-                <input class="input" name="name" placeholder="Aziz Karimov" autocomplete="name">
-                <div class="field-error" data-err="name"></div>
-              </div>
-            ` : ''}
-            <div class="field">
-              <label>Email</label>
-              <input class="input" name="email" type="email" placeholder="siz@email.com" autocomplete="email">
-              <div class="field-error" data-err="email"></div>
-            </div>
-            <div class="field">
-              <label>Parol</label>
-              <input class="input" name="password" type="password" placeholder="Kamida 6 belgi" autocomplete="${isLogin ? 'current-password' : 'new-password'}">
-              <div class="field-error" data-err="password"></div>
-            </div>
-            ${!isLogin ? `
-              <div class="field">
-                <label>Kompaniya nomi <span class="muted">(ixtiyoriy)</span></label>
-                <input class="input" name="company" placeholder="Mening do'konim">
-              </div>
-              <label class="flex items-center gap-2 text-sm mb-4" style="cursor:pointer">
-                <input type="checkbox" name="terms">
-                <span>Men <a href="#" style="color:var(--fox)">foydalanish shartlari</a>ga roziman</span>
-              </label>
-            ` : ''}
-            <button class="btn btn-primary btn-block btn-lg" type="submit">
-              ${isLogin ? 'Kirish' : "Ro'yxatdan o'tish"} ${icon('arrowRight', 16)}
-            </button>
+          <form onsubmit="handleAuth(event, '${mode}')">
+            ${!isLogin ? `<div class="field"><label>Ism</label><input class="input" name="name" required placeholder="Aziz Karimov"></div>` : ''}
+            <div class="field"><label>Email</label><input class="input" type="email" name="email" required placeholder="siz@email.com"></div>
+            <div class="field"><label>Parol</label><input class="input" type="password" name="password" required minlength="6" placeholder="Kamida 6 belgi"></div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px">${isLogin ? 'Kirish' : 'Ro\'yxatdan o\'tish'}</button>
           </form>
-
-          <div class="auth-demo">
-            <strong>Demo:</strong> istalgan email va parol (6+ belgi) bilan kirishingiz mumkin
-          </div>
         </div>
       </div>
     </div>`;
+};
 
-    $('#authForm').addEventListener('submit', e => {
-      e.preventDefault();
-      this.handleAuth(mode, new FormData(e.target));
-    });
-  },
+/* ============================================================
+   VIEW: DASHBOARD SHELL (Sidebar & Topbar)
+   ============================================================ */
+const MENU_ITEMS = [
+  { id: '/', label: 'Boshqaruv', icon: 'home' },
+  { id: '/wallet', label: 'Hamyon', icon: 'wallet' },
+  { id: '/p2p', label: 'P2P O\'tkazma', icon: 'send' },
+  { id: '/payments', label: 'To\'lovlar', icon: 'card' },
+  { id: '/links', label: 'Havolalar', icon: 'link' },
+  { id: '/invoices', label: 'Invoyslar', icon: 'file' },
+  { id: '/agents', label: 'AI Agentlar', icon: 'bot' },
+  { id: '/subscriptions', label: 'Obunalar', icon: 'repeat' },
+  { id: '/dev', label: 'Developers', icon: 'code' },
+  { id: '/settings', label: 'Sozlamalar', icon: 'settings' }
+];
 
-  handleAuth(mode, data) {
-    const err = (f, m) => { const e = $(`[data-err="${f}"]`); if (e) e.textContent = m; };
-    ['name','email','password'].forEach(f => err(f, ''));
-    const email = String(data.get('email') || '').trim();
-    const password = String(data.get('password') || '');
-    let ok = true;
-    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err('email', "To'g'ri email kiriting"); ok = false; }
-    if (!password || password.length < 6) { err('password', "Parol kamida 6 belgi"); ok = false; }
-    if (mode === 'register') {
-      const name = String(data.get('name') || '').trim();
-      if (!name || name.length < 2) { err('name', "Ismingizni kiriting"); ok = false; }
-      if (!data.get('terms')) { toast('Shartlarga rozilik bering', 'error'); ok = false; }
-    }
-    if (!ok) return;
+const renderDashboard = (active) => {
+  State.activeView = active;
+  const user = State.user || { name: 'User', email: 'user@mail.com' };
+  const inits = initials(user.name);
+  const pageTitle = MENU_ITEMS.find(m => m.id === active)?.label || 'Dashboard';
 
-    const user = {
-      id: uid('u'),
-      name: mode === 'register' ? String(data.get('name')).trim() : email.split('@')[0],
-      email,
-      company: String(data.get('company') || '').trim() || 'Mening biznesim',
-      apiKey: 'fox_live_' + Math.random().toString(36).slice(2, 22) + Math.random().toString(36).slice(2, 12),
-      joinedAt: new Date().toISOString()
-    };
-    Store.state.user = user;
-    Store.save();
-    toast(mode === 'register' ? "Hisob yaratildi! Xush kelibsiz." : "Xush kelibsiz!", 'success');
-    setTimeout(() => { location.hash = '/app'; }, 300);
-  },
-
-  logout() {
-    Store.state.user = null;
-    Store.save();
-    toast("Chiqdingiz", 'info');
-    location.hash = '/';
-  },
-
-  /* ============================================================
-     DASHBOARD
-     ============================================================ */
-  renderDashboard(sub) {
-    const active = sub || '/';
-    const user = Store.state.user;
-    if (!user) { location.hash = '/login'; return; }
-    const initials = user.name.split(' ').map(s => s[0]).join('').slice(0,2).toUpperCase();
-
-    $('#app').innerHTML = `
+  $('#app').innerHTML = `
     <div class="dash">
-      <div class="sidebar-back" id="sidebarBack"></div>
       <aside class="sidebar" id="sidebar">
-        <a href="#/" class="logo">
-          <span class="logo-mark">${icon('zap', 18)}</span>
-          FoxPay
-        </a>
+        <div style="padding:10px;margin-bottom:20px">${LogoFull(32)}</div>
         <nav class="side-nav">
-          <a href="#/app/" class="side-item ${active === '/' ? 'active' : ''}">${icon('home')} Boshqaruv</a>
-          <a href="#/app/transactions" class="side-item ${active === '/transactions' ? 'active' : ''}">${icon('list')} Tranzaksiyalar</a>
-          <a href="#/app/invoices" class="side-item ${active === '/invoices' ? 'active' : ''}">${icon('file')} Invoice</a>
-          <a href="#/app/links" class="side-item ${active === '/links' ? 'active' : ''}">${icon('link')} Payment Link</a>
-          <a href="#/app/merchants" class="side-item ${active === '/merchants' ? 'active' : ''}">${icon('users')} Merchantlar</a>
-          <div class="side-sep"></div>
-          <a href="#/app/settings" class="side-item ${active === '/settings' ? 'active' : ''}">${icon('settings')} Sozlamalar</a>
+          ${MENU_ITEMS.map(m => `
+            <a href="#${m.id}" class="si ${active === m.id ? 'active' : ''}">
+              ${getIcon(m.icon, 18)} ${m.label}
+            </a>
+          `).join('')}
         </nav>
-        <div class="side-foot">
-          <div class="side-user">
-            <div class="avatar">${initials}</div>
-            <div class="grow" style="min-width:0">
-              <div class="text-sm font-semibold truncate">${escapeHtml(user.name)}</div>
-              <div class="text-xs muted truncate">${escapeHtml(user.email)}</div>
-            </div>
-          </div>
-          <button class="side-item w-full" id="logoutBtn" style="justify-content:flex-start">${icon('logout')} Chiqish</button>
+        <div style="padding-top:16px;border-top:1px solid var(--border)">
+          <button class="si" style="width:100%;color:var(--red)" onclick="logout()">
+            ${getIcon('logout', 18)} Chiqish
+          </button>
         </div>
       </aside>
-
+      
       <main class="main">
         <header class="topbar">
-          <div class="flex items-center gap-3">
-            <button class="btn btn-ghost btn-icon" id="menuBtn" style="display:none">${icon('menu', 20)}</button>
-            <div>
-              <div class="topbar-title" id="pageTitle"></div>
-              <div class="topbar-sub" id="pageSub"></div>
-            </div>
+          <div class="flex ai-c g4">
+            <button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn">${getIcon('menu', 20)}</button>
+            <div class="t-xl fw7">${pageTitle}</div>
           </div>
-          <div class="topbar-actions">
-            <button class="btn btn-ghost btn-icon" data-theme-toggle title="Tema">${icon(Store.state.theme === 'light' ? 'moon' : 'sun', 18)}</button>
-            <button class="btn btn-ghost btn-icon" title="Bildirishnomalar">${icon('bell', 18)}</button>
-            <div class="avatar sm" title="${escapeHtml(user.name)}">${initials}</div>
+          <div class="flex ai-c g4">
+            <button class="btn btn-ghost btn-icon" onclick="toggleTheme()">
+              ${getIcon(document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon', 18)}
+            </button>
+            <div class="avatar sm" style="width:36px;height:36px;border-radius:50%;background:var(--fox);display:grid;place-items:center;font-weight:800;color:#fff">${inits}</div>
           </div>
         </header>
-        <div class="content" id="content"></div>
+        <div class="content" id="view-content"></div>
       </main>
     </div>`;
 
-    $('[data-theme-toggle]').addEventListener('click', () => {
-      this.toggleTheme();
-      $('[data-theme-toggle]').innerHTML = icon(Store.state.theme === 'light' ? 'moon' : 'sun', 18);
-    });
-    $('#logoutBtn').addEventListener('click', () => this.logout());
+  if (window.innerWidth <= 1024) $('#menuBtn').style.display = 'inline-flex';
+  window.onresize = () => { $('#menuBtn').style.display = window.innerWidth <= 1024 ? 'inline-flex' : 'none'; };
 
-    const menuBtn = $('#menuBtn'), sidebar = $('#sidebar'), sbBack = $('#sidebarBack');
-    if (window.innerWidth <= 768) menuBtn.style.display = 'inline-flex';
-    window.addEventListener('resize', () => {
-      menuBtn.style.display = window.innerWidth <= 768 ? 'inline-flex' : 'none';
-    });
-    menuBtn.addEventListener('click', () => { sidebar.classList.add('open'); sbBack.classList.add('open'); });
-    sbBack.addEventListener('click', () => { sidebar.classList.remove('open'); sbBack.classList.remove('open'); });
+  renderView(active);
+};
 
-    this.renderDashboardContent();
-  },
+const toggleSidebar = () => { $('#sidebar').classList.toggle('open'); };
 
-  renderDashboardContent() {
-    const active = this.currentRoute.replace('/app', '') || '/';
-    const content = $('#content');
-    const titles = {
-      '/': ['Boshqaruv paneli', "Bugungi ko'rsatkichlar va so'nggi faoliyat"],
-      '/transactions': ['Tranzaksiyalar', "Barcha to'lovlar tarixi"],
-      '/invoices': ['Invoice', 'Hisob-fakturalar boshqaruvi'],
-      '/links': ['Payment Link', "To'lov havolalari"],
-      '/merchants': ['Merchantlar', "Hamkor do'konlar ro'yxati"],
-      '/settings': ['Sozlamalar', 'Hisob va API sozlamalari']
-    };
-    const [t, s] = titles[active] || titles['/'];
-    $('#pageTitle').textContent = t;
-    $('#pageSub').textContent = s;
+/* ============================================================
+   VIEW ROUTER (Renders specific view)
+   ============================================================ */
+const renderView = async (view) => {
+  const c = $('#view-content');
+  c.innerHTML = '<div class="card"><div class="t-md muted">Yuklanmoqda...</div></div>'; // Loader
 
-    content.innerHTML = '';
-    if (active === '/') this.viewOverview(content);
-    else if (active === '/transactions') this.viewTransactions(content);
-    else if (active === '/invoices') this.viewInvoices(content);
-    else if (active === '/links') this.viewLinks(content);
-    else if (active === '/merchants') this.viewMerchants(content);
-    else if (active === '/settings') this.viewSettings(content);
-  },
-
-  /* ============================================================
-     VIEW: OVERVIEW
-     ============================================================ */
-  viewOverview(root) {
-    const tx = Store.state.tx;
-    const success = tx.filter(t => t.status === 'success');
-    const totalVolume = success.reduce((s, t) => s + t.amount, 0);
-    const totalFees = success.reduce((s, t) => s + t.fee, 0);
-    const pending = tx.filter(t => t.status === 'pending').length;
-    const successRate = tx.length ? Math.round((success.length / tx.length) * 100) : 0;
-
-    root.innerHTML = `
-      <div class="kpi-grid">
-        <div class="kpi">
-          <div class="kpi-head">
-            <div class="kpi-label">Umumiy aylanma</div>
-            <div class="kpi-icon">${icon('wallet', 18)}</div>
-          </div>
-          <div class="kpi-value">${fmtShort(totalVolume)}</div>
-          <div class="kpi-delta up">${icon('arrowUp', 12)} +18.2% <span class="muted">o'tgan oyga nisbatan</span></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-head">
-            <div class="kpi-label">Komissiya</div>
-            <div class="kpi-icon">${icon('trendUp', 18)}</div>
-          </div>
-          <div class="kpi-value">${fmtShort(totalFees)}</div>
-          <div class="kpi-delta up">${icon('arrowUp', 12)} +12.4% <span class="muted">o'tgan oyga nisbatan</span></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-head">
-            <div class="kpi-label">Muvaffaqiyat darajasi</div>
-            <div class="kpi-icon">${icon('check', 18)}</div>
-          </div>
-          <div class="kpi-value">${successRate}%</div>
-          <div class="kpi-delta up">${icon('arrowUp', 12)} +2.1% <span class="muted">o'tgan oyga nisbatan</span></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-head">
-            <div class="kpi-label">Kutilayotgan</div>
-            <div class="kpi-icon">${icon('refresh', 18)}</div>
-          </div>
-          <div class="kpi-value">${pending}</div>
-          <div class="kpi-delta down">${icon('arrowDown', 12)} -3 <span class="muted">o'tgan oyga nisbatan</span></div>
-        </div>
-      </div>
-
-      <div class="charts-grid">
-        <div class="chart-card">
-          <div class="chart-head">
-            <div>
-              <h3>Aylanma dinamikasi</h3>
-              <div class="text-xs muted mt-1">Oxirgi 12 hafta</div>
-            </div>
-            <div class="chart-tabs">
-              <button class="chart-tab active">Hafta</button>
-              <button class="chart-tab">Oy</button>
-              <button class="chart-tab">Yil</button>
-            </div>
-          </div>
-          <canvas id="revenueChart"></canvas>
-        </div>
-        <div class="chart-card">
-          <div class="chart-head">
-            <div>
-              <h3>To'lov usullari</h3>
-              <div class="text-xs muted mt-1">Taqsimot</div>
-            </div>
-          </div>
-          <div class="flex-col gap-3" id="methodDist"></div>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <div class="table-head">
-          <h3>So'nggi tranzaksiyalar</h3>
-          <a href="#/app/transactions" class="btn btn-outline btn-sm">Barchasi ${icon('arrowRight', 14)}</a>
-        </div>
-        <div id="recentTx"></div>
-      </div>
-    `;
-
-    // Revenue chart
-    requestAnimationFrame(() => {
-      const c = $('#revenueChart');
-      if (c) drawLineChart(c, [120,180,150,220,200,280,260,320,300,380,350,420], {
-        height: 260,
-        labels: ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','H11','H12']
-      });
-    });
-
-    // Method distribution
-    const methods = {};
-    tx.forEach(t => { methods[t.method] = (methods[t.method] || 0) + 1; });
-    const total = tx.length || 1;
-    const dist = $('#methodDist');
-    const colors = { 'Uzcard': 'var(--fox)', 'Humo': 'var(--blue)', 'Payme': 'var(--green)', 'Click': 'var(--amber)', "Bank o'tkazma": 'var(--red)' };
-    Object.entries(methods).sort((a,b) => b[1] - a[1]).forEach(([m, count]) => {
-      const pct = Math.round((count / total) * 100);
-      dist.appendChild(el('div', { html: `
-        <div class="flex justify-between text-sm mb-2">
-          <span class="font-semibold">${escapeHtml(m)}</span>
-          <span class="muted">${pct}% · ${count}</span>
-        </div>
-        <div style="height:8px;border-radius:999px;background:var(--gray-200);overflow:hidden">
-          <div style="width:${pct}%;height:100%;background:${colors[m] || 'var(--fox)'};border-radius:999px;transition:width .6s"></div>
-        </div>
-      `}));
-    });
-
-    // Recent tx
-    const recent = tx.slice(0, 6);
-    $('#recentTx').innerHTML = this.txTable(recent);
-  },
-
-  /* ============================================================
-     TRANSACTIONS TABLE HELPER
-     ============================================================ */
-  txTable(rows) {
-    if (!rows.length) return this.emptyState('list', "Tranzaksiyalar yo'q", "Hozircha birorta to'lov qabul qilinmagan.");
-    const statusBadge = s => ({
-      success: `<span class="badge badge-green"><span class="badge-dot"></span>Muvaffaqiyatli</span>`,
-      pending: `<span class="badge badge-amber"><span class="badge-dot"></span>Kutilmoqda</span>`,
-      failed: `<span class="badge badge-red"><span class="badge-dot"></span>Xato</span>`,
-      refunded: `<span class="badge badge-gray"><span class="badge-dot"></span>Qaytarilgan</span>`
-    }[s] || s);
-    const rowsHtml = rows.map(t => {
-      const initials = t.customer.split(' ').map(s => s[0]).join('').slice(0,2);
-      return `<tr>
-        <td><div class="td-user"><div class="avatar sm">${initials}</div><div class="td-user-info"><div class="td-name">${escapeHtml(t.customer)}</div><div class="td-sub">${escapeHtml(t.email)}</div></div></div></td>
-        <td class="mono text-xs muted">${t.id}</td>
-        <td><span class="badge badge-gray">${escapeHtml(t.method)}</span></td>
-        <td class="font-semibold">${fmtUZS(t.amount)}</td>
-        <td>${statusBadge(t.status)}</td>
-        <td class="text-sm muted">${fmtDateTime(t.date)}</td>
-      </tr>`;
-    }).join('');
-    return `<div style="overflow-x:auto"><table>
-      <thead><tr><th>Mijoz</th><th>ID</th><th>Usul</th><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead>
-      <tbody>${rowsHtml}</tbody>
-    </table></div>`;
-  },
-
-  emptyState(iconName, title, sub) {
-    return `<div class="table-empty">
-      ${icon(iconName, 40)}
-      <h4>${escapeHtml(title)}</h4>
-      <p>${escapeHtml(sub)}</p>
-    </div>`;
-  },
-
-  /* ============================================================
-     VIEW: TRANSACTIONS
-     ============================================================ */
-  viewTransactions(root) {
-    const state = { q: '', status: 'all', method: 'all', page: 1, per: 10 };
-
-    const render = () => {
-      let list = Store.state.tx.slice();
-      if (state.q) {
-        const q = state.q.toLowerCase();
-        list = list.filter(t => t.customer.toLowerCase().includes(q) || t.id.toLowerCase().includes(q) || t.email.toLowerCase().includes(q));
-      }
-      if (state.status !== 'all') list = list.filter(t => t.status === state.status);
-      if (state.method !== 'all') list = list.filter(t => t.method === state.method);
-      const total = list.length;
-      const pages = Math.max(1, Math.ceil(total / state.per));
-      if (state.page > pages) state.page = pages;
-      const slice = list.slice((state.page-1)*state.per, state.page*state.per);
-
-      root.innerHTML = `
-        <div class="table-wrap">
-          <div class="table-head">
-            <h3>Barcha tranzaksiyalar <span class="muted text-sm font-medium">(${total})</span></h3>
-            <div class="table-filters">
-              <div class="input-group" style="width:220px">
-                <span class="ig-icon">${icon('search', 16)}</span>
-                <input class="input" placeholder="Qidirish..." id="txSearch" value="${escapeHtml(state.q)}">
-              </div>
-              <select class="select" id="txStatus" style="width:150px">
-                <option value="all">Barcha holat</option>
-                <option value="success"${state.status==='success'?' selected':''}>Muvaffaqiyatli</option>
-                <option value="pending"${state.status==='pending'?' selected':''}>Kutilmoqda</option>
-                <option value="failed"${state.status==='failed'?' selected':''}>Xato</option>
-                <option value="refunded"${state.status==='refunded'?' selected':''}>Qaytarilgan</option>
-              </select>
-              <select class="select" id="txMethod" style="width:150px">
-                <option value="all">Barcha usul</option>
-                ${['Uzcard','Humo','Payme','Click',"Bank o'tkazma"].map(m => `<option value="${m}"${state.method===m?' selected':''}>${m}</option>`).join('')}
-              </select>
-            </div>
-          </div>
-          <div id="txBody">${this.txTable(slice)}</div>
-          <div class="pagination">
-            <div>Jami ${total} dan ${Math.min((state.page-1)*state.per+1, total)}-${Math.min(state.page*state.per, total)}</div>
-            <div class="flex gap-2">
-              <button class="btn btn-outline btn-sm" id="prevPg" ${state.page===1?'disabled':''}>Oldingi</button>
-              <span class="btn btn-ghost btn-sm" style="pointer-events:none">${state.page} / ${pages}</span>
-              <button class="btn btn-outline btn-sm" id="nextPg" ${state.page===pages?'disabled':''}>Keyingi</button>
-            </div>
-          </div>
-        </div>`;
-
-      const doUpdate = () => {
-        render();
-        const s = $('#txSearch'); if (s) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); }
-      };
-      $('#txSearch').addEventListener('input', debounce(e => { state.q = e.target.value; state.page = 1; render(); }, 200));
-      $('#txStatus').addEventListener('change', e => { state.status = e.target.value; state.page = 1; render(); });
-      $('#txMethod').addEventListener('change', e => { state.method = e.target.value; state.page = 1; render(); });
-      const prev = $('#prevPg'), next = $('#nextPg');
-      if (prev) prev.addEventListener('click', () => { state.page--; render(); });
-      if (next) next.addEventListener('click', () => { state.page++; render(); });
-    };
-    render();
-  },
-
-  /* ============================================================
-     VIEW: INVOICES
-     ============================================================ */
-  viewInvoices(root) {
-    const list = Store.state.invoices;
-    const statusBadge = s => ({
-      paid: `<span class="badge badge-green"><span class="badge-dot"></span>To'langan</span>`,
-      sent: `<span class="badge badge-blue"><span class="badge-dot"></span>Yuborilgan</span>`,
-      draft: `<span class="badge badge-gray"><span class="badge-dot"></span>Qoralama</span>`,
-      overdue: `<span class="badge badge-red"><span class="badge-dot"></span>Muddati o'tgan</span>`
-    }[s] || s);
-
-    root.innerHTML = `
-      <div class="table-wrap">
-        <div class="table-head">
-          <h3>Invoice'lar <span class="muted text-sm font-medium">(${list.length})</span></h3>
-          <button class="btn btn-primary btn-sm" id="newInv">${icon('plus', 16)} Yangi invoice</button>
-        </div>
-        <div id="invBody"></div>
-      </div>`;
-
-    const draw = () => {
-      const body = $('#invBody');
-      if (!list.length) { body.innerHTML = this.emptyState('file', "Invoice yo'q", "Yangi invoice yarating"); return; }
-      body.innerHTML = `<div style="overflow-x:auto"><table>
-        <thead><tr><th>ID</th><th>Mijoz</th><th>Summa</th><th>Berilgan</th><th>Muddat</th><th>Holat</th><th></th></tr></thead>
-        <tbody>${list.map((inv, i) => `<tr>
-          <td class="mono text-xs">${inv.id}</td>
-          <td><div class="td-name">${escapeHtml(inv.customer)}</div><div class="td-sub">${escapeHtml(inv.email)}</div></td>
-          <td class="font-semibold">${fmtUZS(inv.amount)}</td>
-          <td class="text-sm muted">${fmtDate(inv.issueDate)}</td>
-          <td class="text-sm muted">${fmtDate(inv.dueDate)}</td>
-          <td>${statusBadge(inv.status)}</td>
-          <td><button class="btn btn-ghost btn-xs" data-del="${i}" title="O'chirish">${icon('trash', 14)}</button></td>
-        </tr>`).join('')}</tbody>
-      </table></div>`;
-      $$('[data-del]').forEach(b => b.addEventListener('click', e => {
-        const idx = +e.currentTarget.dataset.del;
-        if (!confirm('Invoice o\'chirilsinmi?')) return;
-        list.splice(idx, 1);
-        Store.save();
-        toast("O'chirildi", 'success');
-        draw();
-      }));
-    };
-    draw();
-
-    $('#newInv').addEventListener('click', () => {
-      const body = el('div', { html: `
-        <div class="field"><label>Mijoz ismi</label><input class="input" id="invName" placeholder="Aziz Karimov"></div>
-        <div class="field"><label>Email</label><input class="input" id="invEmail" type="email" placeholder="client@mail.uz"></div>
-        <div class="field"><label>Summa (so'm)</label><input class="input" id="invAmount" type="number" placeholder="1000000"></div>
-        <div class="field"><label>Muddat</label><input class="input" id="invDue" type="date"></div>
-        <div class="field"><label>Izoh</label><textarea class="textarea" id="invNote" placeholder="Xizmatlar uchun to'lov"></textarea></div>
-      `});
-      const m = openModal({
-        title: "Yangi invoice",
-        body,
-        footer: (() => {
-          const f = el('div', { class: 'flex gap-2' });
-          f.appendChild(el('button', { class: 'btn btn-outline', onclick: () => m.close() }, 'Bekor qilish'));
-          const submit = el('button', { class: 'btn btn-primary', onclick: () => {
-            const name = $('#invName').value.trim();
-            const email = $('#invEmail').value.trim();
-            const amount = +$('#invAmount').value;
-            if (!name || !email || !amount) { toast("Barcha maydonlarni to'ldiring", 'error'); return; }
-            list.unshift({
-              id: 'INV-' + (2000 + list.length + Math.floor(Math.random()*100)),
-              customer: name, email, amount,
-              status: 'sent',
-              issueDate: new Date().toISOString(),
-              dueDate: $('#invDue').value ? new Date($('#invDue').value).toISOString() : new Date(Date.now()+14*86400000).toISOString(),
-              note: $('#invNote').value.trim() || "Xizmatlar uchun to'lov"
-            });
-            Store.save();
-            m.close();
-            toast("Invoice yaratildi", 'success');
-            draw();
-          }}, 'Yaratish');
-          f.appendChild(submit);
-          return f;
-        })()
-      });
-    });
-  },
-
-  /* ============================================================
-     VIEW: PAYMENT LINKS
-     ============================================================ */
-  viewLinks(root) {
-    const list = Store.state.links;
-
-    root.innerHTML = `
-      <div class="table-wrap">
-        <div class="table-head">
-          <h3>Payment Link'lar <span class="muted text-sm font-medium">(${list.length})</span></h3>
-          <button class="btn btn-primary btn-sm" id="newLink">${icon('plus', 16)} Yangi link</button>
-        </div>
-        <div id="linkBody"></div>
-      </div>`;
-
-    const draw = () => {
-      const body = $('#linkBody');
-      if (!list.length) { body.innerHTML = this.emptyState('link', "Link yo'q", "Yangi payment link yarating"); return; }
-      body.innerHTML = `<div style="overflow-x:auto"><table>
-        <thead><tr><th>Nomi</th><th>Havola</th><th>Summa</th><th>Bosish</th><th>To'lov</th><th>Holat</th><th></th></tr></thead>
-        <tbody>${list.map((l, i) => `<tr>
-          <td class="td-name">${escapeHtml(l.title)}</td>
-          <td class="mono text-xs muted">/p/${escapeHtml(l.slug)}</td>
-          <td class="font-semibold">${fmtUZS(l.amount)}</td>
-          <td class="text-sm">${l.clicks}</td>
-          <td class="text-sm">${l.payments}</td>
-          <td>${l.active ? `<span class="badge badge-green"><span class="badge-dot"></span>Faol</span>` : `<span class="badge badge-gray"><span class="badge-dot"></span>O'chirilgan</span>`}</td>
-          <td>
-            <div class="flex gap-1">
-              <button class="btn btn-ghost btn-xs" data-copy="${i}" title="Nusxalash">${icon('copy', 14)}</button>
-              <button class="btn btn-ghost btn-xs" data-toggle="${i}" title="Faollik">${icon('eye', 14)}</button>
-              <button class="btn btn-ghost btn-xs" data-del="${i}" title="O'chirish">${icon('trash', 14)}</button>
-            </div>
-          </td>
-        </tr>`).join('')}</tbody>
-      </table></div>`;
-      $$('[data-copy]').forEach(b => b.addEventListener('click', e => {
-        const url = location.origin + location.pathname + '#/p/' + list[+e.currentTarget.dataset.copy].slug;
-        navigator.clipboard?.writeText(url);
-        toast("Havola nusxalandi", 'success');
-      }));
-      $$('[data-toggle]').forEach(b => b.addEventListener('click', e => {
-        const item = list[+e.currentTarget.dataset.toggle];
-        item.active = !item.active; Store.save(); draw();
-      }));
-      $$('[data-del]').forEach(b => b.addEventListener('click', e => {
-        if (!confirm('Link o\'chirilsinmi?')) return;
-        list.splice(+e.currentTarget.dataset.del, 1);
-        Store.save(); toast("O'chirildi", 'success'); draw();
-      }));
-    };
-    draw();
-
-    $('#newLink').addEventListener('click', () => {
-      const body = el('div', { html: `
-        <div class="field"><label>Nomi</label><input class="input" id="lnkTitle" placeholder="Konsultatsiya"></div>
-        <div class="field"><label>Summa (so'm)</label><input class="input" id="lnkAmount" type="number" placeholder="500000"></div>
-      `});
-      const m = openModal({
-        title: "Yangi payment link",
-        body,
-        footer: (() => {
-          const f = el('div', { class: 'flex gap-2' });
-          f.appendChild(el('button', { class: 'btn btn-outline', onclick: () => m.close() }, 'Bekor qilish'));
-          f.appendChild(el('button', { class: 'btn btn-primary', onclick: () => {
-            const title = $('#lnkTitle').value.trim();
-            const amount = +$('#lnkAmount').value;
-            if (!title || !amount) { toast("Maydonlarni to'ldiring", 'error'); return; }
-            list.unshift({
-              id: 'PL-' + (3000 + list.length + Math.floor(Math.random()*100)),
-              title, amount,
-              slug: 'fox-' + Math.random().toString(36).slice(2, 8),
-              clicks: 0, payments: 0, active: true,
-              createdAt: new Date().toISOString()
-            });
-            Store.save(); m.close(); toast("Link yaratildi", 'success'); draw();
-          }}, 'Yaratish'));
-          return f;
-        })()
-      });
-    });
-  },
-
-  /* ============================================================
-     VIEW: MERCHANTS
-     ============================================================ */
-  viewMerchants(root) {
-    const list = Store.state.merchants;
-    root.innerHTML = `
-      <div class="table-wrap">
-        <div class="table-head">
-          <h3>Merchantlar <span class="muted text-sm font-medium">(${list.length})</span></h3>
-        </div>
-        <div style="overflow-x:auto"><table>
-          <thead><tr><th>Do'kon</th><th>Kategoriya</th><th>Hajm</th><th>Qo'shilgan</th><th>Holat</th></tr></thead>
-          <tbody>${list.map(m => `<tr>
-            <td><div class="td-user"><div class="avatar sm">${m.name.split(' ').map(s=>s[0]).join('').slice(0,2)}</div><div class="td-name">${escapeHtml(m.name)}</div></div></td>
-            <td><span class="badge badge-gray">${escapeHtml(m.category)}</span></td>
-            <td class="font-semibold">${fmtUZS(m.volume)}</td>
-            <td class="text-sm muted">${fmtDate(m.joined)}</td>
-            <td>${m.status === 'active' ? `<span class="badge badge-green"><span class="badge-dot"></span>Faol</span>` : `<span class="badge badge-amber"><span class="badge-dot"></span>Tekshiruvda</span>`}</td>
-          </tr>`).join('')}</tbody>
-        </table></div>
-      </div>`;
-  },
-
-  /* ============================================================
-     VIEW: SETTINGS
-     ============================================================ */
-  viewSettings(root) {
-    const u = Store.state.user;
-    root.innerHTML = `
-      <div class="settings-grid">
-        <div class="card">
-          <h3 class="card-title mb-4">Profil</h3>
-          <div class="field"><label>To'liq ism</label><input class="input" id="sName" value="${escapeHtml(u.name)}"></div>
-          <div class="field"><label>Email</label><input class="input" id="sEmail" value="${escapeHtml(u.email)}"></div>
-          <div class="field"><label>Kompaniya</label><input class="input" id="sCompany" value="${escapeHtml(u.company)}"></div>
-          <button class="btn btn-primary btn-sm" id="saveProfile">Saqlash</button>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title mb-4">Ko'rinish</h3>
-          <div class="setting-row">
-            <div class="setting-info">
-              <h4>Qorong'i rejim</h4>
-              <p>Interfeys mavzusini almashtirish</p>
-            </div>
-            <div class="switch ${Store.state.theme === 'dark' ? 'on' : ''}" id="themeSwitch"></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <h4>Email bildirishnomalar</h4>
-              <p>Yangi to'lovlar haqida xabar</p>
-            </div>
-            <div class="switch on" data-toggle></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <h4>Xavfsizlik 2FA</h4>
-              <p>Ikki bosqichli autentifikatsiya</p>
-            </div>
-            <div class="switch" data-toggle></div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:1/-1">
-          <h3 class="card-title mb-2">API kalit</h3>
-          <p class="card-sub mb-4">Bu kalitni hech kim bilan bo'lishmang. Faqat server tomonida ishlatilsin.</p>
-          <div class="code-block mb-3">
-            <span class="mono" id="apiKeyText">${escapeHtml(u.apiKey)}</span>
-            <button class="btn btn-ghost btn-icon" id="copyKey" style="color:#fff">${icon('copy', 16)}</button>
-          </div>
-          <button class="btn btn-outline btn-sm" id="regenKey">${icon('refresh', 14)} Qayta yaratish</button>
-        </div>
-
-        <div class="card" style="grid-column:1/-1">
-          <h3 class="card-title mb-2">Xavfli zona</h3>
-          <p class="card-sub mb-4">Barcha ma'lumotlarni o'chirish va hisobni tiklash. Bu amalni qaytarib bo'lmaydi.</p>
-          <button class="btn btn-danger btn-sm" id="resetAll">Barcha ma'lumotni tozalash</button>
-        </div>
-      </div>`;
-
-    $('#saveProfile').addEventListener('click', () => {
-      Store.state.user.name = $('#sName').value.trim() || Store.state.user.name;
-      Store.state.user.email = $('#sEmail').value.trim() || Store.state.user.email;
-      Store.state.user.company = $('#sCompany').value.trim() || Store.state.user.company;
-      Store.save();
-      toast("Saqlandi", 'success');
-      // refresh topbar avatar via re-render
-      setTimeout(() => { this.renderDashboardContent(); }, 200);
-    });
-
-    $('#themeSwitch').addEventListener('click', () => this.toggleTheme());
-
-    $('#copyKey').addEventListener('click', () => {
-      navigator.clipboard?.writeText(Store.state.user.apiKey);
-      toast("API kalit nusxalandi", 'success');
-    });
-
-    $('#regenKey').addEventListener('click', () => {
-      if (!confirm("Yangi API kalit yaratilsinmi? Eski kalit ishlamaydi.")) return;
-      Store.state.user.apiKey = 'fox_live_' + Math.random().toString(36).slice(2, 22) + Math.random().toString(36).slice(2, 12);
-      Store.save();
-      $('#apiKeyText').textContent = Store.state.user.apiKey;
-      toast("Yangi kalit yaratildi", 'success');
-    });
-
-    $('#resetAll').addEventListener('click', () => {
-      if (!confirm("Barcha ma'lumotlar o'chirilsinmi? Bu amalni qaytarib bo'lmaydi.")) return;
-      if (!confirm("Rostdan ham o'chirilsinmi?")) return;
-      Store.reset();
-    });
+  try {
+    switch (view) {
+      case '/': await viewOverview(c); break;
+      case '/wallet': await viewWallet(c); break;
+      case '/p2p': await viewP2P(c); break;
+      case '/payments': await viewPayments(c); break;
+      case '/links': viewLinks(c); break;
+      case '/invoices': viewInvoices(c); break;
+      case '/agents': viewAgents(c); break;
+      case '/subscriptions': viewSubscriptions(c); break;
+      case '/dev': await viewDev(c); break;
+      case '/settings': await viewSettings(c); break;
+      default: c.innerHTML = '<div class="card">Sahifa topilmadi</div>';
+    }
+  } catch (e) {
+    c.innerHTML = `<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Xatolik</div><div class="t-sm muted mt2">${escapeHTML(e.message)}</div></div>`;
   }
 };
 
 /* ============================================================
-   BOOT
+   VIEW: OVERVIEW (Boshqaruv)
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => App.init());
+const viewOverview = async (c) => {
+  const [wallet, transfers, intents] = await Promise.all([
+    api.get('/api/wallet').catch(() => ({ balance_tiyin: 0 })),
+    api.get('/api/p2p/transfers?limit=5').catch(() => []),
+    api.get('/api/pay/intents').catch(() => [])
+  ]);
+
+  State.wallet = wallet; State.transfers = transfers; State.intents = intents;
+  const sent = transfers.filter(t => t.from_user_id === State.user.id);
+  const totalSent = sent.reduce((s, t) => s + t.amount_tiyin, 0);
+
+  c.innerHTML = `
+    <div class="wallet-banner">
+      <div class="t-sm" style="opacity:.8">Umumiy Balans</div>
+      <div class="wallet-amount">${formatUZS(wallet.balance_tiyin)}</div>
+      <div class="wallet-actions">
+        <a href="#/wallet" class="btn">${getIcon('plus', 14)} To'ldirish</a>
+        <a href="#/p2p" class="btn">${getIcon('send', 14)} Yuborish</a>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-l">Yuborilgan</div><div class="kpi-v">${formatUZS(totalSent)}</div></div>
+      <div class="kpi"><div class="kpi-l">Komissiya</div><div class="kpi-v" style="color:var(--fox)">${formatUZS(totalSent * 0.015)}</div></div>
+      <div class="kpi"><div class="kpi-l">Tranzaksiyalar</div><div class="kpi-v" style="color:var(--green)">${transfers.length}</div></div>
+      <div class="kpi"><div class="kpi-l">Intentlar</div><div class="kpi-v" style="color:var(--cyan)">${intents.length}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="flex jc-b ai-c mb4"><h3 class="t-lg fw7">So'nggi Faoliyat</h3><a href="#/p2p" class="btn btn-outline btn-sm">Barchasi</a></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tur</th><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead>
+          <tbody>
+            ${transfers.length ? transfers.map(t => `
+              <tr>
+                <td class="fw6">P2P O'tkazma</td>
+                <td style="color:${t.to_user_id === State.user.id ? 'var(--green)' : 'var(--text)'}">${t.to_user_id === State.user.id ? '+' : '-'}${formatUZS(t.amount_tiyin)}</td>
+                <td><span class="badge b-green">${t.status}</span></td>
+                <td class="muted t-sm">${formatDate(t.created_at)}</td>
+              </tr>
+            `).join('') : '<tr><td colspan="4" class="text-c muted">Ma\'lumot yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+};
+
+/* ============================================================
+   VIEW: WALLET (Hamyon)
+   ============================================================ */
+const viewWallet = async (c) => {
+  const [wallet, ledger] = await Promise.all([
+    api.get('/api/wallet'),
+    api.get('/api/wallet/ledger?limit=50')
+  ]);
+  State.wallet = wallet; State.ledger = ledger;
+
+  c.innerHTML = `
+    <div class="wallet-banner">
+      <div class="t-sm" style="opacity:.8">Joriy Balans</div>
+      <div class="wallet-amount">${formatUZS(wallet.balance_tiyin)}</div>
+      <div class="wallet-actions">
+        <button class="btn" onclick="fundDemo(100000)">+ 1,000 so'm</button>
+        <button class="btn" onclick="fundDemo(1000000)">+ 10,000 so'm</button>
+        <button class="btn" onclick="fundDemo(10000000)">+ 100,000 so'm</button>
+      </div>
+    </div>
+
+    <div class="grid-2 mb4">
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Balansni To'ldirish</h3>
+        <div class="field"><label>Summa (so'm)</label><input type="number" class="input" id="depositAmt" placeholder="100000"></div>
+        <button class="btn btn-primary btn-block" onclick="handleDeposit()">To'ldirish</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Karta Ulash</h3>
+        <p class="t-sm muted mb4">Uzcard, Humo, Visa, Mastercard</p>
+        <button class="btn btn-outline btn-block" onclick="toast('Karta ulash tez orada!')">+ Yangi Karta</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="t-lg fw7 mb4">Ledger Yozuvlari</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tur</th><th>Summa</th><th>Manba</th><th>Vaqt</th></tr></thead>
+          <tbody>
+            ${ledger.length ? ledger.map(r => `
+              <tr>
+                <td><span class="badge ${r.direction === 'credit' ? 'b-green' : 'b-red'}">${r.direction === 'credit' ? 'Kirim' : 'Chiqim'}</span></td>
+                <td class="fw6" style="color:${r.direction === 'credit' ? 'var(--green)' : 'var(--red)'}">${r.direction === 'credit' ? '+' : '-'}${formatUZS(r.amount_tiyin)}</td>
+                <td class="muted t-sm">${r.ref_type || '—'}</td>
+                <td class="muted t-sm">${formatDate(r.created_at)}</td>
+              </tr>
+            `).join('') : '<tr><td colspan="4" class="text-c muted">Yozuvlar yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+};
+
+const fundDemo = async (amount) => {
+  try {
+    await api.post('/api/dev/fund', { amount_tiyin: amount });
+    toast('Balans to\'ldirildi!');
+    renderView('/wallet');
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+const handleDeposit = () => {
+  const amt = parseFloat($('#depositAmt').value);
+  if (!amt || amt < 100) return toast('Kamida 100 so\'m kiriting', 'error');
+  fundDemo(amt * 100);
+};
+
+/* ============================================================
+   VIEW: P2P (O'tkazmalar)
+   ============================================================ */
+const viewP2P = async (c) => {
+  const list = await api.get('/api/p2p/transfers').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Pul Yuborish</h3>
+        <form onsubmit="handleP2P(event)">
+          <div class="field"><label>Qabul qiluvchi Email</label><input class="input" name="email" required placeholder="friend@mail.uz"></div>
+          <div class="field"><label>Summa (so'm)</label><input class="input" type="number" name="amount" required placeholder="50000"></div>
+          <div class="field"><label>Izoh</label><input class="input" name="note" placeholder="Tushlik uchun"></div>
+          <button type="submit" class="btn btn-primary btn-block">Yuborish</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">O'tkazmalar Tarixi</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead>
+            <tbody>
+              ${list.length ? list.map(t => `
+                <tr>
+                  <td class="fw6">${formatUZS(t.amount_tiyin)}</td>
+                  <td><span class="badge ${t.status === 'succeeded' ? 'b-green' : 'b-amber'}">${t.status}</span></td>
+                  <td class="muted t-sm">${formatDate(t.created_at)}</td>
+                </tr>
+              `).join('') : '<tr><td colspan="3" class="text-c muted">Tranzaksiyalar yo\'q</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+};
+
+const handleP2P = async (e) => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  const btn = e.target.querySelector('button');
+  btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+
+  try {
+    await api.post('/api/p2p/transfers', {
+      to_email: form.get('email'),
+      amount_tiyin: parseFloat(form.get('amount')) * 100,
+      note: form.get('note')
+    });
+    toast('O\'tkazma muvaffaqiyatli!');
+    renderView('/p2p');
+  } catch (err) {
+    toast(err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Yuborish';
+  }
+};
+
+/* ============================================================
+   VIEW: PAYMENTS (To'lov Intentlari)
+   ============================================================ */
+const viewPayments = async (c) => {
+  const intents = await api.get('/api/pay/intents').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Payment Intent Yaratish</h3>
+        <form onsubmit="handleIntent(event)">
+          <div class="field"><label>Summa (so'm)</label><input class="input" type="number" name="amount" required placeholder="100000"></div>
+          <div class="field"><label>Izoh</label><input class="input" name="desc" placeholder="Kurs to'lovi"></div>
+          <div class="field"><label>Mijoz Email</label><input class="input" type="email" name="email" placeholder="client@mail.uz"></div>
+          <button type="submit" class="btn btn-primary btn-block">Yaratish</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Intentlar</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Summa</th><th>Holat</th><th>Amal</th></tr></thead>
+            <tbody>
+              ${intents.length ? intents.map(i => `
+                <tr>
+                  <td class="fw6">${formatUZS(i.amount_tiyin)}</td>
+                  <td><span class="badge ${i.status === 'succeeded' ? 'b-green' : 'b-amber'}">${i.status}</span></td>
+                  <td>${i.status === 'requires_payment' ? `<button class="btn btn-primary btn-sm" onclick="confirmIntent('${i.intent_id}')">Tasdiqlash</button>` : '—'}</td>
+                </tr>
+              `).join('') : '<tr><td colspan="3" class="text-c muted">Intentlar yo\'q</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+};
+
+const handleIntent = async (e) => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  try {
+    await api.post('/api/pay/intents', {
+      amount_tiyin: parseFloat(form.get('amount')) * 100,
+      description: form.get('desc'),
+      customer_email: form.get('email')
+    });
+    toast('Intent yaratildi!');
+    renderView('/payments');
+  } catch (err) { toast(err.message, 'error'); }
+};
+
+const confirmIntent = async (id) => {
+  try {
+    await api.post(`/api/pay/intents/${id}/confirm`);
+    toast('To\'lov tasdiqlandi!');
+    renderView('/payments');
+  } catch (err) { toast(err.message, 'error'); }
+};
+
+/* ============================================================
+   VIEW: LINKS & INVOICES (Static for now)
+   ============================================================ */
+const viewLinks = (c) => {
+  c.innerHTML = `
+    <div class="card text-c" style="padding:60px 20px">
+      <div class="t-3xl mb4">🔗</div>
+      <h3 class="t-xl fw7 mb2">To'lov Havolalari</h3>
+      <p class="muted mb4">Tez orada ushbu bo'lim orqali mijozlarga maxsus havolalar yuborishingiz mumkin bo'ladi.</p>
+      <button class="btn btn-primary" onclick="toast('Tez orada!')">Kutilmoqda</button>
+    </div>`;
+};
+
+const viewInvoices = (c) => {
+  c.innerHTML = `
+    <div class="card text-c" style="padding:60px 20px">
+      <div class="t-3xl mb4">📄</div>
+      <h3 class="t-xl fw7 mb2">Invoyslar</h3>
+      <p class="muted mb4">Professional hisob-fakturalar yaratish moduli ustida ishlanmoqda.</p>
+      <button class="btn btn-outline" onclick="toast('Tez orada!')">Kutilmoqda</button>
+    </div>`;
+};
+
+/* ============================================================
+   VIEW: AI AGENTS
+   ============================================================ */
+const viewAgents = (c) => {
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Agent API Kaliti Yaratish</h3>
+        <p class="t-sm muted mb4">AI agentlar uchun maxsus kalit. Sub-cent billing avtomatik ishlaydi.</p>
+        <div class="field"><label>Agent Nomi</label><input class="input" id="agentName" placeholder="ChatGPT-Bot-1"></div>
+        <button class="btn btn-primary btn-block" onclick="generateAgentKey()">Kalit Yaratish</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Metered Billing</h3>
+        <div class="t-3xl fw9" style="color:var(--cyan)">$0.0042</div>
+        <p class="muted t-sm mt2">Oxirgi 24 soatda ishlatilgan tokenlar uchun yechilgan to'lov.</p>
+      </div>
+    </div>`;
+};
+
+const generateAgentKey = () => {
+  const name = $('#agentName').value;
+  if (!name) return toast('Agent nomini kiriting', 'error');
+  const mockKey = 'agent_live_' + Math.random().toString(36).slice(2, 20);
+  openModal('Agent Kaliti Yaratildi', `
+    <p class="t-sm muted mb4">Bu kalitni nusxalab saqlang. U boshqa ko'rinmaydi!</p>
+    <div class="input mono" style="background:var(--bg);padding:12px">${mockKey}</div>
+  `, `<button class="btn btn-primary" onclick="closeModal()">Tushundim</button>`);
+};
+
+/* ============================================================
+   VIEW: SUBSCRIPTIONS (Obunalar)
+   ============================================================ */
+const viewSubscriptions = (c) => {
+  c.innerHTML = `
+    <div class="grid-3">
+      <div class="card">
+        <div class="t-sm muted">Joriy Reja</div>
+        <div class="t-2xl fw8 mt2">Business Pro</div>
+        <div class="t-sm muted mt2">$49 / oy</div>
+        <button class="btn btn-outline btn-block mt4" onclick="toast('Boshqarilmoqda')">Boshqarish</button>
+      </div>
+      <div class="card">
+        <div class="t-sm muted">Keyingi To'lov</div>
+        <div class="t-2xl fw8 mt2">12-Noyabr</div>
+        <div class="t-sm muted mt2">Avtomatik yechiladi</div>
+        <button class="btn btn-primary btn-block mt4" onclick="toast('To\'landi!')">To'lash</button>
+      </div>
+      <div class="card">
+        <div class="t-sm muted">API Limit</div>
+        <div class="t-2xl fw8 mt2">10,000/min</div>
+        <div class="t-sm muted mt2">Enterprise darajasi</div>
+      </div>
+    </div>`;
+};
+
+/* ============================================================
+   VIEW: DEVELOPERS (API Keys & Webhooks)
+   ============================================================ */
+const viewDev = async (c) => {
+  const keys = await api.get('/api/keys').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <div class="flex jc-b ai-c mb4">
+          <h3 class="t-lg fw7">API Kalitlar</h3>
+          <button class="btn btn-primary btn-sm" onclick="createApiKey()">+ Yangi</button>
+        </div>
+        ${keys.length ? keys.map(k => `
+          <div class="flex jc-b ai-c" style="padding:12px 0;border-bottom:1px solid var(--border)">
+            <div>
+              <div class="fw6 mono">${k.prefix}...</div>
+              <div class="t-xs muted">${k.label} • ${k.is_active ? 'Faol' : 'O\'chirilgan'}</div>
+            </div>
+            ${k.is_active ? `<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="revokeKey(${k.id})">O'chirish</button>` : ''}
+          </div>
+        `).join('') : '<div class="t-sm muted">Kalitlar yo\'q</div>'}
+      </div>
+      
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Webhook URL</h3>
+        <div class="field"><label>URL Manzil</label><input class="input" placeholder="https://sizning-sayt.uz/webhook"></div>
+        <button class="btn btn-primary btn-block" onclick="toast('Saqlandi!')">Saqlash</button>
+      </div>
+    </div>`;
+};
+
+const createApiKey = async () => {
+  try {
+    const res = await api.post('/api/keys', { label: 'Default Key' });
+    openModal('API Kalit Yaratildi', `
+      <p class="t-sm muted mb4">Bu kalit faqat bir marta ko'rsatiladi.</p>
+      <div class="input mono" style="background:var(--bg);padding:12px;word-break:break-all">${res.full_key}</div>
+    `, `<button class="btn btn-primary" onclick="closeModal(); renderView('/dev')">Yopish</button>`);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+const revokeKey = async (id) => {
+  if (!confirm('Bu kalitni o\'chirmoqchimisiz?')) return;
+  try {
+    await api.del(`/api/keys/${id}`);
+    toast('O\'chirildi');
+    renderView('/dev');
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+/* ============================================================
+   VIEW: SETTINGS (Sozlamalar)
+   ============================================================ */
+const viewSettings = async (c) => {
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Profil</h3>
+        <div class="field"><label>Ism</label><input class="input" value="${State.user?.name || ''}"></div>
+        <div class="field"><label>Email</label><input class="input" value="${State.user?.email || ''}"></div>
+        <button class="btn btn-primary" onclick="toast('Saqlandi!')">Saqlash</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Xavfsizlik</h3>
+        <div class="flex jc-b ai-c" style="padding:12px 0;border-bottom:1px solid var(--border)">
+          <div><div class="fw6 t-sm">2FA Autentifikatsiya</div><div class="muted t-xs">O'chirilgan</div></div>
+          <button class="btn btn-outline btn-sm" onclick="toast('Tez orada!')">Yoqish</button>
+        </div>
+        <div class="flex jc-b ai-c" style="padding:12px 0">
+          <div><div class="fw6 t-sm">Passkey</div><div class="muted t-xs">Face ID / Touch ID</div></div>
+          <button class="btn btn-outline btn-sm" onclick="toast('Tez orada!')">Sozlash</button>
+        </div>
+      </div>
+    </div>`;
+};
+
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+window.addEventListener('hashchange', router);
+window.addEventListener('load', router);
+
+// Global expose for inline HTML events
+window.handleAuth = handleAuth;
+window.logout = logout;
+window.toggleSidebar = toggleSidebar;
+window.toggleTheme = toggleTheme;
+window.closeModal = closeModal;
+window.fundDemo = fundDemo;
+window.handleDeposit = handleDeposit;
+window.handleP2P = handleP2P;
+window.handleIntent = handleIntent;
+window.confirmIntent = confirmIntent;
+window.generateAgentKey = generateAgentKey;
+window.createApiKey = createApiKey;
+window.revokeKey = revokeKey;
+window.renderView = renderView;
+window.toast = toast;
 </script>
 </body>
 </html>
