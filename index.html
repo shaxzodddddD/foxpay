@@ -2,1376 +2,938 @@
 <html lang="uz" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>FoxPay — Global Payment Protocol</title>
 <meta name="description" content="FoxPay — AI-agent va B2B uchun zamonaviy to'lov infratuzilmasi.">
 <meta name="theme-color" content="#FF6B00">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B1120'/%3E%3Cpath d='M30 30l20 20 20-20v30a20 20 0 0 1-40 0V30z' fill='%23FF6B00'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-/* ═══════════════ RESET ═══════════════ */
+/* ============================================================
+   1. CSS RESET & VARIABLES
+   ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-html[lang="zh"] body{font-family:'Noto Sans SC',sans-serif}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden;font-size:14px;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 input,select,textarea{font:inherit;color:inherit;background:none;border:0;outline:none}
 ul,ol{list-style:none}
 img,svg{display:block;max-width:100%}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 
-/* ═══════════════ TOKENS ═══════════════ */
-:root{
---bg:#0B1120;--panel:#0F172A;--panel2:#141E33;--border:#1E293B;--border2:#2A3A50;
---fox:#FF6B00;--fox2:#E64A00;--cyan:#00F2FE;--cyan2:#4FACFE;
---text:#F8FAFC;--muted:#94A3B8;--muted2:#64748B;
---green:#10B981;--green-bg:rgba(16,185,129,.12);
---red:#EF4444;--red-bg:rgba(239,68,68,.12);
---amber:#F59E0B;--amber-bg:rgba(245,158,11,.12);
---blue:#3B82F6;--blue-bg:rgba(59,130,246,.12);
---purple:#8B5CF6;--purple-bg:rgba(139,92,246,.12);
---r:10px;--r-lg:14px;--r-xl:18px;
---sh:0 2px 8px rgba(0,0,0,.3);--sh-lg:0 12px 40px rgba(0,0,0,.5);
---sidebar-w:260px;
+:root {
+  --bg:#0B1120; --panel:#0F172A; --panel2:#141E33; --border:#1E293B;
+  --fox:#FF6B00; --fox2:#E64A00; --cyan:#00F2FE;
+  --text:#F8FAFC; --muted:#94A3B8;
+  --green:#10B981; --green-bg:rgba(16,185,129,.12);
+  --red:#EF4444; --red-bg:rgba(239,68,68,.12);
+  --amber:#F59E0B; --amber-bg:rgba(245,158,11,.12);
+  --blue:#3B82F6; --blue-bg:rgba(59,130,246,.12);
+  --r:10px; --r-lg:14px; --r-xl:18px;
+  --sh:0 2px 8px rgba(0,0,0,.3); --sh-lg:0 12px 40px rgba(0,0,0,.5);
+  --sidebar-w:260px;
 }
-[data-theme="light"]{
---bg:#F8FAFC;--panel:#FFFFFF;--panel2:#F1F5F9;--border:#E2E8F0;--border2:#CBD5E1;
---text:#0F172A;--muted:#475569;--muted2:#64748B;
---sh:0 2px 8px rgba(0,0,0,.05);--sh-lg:0 12px 40px rgba(0,0,0,.1);
+[data-theme="light"] {
+  --bg:#F8FAFC; --panel:#FFFFFF; --panel2:#F1F5F9; --border:#E2E8F0;
+  --text:#0F172A; --muted:#475569;
+  --sh:0 2px 8px rgba(0,0,0,.05); --sh-lg:0 12px 40px rgba(0,0,0,.1);
 }
 
-/* ═══════════════ UTILS ═══════════════ */
-.flex{display:flex}.fcol{flex-direction:column}.ai-c{align-items:center}.ai-s{align-items:flex-start}.ai-e{align-items:flex-end}
-.jc-b{justify-content:space-between}.jc-c{justify-content:center}.jc-e{justify-content:flex-end}
-.g1{gap:4px}.g2{gap:8px}.g3{gap:12px}.g4{gap:16px}.g5{gap:20px}.g6{gap:24px}.g8{gap:32px}
-.grow{flex:1;min-width:0}.wrap{flex-wrap:wrap}.shrink{flex-shrink:0}
-.hide{display:none!important}
-.t-xs{font-size:11px}.t-sm{font-size:12px}.t-md{font-size:13px}.t-base{font-size:14px}.t-lg{font-size:15px}
-.t-xl{font-size:18px}.t-2xl{font-size:22px}.t-3xl{font-size:28px}.t-4xl{font-size:36px}.t-5xl{font-size:48px}
-.fw5{font-weight:500}.fw6{font-weight:600}.fw7{font-weight:700}.fw8{font-weight:800}.fw9{font-weight:900}
-.muted{color:var(--muted)}.muted2{color:var(--muted2)}.text-r{text-align:right}.text-c{text-align:center}
+/* ============================================================
+   2. UTILITIES
+   ============================================================ */
+.flex{display:flex} .fcol{flex-direction:column} .ai-c{align-items:center} .jc-b{justify-content:space-between} .jc-c{justify-content:center}
+.g1{gap:4px} .g2{gap:8px} .g3{gap:12px} .g4{gap:16px} .g6{gap:24px}
+.grow{flex:1;min-width:0} .wrap{flex-wrap:wrap} .hide{display:none!important}
+.t-xs{font-size:11px} .t-sm{font-size:12px} .t-md{font-size:13px} .t-lg{font-size:15px} .t-xl{font-size:18px} .t-2xl{font-size:24px} .t-3xl{font-size:32px}
+.fw5{font-weight:500} .fw6{font-weight:600} .fw7{font-weight:700} .fw8{font-weight:800} .fw9{font-weight:900}
+.muted{color:var(--muted)} .text-r{text-align:right} .text-c{text-align:center}
 .trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
-.w100{width:100%}.h100{height:100%}.rel{position:relative}.abs{position:absolute}
-.mt1{margin-top:4px}.mt2{margin-top:8px}.mt3{margin-top:12px}.mt4{margin-top:16px}.mt6{margin-top:24px}
-.mb1{margin-bottom:4px}.mb2{margin-bottom:8px}.mb3{margin-bottom:12px}.mb4{margin-bottom:16px}.mb6{margin-bottom:24px}
-.p2{padding:8px}.p3{padding:12px}.p4{padding:16px}.p5{padding:20px}.p6{padding:24px}
-.divider{height:1px;background:var(--border);margin:12px 0}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.mono{font-family:ui-monospace,SFMono-Regular,monospace}
+.mt2{margin-top:8px} .mt4{margin-top:16px} .mb2{margin-bottom:8px} .mb4{margin-bottom:16px}
+.w100{width:100%} .rel{position:relative}
 
-/* ═══════════════ BUTTONS ═══════════════ */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--r);font-weight:600;font-size:13px;transition:all .15s;white-space:nowrap;border:1px solid transparent;line-height:1.2;user-select:none}
+/* ============================================================
+   3. COMPONENTS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--r);font-weight:600;font-size:13px;transition:all .15s;border:1px solid transparent;white-space:nowrap}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn:active:not(:disabled){transform:translateY(1px)}
 .btn-primary{background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;box-shadow:0 2px 8px rgba(255,107,0,.25)}
-.btn-primary:hover:not(:disabled){box-shadow:0 4px 16px rgba(255,107,0,.4)}
-.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#0B1120}
-.btn-outline{border-color:var(--border);background:rgba(255,255,255,.02);color:var(--text)}
-.btn-outline:hover:not(:disabled){background:rgba(255,255,255,.06);border-color:var(--border2)}
-.btn-ghost{color:var(--muted)}
-.btn-ghost:hover:not(:disabled){background:var(--panel2);color:var(--text)}
-.btn-danger{background:var(--red);color:#fff}
-.btn-sm{padding:6px 11px;font-size:12px}
-.btn-xs{padding:4px 9px;font-size:11px}
-.btn-lg{padding:12px 22px;font-size:14px;border-radius:12px}
-.btn-block{width:100%}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(255,107,0,.4)}
+.btn-outline{border-color:var(--border);background:var(--panel);color:var(--text)}
+.btn-outline:hover{background:var(--panel2)}
+.btn-ghost{color:var(--muted)} .btn-ghost:hover{color:var(--text);background:var(--panel2)}
+.btn-sm{padding:6px 12px;font-size:12px} .btn-block{width:100%}
 .btn-icon{width:36px;height:36px;padding:0;border-radius:var(--r)}
 
-/* ═══════════════ INPUTS ═══════════════ */
-.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.field label{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em}
-.input,.select,.textarea{width:100%;padding:10px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);font-size:13px;color:var(--text);transition:all .15s}
-.input:focus,.select:focus,.textarea:focus{border-color:var(--fox);box-shadow:0 0 0 3px rgba(255,107,0,.15)}
-.input::placeholder{color:var(--muted2)}
-.textarea{resize:vertical;min-height:70px;font-family:var(--font)}
-.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.err{color:var(--red);font-size:11px;min-height:14px;margin-top:1px}
-.input-group{position:relative}
-.input-group .input{padding-left:38px}
-.input-group .ig-i{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted2);pointer-events:none}
+.input{width:100%;padding:10px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;transition:all .15s}
+.input:focus{border-color:var(--fox);box-shadow:0 0 0 3px rgba(255,107,0,.15)}
+.field{margin-bottom:16px} .field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.err{color:var(--red);font-size:11px;margin-top:4px;min-height:14px}
 
-/* ═══════════════ CARDS & PANELS ═══════════════ */
 .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
-.card-elev{box-shadow:var(--sh)}
-.card-lg{padding:24px;border-radius:var(--r-xl)}
-.card-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap}
-.card-title{font-size:15px;font-weight:700;color:var(--text)}
-.card-sub{font-size:12px;color:var(--muted);margin-top:2px}
-
-/* ═══════════════ BADGES ═══════════════ */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;line-height:1.4}
-.bd{width:5px;height:5px;border-radius:50%;background:currentColor}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600}
+.bd{width:6px;height:6px;border-radius:50%;background:currentColor}
 .b-green{background:var(--green-bg);color:var(--green)}
 .b-red{background:var(--red-bg);color:var(--red)}
 .b-amber{background:var(--amber-bg);color:var(--amber)}
-.b-blue{background:var(--blue-bg);color:var(--blue)}
 .b-cyan{background:rgba(0,242,254,.12);color:var(--cyan)}
 .b-fox{background:rgba(255,107,0,.12);color:var(--fox)}
-.b-purple{background:var(--purple-bg);color:var(--purple)}
-.b-gray{background:var(--panel2);color:var(--muted)}
 
-/* ═══════════════ TOAST ═══════════════ */
-.toast-host{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px}
-.toast{display:flex;align-items:center;gap:8px;padding:11px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--border);color:var(--text);box-shadow:var(--sh-lg);font-size:13px;font-weight:500;pointer-events:auto;animation:ti .2s cubic-bezier(.2,.9,.3,1.2);min-width:220px;line-height:1.4}
+.toast-host{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{padding:12px 18px;border-radius:var(--r);background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;box-shadow:var(--sh-lg);animation:slideIn .3s}
 .toast.success{border-color:var(--green);color:var(--green)}
 .toast.error{border-color:var(--red);color:var(--red)}
-.toast.info{border-color:var(--blue);color:var(--blue)}
-.toast.out{animation:to .2s ease forwards}
-@keyframes ti{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
-@keyframes to{to{opacity:0;transform:translateX(24px)}}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:none;opacity:1}}
 
-/* ═══════════════ MODAL ═══════════════ */
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:16px;animation:fade .15s}
-.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lg);animation:scale .2s}
-.modal-lg{max-width:640px}
-.m-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border)}
-.m-title{font-size:15px;font-weight:700}
-.m-body{padding:22px}
-.m-foot{display:flex;gap:8px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--border);flex-wrap:wrap}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes scale{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
-
-/* ═══════════════ SKELETON ═══════════════ */
-.skel{background:linear-gradient(90deg,var(--panel2) 25%,var(--border) 50%,var(--panel2) 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:8px}
-.skel-line{height:14px;margin:8px 0}
-@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-/* ═══════════════ LANG ═══════════════ */
-.lang-switch{position:relative;display:inline-block}
-.lang-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:var(--r);border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
-.lang-btn:hover{background:var(--panel2)}
-.lang-menu{position:absolute;top:calc(100% + 6px);right:0;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh-lg);min-width:170px;z-index:500;display:none;overflow:hidden}
-.lang-menu.open{display:block;animation:fade .15s}
-.lang-opt{padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s}
-.lang-opt:hover{background:var(--panel2)}
-.lang-opt.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600}
-
-/* ═══════════════ LANDING ═══════════════ */
-.landing{min-height:100vh}
-.topnav{position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);background:rgba(11,17,32,.85);border-bottom:1px solid var(--border)}
-[data-theme="light"] .topnav{background:rgba(248,250,252,.85)}
-.tn-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:16px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.02em;flex-shrink:0;cursor:pointer}
-.nav-links{display:flex;gap:28px;align-items:center}
-.nl{font-size:13px;font-weight:500;color:var(--muted);transition:color .15s;cursor:pointer}
-.nl:hover{color:var(--text)}
-.nav-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
-.hero{max-width:1200px;margin:0 auto;padding:80px 24px 100px;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,107,0,.1);color:var(--fox);font-size:12px;font-weight:600;margin-bottom:24px;border:1px solid rgba(255,107,0,.2)}
-.hero h1{font-size:56px;line-height:1.05;letter-spacing:-.03em;font-weight:900;margin-bottom:20px;color:var(--text)}
-.hero h1 .grad{background:linear-gradient(135deg,var(--fox),var(--fox2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .lead{font-size:17px;line-height:1.65;color:var(--muted);margin-bottom:32px;max-width:520px}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
-.hero-stats{display:flex;gap:40px;flex-wrap:wrap}
-.hs-num{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
-.hs-lbl{font-size:12px;color:var(--muted);margin-top:2px}
-.hero-visual{position:relative}
-.hero-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;box-shadow:var(--sh-lg);position:relative;overflow:hidden}
-.hero-card::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.2),transparent 70%);top:-80px;right:-80px}
-.hero-amt{font-size:32px;font-weight:800;letter-spacing:-.02em;margin:4px 0;color:var(--text)}
-
-.section{max-width:1200px;margin:0 auto;padding:80px 24px}
-.section-head{text-align:center;max-width:640px;margin:0 auto 48px}
-.section-eyebrow{font-size:12px;font-weight:700;color:var(--fox);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-.section-head h2{font-size:40px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin-bottom:14px;color:var(--text)}
-.section-head p{font-size:16px;color:var(--muted);line-height:1.6}
-
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.feature{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:all .2s}
-.feature:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);border-color:var(--fox)}
-.feature-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,107,0,.12);color:var(--fox);display:grid;place-items:center;margin-bottom:16px}
-.feature h3{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
-.feature p{font-size:13px;color:var(--muted);line-height:1.6}
-
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.step{text-align:center;padding:16px}
-.step-num{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(255,107,0,.35)}
-.step h3{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
-.step p{font-size:13px;color:var(--muted);line-height:1.6}
-
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
-.price-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;position:relative}
-.price-card.featured{border:2px solid var(--fox);box-shadow:0 16px 50px rgba(255,107,0,.2)}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700}
-.price-name{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
-.price-amount{font-size:32px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;color:var(--text)}
-.price-amount span{font-size:13px;font-weight:500;color:var(--muted)}
-.price-desc{font-size:12px;color:var(--muted);margin-bottom:20px;min-height:36px}
-.price-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;flex:1}
-.price-item{display:flex;gap:8px;font-size:13px;color:var(--muted);line-height:1.5}
-
-.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.testimonial{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px}
-.testimonial-quote{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:16px;font-style:italic}
-.testimonial-author{display:flex;align-items:center;gap:10px}
-.testimonial-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center;flex-shrink:0}
-.testimonial-name{font-size:13px;font-weight:600;color:var(--text)}
-.testimonial-role{font-size:11px;color:var(--muted)}
-.stars{display:flex;gap:2px;margin-bottom:12px;color:var(--amber)}
-
-.faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.faq-item{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.faq-q{width:100%;text-align:left;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:600;color:var(--text);transition:background .15s;cursor:pointer}
-.faq-q:hover{background:var(--panel2)}
-.faq-q .chev{transition:transform .2s;color:var(--muted);flex-shrink:0}
-.faq-item.open .chev{transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.faq-item.open .faq-a{max-height:500px}
-.faq-a-inner{padding:0 20px 16px;font-size:13px;color:var(--muted);line-height:1.7}
-
-.cta-box{background:linear-gradient(135deg,var(--fox),var(--fox2));border-radius:var(--r-xl);padding:56px 40px;text-align:center;color:#fff;box-shadow:0 20px 60px rgba(255,107,0,.3);position:relative;overflow:hidden}
-.cta-box::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.08);top:-100px;right:-100px}
-.cta-box h2{font-size:36px;line-height:1.15;font-weight:800;margin-bottom:14px;position:relative}
-.cta-box p{font-size:15px;opacity:.9;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;position:relative}
-.cta-box .btn{background:#fff;color:var(--fox2);font-weight:700;position:relative}
-
-.site-footer{border-top:1px solid var(--border);padding:56px 24px 32px;max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
-.footer-col h4{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.footer-col a{display:block;font-size:13px;color:var(--muted);padding:5px 0;transition:color .15s;cursor:pointer}
-.footer-col a:hover{color:var(--text)}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
-
-/* ═══════════════ AUTH ═══════════════ */
+/* ============================================================
+   4. LAYOUT & VIEWS
+   ============================================================ */
 .auth-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
-.auth-side{background:radial-gradient(circle at 50% 50%,#0F172A 0%,#020617 100%);padding:48px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;color:#F8FAFC}
-.auth-side::before{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.15),transparent 70%);top:-100px;right:-100px}
-.auth-side::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,242,254,.1),transparent 70%);bottom:-80px;left:-80px}
-.auth-side .logo{color:#fff;position:relative;z-index:1}
-.auth-side h2{font-size:28px;line-height:1.2;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1}
-.auth-side p{font-size:14px;opacity:.85;margin-top:12px;line-height:1.6;position:relative;z-index:1}
-.auth-side-foot{font-size:11px;opacity:.7;position:relative;z-index:1}
+.auth-side{background:radial-gradient(circle at 50% 50%,#0F172A 0%,#020617 100%);padding:48px;display:flex;flex-direction:column;justify-content:space-between;color:#F8FAFC}
 .auth-main{padding:48px;display:flex;align-items:center;justify-content:center;background:var(--bg)}
 .auth-box{width:100%;max-width:400px}
-.auth-box h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;color:var(--text)}
-.auth-box .sub{font-size:13px;color:var(--muted);margin-bottom:24px}
-.auth-tabs{display:flex;gap:4px;background:var(--panel);padding:4px;border-radius:var(--r);margin-bottom:22px;border:1px solid var(--border)}
-.auth-tab{flex:1;padding:8px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);border-radius:8px;transition:all .15s;cursor:pointer}
+.auth-tabs{display:flex;gap:4px;background:var(--panel);padding:4px;border-radius:var(--r);margin-bottom:24px;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);border-radius:8px;cursor:pointer}
 .auth-tab.active{background:var(--panel2);color:var(--text)}
-.auth-hint{font-size:11px;color:var(--muted);text-align:center;margin-top:18px;padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);line-height:1.5}
 
-/* ═══════════════ DASHBOARD ═══════════════ */
-.dash{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh;background:var(--bg)}
-.sidebar{background:var(--panel);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;overscroll-behavior:contain}
-.sidebar .logo{padding:6px 10px;margin-bottom:20px}
+.dash{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
+.sidebar{background:var(--panel);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-.si{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);transition:all .15s;width:100%;text-align:left;border-left:3px solid transparent;cursor:pointer}
+.si{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
 .si:hover{background:var(--panel2);color:var(--text)}
-.si.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600;border-left-color:var(--fox)}
-.si svg{width:17px;height:17px;flex-shrink:0}
-.si-sep{height:1px;background:var(--border);margin:10px 6px}
-.side-foot{padding-top:14px;border-top:1px solid var(--border)}
-.side-user{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;background:var(--panel2);margin-bottom:8px}
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center;flex-shrink:0}
-.avatar.sm{width:28px;height:28px;font-size:10px}
-.avatar.lg{width:44px;height:44px;font-size:14px}
+.si.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600;border-left:3px solid var(--fox)}
+.si svg{width:16px;height:16px}
 
-.main{min-width:0;display:flex;flex-direction:column}
-.topbar{background:rgba(15,23,42,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:50;flex-wrap:wrap}
-[data-theme="light"] .topbar{background:rgba(248,250,252,.85)}
-.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
-.tb-sub{font-size:12px;color:var(--muted);margin-top:1px}
-.tb-actions{display:flex;gap:8px;align-items:center}
-.content{padding:24px;max-width:1300px;width:100%;margin:0 auto;flex:1;min-height:60vh}
+.main{display:flex;flex-direction:column}
+.topbar{background:rgba(15,23,42,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
+.content{padding:24px;max-width:1300px;margin:0 auto;width:100%}
 
-/* KPI */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;transition:all .15s}
-.kpi:hover{box-shadow:var(--sh)}
-.kpi-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.kpi-l{font-size:12px;color:var(--muted);font-weight:500}
-.kpi-i{width:34px;height:34px;border-radius:10px;background:rgba(255,107,0,.12);color:var(--fox);display:grid;place-items:center;flex-shrink:0}
-.kpi-v{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--text)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.kpi-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.kpi-l{font-size:12px;color:var(--muted);font-weight:600}
+.kpi-v{font-size:24px;font-weight:800}
 
-/* Wallet Banner */
-.wallet-banner{background:linear-gradient(135deg,var(--fox) 0%,var(--fox2) 100%);border-radius:var(--r-xl);padding:24px;color:#fff;box-shadow:0 16px 40px rgba(255,107,0,.25);margin-bottom:20px;position:relative;overflow:hidden}
-.wallet-banner::before{content:'';position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,.1);top:-80px;right:-80px}
-.wallet-banner::after{content:'';position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.06);bottom:-50px;left:30%}
-.wallet-label{font-size:12px;opacity:.85;font-weight:500;margin-bottom:6px;position:relative;z-index:1}
-.wallet-amount{font-size:38px;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1;line-height:1.1}
-.wallet-meta{font-size:11px;opacity:.8;margin-top:6px;position:relative;z-index:1}
-.wallet-actions{display:flex;gap:10px;margin-top:20px;position:relative;z-index:1;flex-wrap:wrap}
-.wallet-actions .btn{background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}
-.wallet-actions .btn:hover{background:rgba(255,255,255,.28)}
+.wallet-banner{background:linear-gradient(135deg,var(--fox) 0%,var(--fox2) 100%);border-radius:var(--r-xl);padding:28px;color:#fff;box-shadow:0 12px 32px rgba(255,107,0,.25);margin-bottom:24px;position:relative;overflow:hidden}
+.wallet-banner::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);top:-60px;right:-60px}
+.wallet-amount{font-size:36px;font-weight:800;margin-top:6px;position:relative;z-index:1}
+.wallet-actions{display:flex;gap:12px;margin-top:20px;position:relative;z-index:1}
+.wallet-actions .btn{background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)}
+.wallet-actions .btn:hover{background:rgba(255,255,255,.25)}
 
-/* Table */
-.table-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.tc-head{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.tc-head h3{font-size:14px;font-weight:700;color:var(--text)}
-.tc-filters{display:flex;gap:6px;flex-wrap:wrap}
+.table-wrap{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
 table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{text-align:left;padding:10px 20px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
-tbody td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--text)}
-tbody tr:hover{background:rgba(255,255,255,.02)}
-tbody tr:last-child td{border-bottom:0}
-.user-cell{display:flex;align-items:center;gap:10px}
-.user-cell .info{min-width:0}
-.user-cell .name{font-weight:600;color:var(--text);font-size:12px}
-.user-cell .sub{font-size:11px;color:var(--muted);margin-top:1px}
+th{text-align:left;padding:12px 20px;background:rgba(255,255,255,.02);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.02)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 
-.empty{padding:56px 20px;text-align:center;color:var(--muted);font-size:13px}
-.empty svg{margin:0 auto 12px;color:var(--muted2)}
-.empty h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
-.empty p{font-size:12px}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:20px}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:480px;overflow:hidden;animation:scaleIn .2s}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
+.modal-head{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-body{padding:20px}
+.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
 
-.pagination{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);gap:8px;flex-wrap:wrap}
-
-/* Chart */
-.chart-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:20px}
-.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.chart-head h3{font-size:14px;font-weight:700;color:var(--text)}
-canvas{width:100%;display:block;max-width:100%}
-
-/* Code block */
-.code-block{background:#020617;color:#E5E5E5;padding:14px 16px;border-radius:var(--r);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;overflow-x:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--border);word-break:break-all}
-.code-block .mono{white-space:pre-wrap;overflow:hidden;flex:1;min-width:0}
-
-/* Switch */
-.switch{position:relative;width:40px;height:22px;background:var(--border2);border-radius:999px;transition:background .2s;flex-shrink:0;cursor:pointer;border:0;padding:0}
-.switch.on{background:var(--fox)}
-.switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
-.switch.on::after{transform:translateX(18px)}
-
-.setting-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);gap:12px}
-.setting-row:last-child{border-bottom:0}
-.si-info h4{font-size:13px;font-weight:600;margin-bottom:2px;color:var(--text)}
-.si-info p{font-size:11px;color:var(--muted)}
-
-/* Layout */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-
-/* Perf */
-.perf-skip{content-visibility:auto;contain-intrinsic-size:auto 60px}
-
-/* ═══════════════ RESPONSIVE ═══════════════ */
-@media (max-width:1024px){
-.hero{grid-template-columns:1fr;padding:48px 20px 64px;gap:32px}
-.hero h1{font-size:42px}
-.hero-visual{display:none}
-.features,.steps,.pricing-grid,.testimonials{grid-template-columns:1fr}
-.kpis{grid-template-columns:repeat(2,1fr)}
-.auth-wrap{grid-template-columns:1fr}
-.auth-side{display:none}
-.auth-main{padding:28px 20px}
-.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
-.section{padding:48px 20px}
-.section-head h2{font-size:30px}
-.footer-grid{grid-template-columns:1fr 1fr}
+@media(max-width:1024px){
+  .dash{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-100%;top:0;bottom:0;z-index:200;transition:left .3s;width:280px;box-shadow:var(--sh-lg)}
+  .sidebar.open{left:0}
+  .auth-wrap{grid-template-columns:1fr}
+  .auth-side{display:none}
+  .kpis{grid-template-columns:1fr 1fr}
+  .grid-2,.grid-3{grid-template-columns:1fr}
 }
-@media (max-width:768px){
-.dash{grid-template-columns:1fr}
-.sidebar{position:fixed;left:-100%;top:0;bottom:0;width:280px;z-index:200;transition:left .25s;box-shadow:var(--sh-lg)}
-.sidebar.open{left:0}
-.sb-back{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199;display:none;backdrop-filter:blur(4px)}
-.sb-back.open{display:block}
-.topbar{padding:12px 16px}
-.content{padding:16px}
-.tb-title{font-size:15px}
-.nav-links{display:none}
-.hero h1{font-size:34px}
-.hero .lead{font-size:15px}
-.hide-sm{display:none}
-table{font-size:12px}
-thead th,tbody td{padding:10px 12px}
-.kpis{grid-template-columns:1fr}
-.wallet-amount{font-size:30px}
-.footer-grid{grid-template-columns:1fr}
-.section-head h2{font-size:24px}
-.cta-box{padding:40px 24px}
-.cta-box h2{font-size:26px}
-}
-@media (prefers-reduced-motion:reduce){
-*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+@media(max-width:600px){
+  .kpis{grid-template-columns:1fr}
+  .content{padding:16px}
+  .wallet-actions{flex-direction:column}
 }
 </style>
 </head>
 <body>
-<main id="main"><div id="app"></div></main>
+
+<!-- Asosiy App Container -->
+<div id="app"></div>
+
+<!-- Global Xabarlar va Modallar -->
 <div id="toast-host" class="toast-host" aria-live="polite"></div>
 <div id="modal-host"></div>
 
 <script>
 'use strict';
 
-/* ═══════════════════════════════════════════════
-   1. I18N — 6 til
-   ═══════════════════════════════════════════════ */
-var I18N={
-uz:{flag:'🇺🇿',name:"O'zbekcha",
-nav:{features:"Imkoniyatlar",how:"Qanday ishlaydi",pricing:"Narxlar",faq:"FAQ",login:"Kirish",start:"Boshlash",dashboard:"Boshqaruv"},
-hero:{eyebrow:"O'zbekistonda #1 to'lovlar platformasi",titleA:"To'lovni ",titleB:"bir zumda",titleC:" qabul qiling.",lead:"FoxPay — AI-agentlar, freelancerlar va biznes uchun zamonaviy to'lov infratuzilmasi. Sub-cent metered billing, P2P, API va webhooks.",btnStart:"Bepul boshlash",btnMore:"Batafsil",stat1:"Faol merchant",stat2:"Oylik aylanma",stat3:"Uptime SLA",todayIncome:"Bugungi tushum"},
-features:{title:"Hammasi bitta joyda",sub:"To'lov qabul qilishdan AI-agent billing'gacha.",f1t:"Tez to'lov",f1d:"Uzcard, Humo, Payme, Click — bir tugmada. 1.2 soniya.",f2t:"Xavfsiz",f2d:"Double-entry ledger, PCI DSS, 2FA, HMAC webhooks.",f3t:"Oson integratsiya",f3d:"REST API, webhook, SDK. 15 daqiqada boshlang.",f4t:"P2P o'tkazma",f4d:"Telefon yoki email orqali bir zumda. 1.5%.",f5t:"AI-Agent billing",f5d:"Sub-cent metered billing. Tokenlar bo'yicha avtomatik.",f6t:"Xalqaro",f6d:"SWIFT va SEPA orqali 40+ valyutada."},
-pricing:{title:"Halol va shaffof",sub:"Yashirin to'lovlar yo'q.",start:"Boshlash",popular:"Ommabop",plan1:"Start",plan2:"Business",plan3:"Enterprise",perTx:"/ tranzaksiya",plan1d:"Yangi boshlovchilar uchun",plan2d:"O'sib borayotgan biznes uchun",plan3d:"Yirik kompaniyalar uchun",negotiable:"Kelishiladi",monthlyNo:"Oylik to'lov yo'q",apiAccess:"REST API + Webhook",prioritySupport:"Ustuvor support",aiBilling:"AI-Agent billing",enterpriseSLA:"SLA 99.99%",dedicated:"Dedicated manager",contact:"Bog'lanish",paymentLink:"Payment link",emailSupport:"Email support"},
-faq:{title:"Ko'p beriladigan savollar",q1:"FoxPay nima?",a1:"FoxPay — O'zbekiston uchun onlayn to'lov platformasi. Freelancerlar, kichik biznes va merchantlar uchun.",q2:"Komissiya qancha?",a2:"Start 1.8%, Business 1.5%, Enterprise individual. Oylik to'lov yo'q.",q3:"Qaysi kartalar?",a3:"Uzcard, Humo, Visa, Mastercard. Payme, Click, bank o'tkazmalari.",q4:"AI-agent billing nima?",a4:"AI agentlar tokenlar bo'yicha sub-cent to'lov qiladi. 1000 token uchun $0.0001.",q5:"Xavfsizlik qanday?",a5:"Double-entry ledger, PCI DSS, 2FA, HMAC-signed webhooks, to'liq audit log."},
-cta:{title:"Bugun birinchi to'lovni qabul qiling",sub:"Bepul ro'yxatdan o'ting. 5 daqiqada boshlang.",btn:"Bepul boshlash"},
-footer:{product:"Mahsulot",company:"Kompaniya",legal:"Huquqiy",features:"Imkoniyatlar",pricing:"Narxlar",apiDocs:"API Docs",register:"Ro'yxatdan o'tish",how:"Qanday ishlaydi",faq:"FAQ",contactLink:"Bog'lanish",privacy:"Maxfiylik",terms:"Shartlar",security:"Xavfsizlik",rights:"Barcha huquqlar himoyalangan."},
-auth:{login:"Kirish",register:"Ro'yxatdan o'tish",welcomeBack:"Xush kelibsiz",createAccount:"Hisob yaratish",loginSub:"Hisobingizga kiring",registerSub:"Bepul hisob yarating",name:"To'liq ism",email:"Email",password:"Parol",namePlaceholder:"Aziz Karimov",emailPlaceholder:"siz@email.com",passwordPlaceholder:"Kamida 6 belgi",invalidEmail:"Email formati noto'g'ri",shortPassword:"Parol kamida 6 belgi",nameRequired:"Ismingizni kiriting",loading:"Yuklanmoqda...",sessionExpired:"Sessiya tugadi",networkError:"Server bilan aloqa yo'q",sideTitle:"Kelajak to'lov tizimi. Bir zumda.",sideDesc:"AI-agentlar va B2B uchun yuqori tezlikdagi moliyaviy infratuzilma."},
-menu:{home:"Boshqaruv",wallet:"Hamyon",p2p:"P2P O'tkazma",payments:"To'lovlar",links:"Havolalar",invoices:"Invoyslar",agents:"AI Agentlar",subscriptions:"Obunalar",dev:"Developers",settings:"Sozlamalar",logout:"Chiqish"},
-dash:{totalBalance:"Umumiy Balans",add:"To'ldirish",send:"Yuborish",sent:"Yuborilgan",commission:"Komissiya",transactions:"Tranzaksiyalar",intents:"Intentlar",recentActivity:"So'nggi Faoliyat",viewAll:"Barchasi",p2pTransfer:"P2P O'tkazma",noData:"Ma'lumot yo'q",currentBalance:"Joriy Balans",fundBalance:"Balansni To'ldirish",amountSom:"Summa (so'm)",depositBtn:"To'ldirish",linkCard:"Karta Ulash",linkCardSub:"Uzcard, Humo, Visa, Mastercard",addCard:"Yangi Karta",ledgerEntries:"Ledger Yozuvlari",credit:"Kirim",debit:"Chiqim",source:"Manba",time:"Vaqt",sendMoney:"Pul Yuborish",recipientEmail:"Qabul qiluvchi Email",amount:"Summa",note:"Izoh",sendBtn:"Yuborish",transferHistory:"O'tkazmalar Tarixi",createIntent:"Payment Intent Yaratish",description:"Izoh",customerEmail:"Mijoz Email",createBtn:"Yaratish",intentsList:"Intentlar",confirmBtn:"Tasdiqlash",apiKeys:"API Kalitlar",newKey:"+ Yangi",profile:"Profil",security:"Xavfsizlik",twoFA:"2FA Autentifikatsiya",disabled:"O'chirilgan",enable:"Yoqish",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"Sozlash",keysEmpty:"Kalitlar yo'q",agentName:"Agent Nomi",createKey:"Kalit Yaratish",meteredBilling:"Metered Billing",last24h:"Oxirgi 24 soat tokenlar uchun to'lov.",currentPlan:"Joriy Reja",nextPayment:"Keyingi To'lov",apiLimit:"API Limit",manage:"Boshqarish",payNow:"To'lash",autoCharge:"Avtomatik",agentDesc:"AI agentlar uchun maxsus kalit.",webhookUrl:"Webhook URL",urlAddress:"URL Manzil",save:"Saqlash"},
-toast:{welcome:"Xush kelibsiz",funded:"Balans to'ldirildi!",minAmount:"Kamida 100 so'm",transferSuccess:"O'tkazma muvaffaqiyatli!",intentCreated:"Intent yaratildi!",intentConfirmed:"To'lov tasdiqlandi!",keyCreated:"API kalit yaratildi",keyRevoked:"Kalit o'chirildi",confirmRevoke:"Kalitni o'chirasizmi?",saved:"Saqlandi!",agentNameRequired:"Agent nomini kiriting",comingSoon:"Tez orada!",error:"Xatolik",copied:"Nusxalandi!"},
-empty:{noTransfers:"O'tkazmalar yo'q",noLedger:"Yozuvlar yo'q",noIntents:"Intentlar yo'q"}},
-
-en:{flag:'🇬🇧',name:"English",
-nav:{features:"Features",how:"How it works",pricing:"Pricing",faq:"FAQ",login:"Login",start:"Get Started",dashboard:"Dashboard"},
-hero:{eyebrow:"#1 payment platform in Uzbekistan",titleA:"Accept payments ",titleB:"instantly",titleC:".",lead:"FoxPay — modern payment infrastructure for AI agents, freelancers and businesses. Sub-cent metered billing, P2P, API and webhooks.",btnStart:"Start for Free",btnMore:"Learn More",stat1:"Active merchants",stat2:"Monthly volume",stat3:"Uptime SLA",todayIncome:"Today's revenue"},
-features:{title:"Everything in one place",sub:"From payment acceptance to AI-agent billing.",f1t:"Fast payments",f1d:"Uzcard, Humo, Payme, Click — one button. 1.2s average.",f2t:"Secure",f2d:"Double-entry ledger, PCI DSS, 2FA, HMAC webhooks.",f3t:"Easy integration",f3d:"REST API, webhook, SDK. Start in 15 minutes.",f4t:"P2P transfer",f4d:"Instant via phone or email. 1.5% commission.",f5t:"AI-Agent billing",f5d:"Sub-cent metered billing. AI agents pay per tokens.",f6t:"International",f6d:"Send in 40+ currencies via SWIFT and SEPA."},
-pricing:{title:"Fair and transparent",sub:"No hidden fees.",start:"Start",popular:"Popular",plan1:"Start",plan2:"Business",plan3:"Enterprise",perTx:"/ transaction",plan1d:"For beginners",plan2d:"For growing businesses",plan3d:"For large companies",negotiable:"Custom",monthlyNo:"No monthly fee",apiAccess:"REST API + Webhook",prioritySupport:"Priority support",aiBilling:"AI-Agent billing",enterpriseSLA:"SLA 99.99%",dedicated:"Dedicated manager",contact:"Contact us",paymentLink:"Payment link",emailSupport:"Email support"},
-faq:{title:"Frequently asked questions",q1:"What is FoxPay?",a1:"FoxPay is an online payment platform for Uzbekistan. For freelancers, small businesses and merchants.",q2:"What's the commission?",a2:"1.8% on Start, 1.5% on Business, custom for Enterprise.",q3:"Which cards?",a3:"Uzcard, Humo, Visa, Mastercard. Also Payme, Click, bank transfers.",q4:"What is AI-agent billing?",a4:"AI agents make sub-cent payments per tokens. $0.0001 per 1000 tokens.",q5:"How secure?",a5:"Double-entry ledger, PCI DSS, 2FA, HMAC-signed webhooks, full audit log."},
-cta:{title:"Accept your first payment today",sub:"Free signup. Start in 5 minutes.",btn:"Start for Free"},
-footer:{product:"Product",company:"Company",legal:"Legal",features:"Features",pricing:"Pricing",apiDocs:"API Docs",register:"Sign Up",how:"How it works",faq:"FAQ",contactLink:"Contact",privacy:"Privacy",terms:"Terms",security:"Security",rights:"All rights reserved."},
-auth:{login:"Login",register:"Sign Up",welcomeBack:"Welcome back",createAccount:"Create account",loginSub:"Sign in to your account",registerSub:"Create a free account",name:"Full name",email:"Email",password:"Password",namePlaceholder:"John Doe",emailPlaceholder:"you@email.com",passwordPlaceholder:"At least 6 characters",invalidEmail:"Invalid email format",shortPassword:"Password must be at least 6 characters",nameRequired:"Please enter your name",loading:"Loading...",sessionExpired:"Session expired",networkError:"Cannot reach server",sideTitle:"The future of payments. Instantly.",sideDesc:"High-performance financial infrastructure for AI agents and B2B."},
-menu:{home:"Dashboard",wallet:"Wallet",p2p:"P2P Transfer",payments:"Payments",links:"Payment Links",invoices:"Invoices",agents:"AI Agents",subscriptions:"Subscriptions",dev:"Developers",settings:"Settings",logout:"Logout"},
-dash:{totalBalance:"Total Balance",add:"Add Funds",send:"Send",sent:"Sent",commission:"Commission",transactions:"Transactions",intents:"Intents",recentActivity:"Recent Activity",viewAll:"View All",p2pTransfer:"P2P Transfer",noData:"No data",currentBalance:"Current Balance",fundBalance:"Fund Balance",amountSom:"Amount",depositBtn:"Deposit",linkCard:"Link Card",linkCardSub:"Uzcard, Humo, Visa, Mastercard",addCard:"Add Card",ledgerEntries:"Ledger Entries",credit:"Credit",debit:"Debit",source:"Source",time:"Time",sendMoney:"Send Money",recipientEmail:"Recipient Email",amount:"Amount",note:"Note",sendBtn:"Send",transferHistory:"Transfer History",createIntent:"Create Payment Intent",description:"Description",customerEmail:"Customer Email",createBtn:"Create",intentsList:"Intents",confirmBtn:"Confirm",apiKeys:"API Keys",newKey:"+ New",profile:"Profile",security:"Security",twoFA:"2FA Authentication",disabled:"Disabled",enable:"Enable",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"Setup",keysEmpty:"No keys",agentName:"Agent Name",createKey:"Create Key",meteredBilling:"Metered Billing",last24h:"Tokens used in last 24 hours billed.",currentPlan:"Current Plan",nextPayment:"Next Payment",apiLimit:"API Limit",manage:"Manage",payNow:"Pay Now",autoCharge:"Auto-charged",agentDesc:"Special key for AI agents.",webhookUrl:"Webhook URL",urlAddress:"URL Address",save:"Save"},
-toast:{welcome:"Welcome",funded:"Balance funded!",minAmount:"Minimum 100",transferSuccess:"Transfer successful!",intentCreated:"Intent created!",intentConfirmed:"Payment confirmed!",keyCreated:"API key created",keyRevoked:"Key revoked",confirmRevoke:"Revoke this key?",saved:"Saved!",agentNameRequired:"Enter agent name",comingSoon:"Coming soon!",error:"Error",copied:"Copied!"},
-empty:{noTransfers:"No transfers",noLedger:"No entries",noIntents:"No intents"}},
-
-ru:{flag:'🇷🇺',name:"Русский",
-nav:{features:"Возможности",how:"Как работает",pricing:"Тарифы",faq:"Вопросы",login:"Войти",start:"Начать",dashboard:"Панель"},
-hero:{eyebrow:"Платформа №1 в Узбекистане",titleA:"Принимайте платежи ",titleB:"мгновенно",titleC:".",lead:"FoxPay — современная платежная инфраструктура для AI-агентов, фрилансеров и бизнеса. Sub-cent биллинг, P2P, API и вебхуки.",btnStart:"Начать бесплатно",btnMore:"Подробнее",stat1:"Активных мерчантов",stat2:"Месячный оборот",stat3:"Uptime SLA",todayIncome:"Доход сегодня"},
-features:{title:"Все в одном месте",sub:"От приема платежей до биллинга AI-агентов.",f1t:"Быстрые платежи",f1d:"Uzcard, Humo, Payme, Click — в одной кнопке. 1.2 секунды.",f2t:"Безопасно",f2d:"Двойная запись, PCI DSS, 2FA, HMAC-вебхуки.",f3t:"Легкая интеграция",f3d:"REST API, вебхуки, SDK. За 15 минут.",f4t:"P2P перевод",f4d:"Мгновенно по телефону или email. 1.5%.",f5t:"AI-Agent биллинг",f5d:"Sub-cent метрический биллинг. За токены.",f6t:"Международные",f6d:"40+ валют через SWIFT и SEPA."},
-pricing:{title:"Честно и прозрачно",sub:"Никаких скрытых платежей.",start:"Начать",popular:"Популярный",plan1:"Старт",plan2:"Бизнес",plan3:"Корпоративный",perTx:"/ транзакция",plan1d:"Для начинающих",plan2d:"Для растущего бизнеса",plan3d:"Для крупных компаний",negotiable:"Индивидуально",monthlyNo:"Без месячной платы",apiAccess:"REST API + вебхуки",prioritySupport:"Приоритетная поддержка",aiBilling:"AI-Agent биллинг",enterpriseSLA:"SLA 99.99%",dedicated:"Персональный менеджер",contact:"Связаться",paymentLink:"Payment link",emailSupport:"Email поддержка"},
-faq:{title:"Часто задаваемые вопросы",q1:"Что такое FoxPay?",a1:"FoxPay — онлайн платформа платежей для Узбекистана.",q2:"Какая комиссия?",a2:"1.8% на Старт, 1.5% на Бизнес, индивидуально для Корпоративного.",q3:"Какие карты?",a3:"Uzcard, Humo, Visa, Mastercard. Также Payme, Click.",q4:"Что такое AI-Agent биллинг?",a4:"AI-агенты платят за токены. $0.0001 за 1000 токенов.",q5:"Безопасность?",a5:"Двойная запись, PCI DSS, 2FA, HMAC-вебхуки, audit log."},
-cta:{title:"Примите первый платеж сегодня",sub:"Бесплатная регистрация. Начните за 5 минут.",btn:"Начать бесплатно"},
-footer:{product:"Продукт",company:"Компания",legal:"Правовое",features:"Возможности",pricing:"Тарифы",apiDocs:"API Docs",register:"Регистрация",how:"Как работает",faq:"Вопросы",contactLink:"Связаться",privacy:"Конфиденциальность",terms:"Условия",security:"Безопасность",rights:"Все права защищены."},
-auth:{login:"Вход",register:"Регистрация",welcomeBack:"С возвращением",createAccount:"Создать аккаунт",loginSub:"Войдите в аккаунт",registerSub:"Создайте бесплатный аккаунт",name:"Полное имя",email:"Email",password:"Пароль",namePlaceholder:"Иван Иванов",emailPlaceholder:"вы@email.com",passwordPlaceholder:"Минимум 6 символов",invalidEmail:"Неверный формат email",shortPassword:"Пароль минимум 6 символов",nameRequired:"Введите имя",loading:"Загрузка...",sessionExpired:"Сессия истекла",networkError:"Сервер недоступен",sideTitle:"Будущее платежей. Мгновенно.",sideDesc:"Высокопроизводительная инфраструктура для AI-агентов и B2B."},
-menu:{home:"Панель",wallet:"Кошелек",p2p:"P2P Перевод",payments:"Платежи",links:"Ссылки",invoices:"Счета",agents:"AI Агенты",subscriptions:"Подписки",dev:"Разработчикам",settings:"Настройки",logout:"Выход"},
-dash:{totalBalance:"Общий баланс",add:"Пополнить",send:"Отправить",sent:"Отправлено",commission:"Комиссия",transactions:"Транзакции",intents:"Интенты",recentActivity:"Последняя активность",viewAll:"Все",p2pTransfer:"P2P Перевод",noData:"Нет данных",currentBalance:"Текущий баланс",fundBalance:"Пополнить баланс",amountSom:"Сумма",depositBtn:"Пополнить",linkCard:"Привязать карту",linkCardSub:"Uzcard, Humo, Visa, Mastercard",addCard:"Новая карта",ledgerEntries:"Записи журнала",credit:"Приход",debit:"Расход",source:"Источник",time:"Время",sendMoney:"Отправить деньги",recipientEmail:"Email получателя",amount:"Сумма",note:"Заметка",sendBtn:"Отправить",transferHistory:"История переводов",createIntent:"Создать Payment Intent",description:"Описание",customerEmail:"Email клиента",createBtn:"Создать",intentsList:"Интенты",confirmBtn:"Подтвердить",apiKeys:"API Ключи",newKey:"+ Новый",profile:"Профиль",security:"Безопасность",twoFA:"2FA Аутентификация",disabled:"Отключено",enable:"Включить",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"Настроить",keysEmpty:"Нет ключей",agentName:"Имя агента",createKey:"Создать ключ",meteredBilling:"Metered Billing",last24h:"Списано за токены за 24 часа.",currentPlan:"Текущий план",nextPayment:"Следующий платеж",apiLimit:"API лимит",manage:"Управлять",payNow:"Оплатить",autoCharge:"Автосписание",agentDesc:"Специальный ключ для AI-агентов.",webhookUrl:"Webhook URL",urlAddress:"URL адрес",save:"Сохранить"},
-toast:{welcome:"Добро пожаловать",funded:"Баланс пополнен!",minAmount:"Минимум 100",transferSuccess:"Перевод успешен!",intentCreated:"Интент создан!",intentConfirmed:"Платеж подтвержден!",keyCreated:"API ключ создан",keyRevoked:"Ключ отозван",confirmRevoke:"Отозвать ключ?",saved:"Сохранено!",agentNameRequired:"Введите имя агента",comingSoon:"Скоро!",error:"Ошибка",copied:"Скопировано!"},
-empty:{noTransfers:"Нет переводов",noLedger:"Нет записей",noIntents:"Нет интентов"}},
-
-zh:{flag:'🇨🇳',name:"中文",
-nav:{features:"功能",how:"使用方法",pricing:"价格",faq:"常见问题",login:"登录",start:"开始",dashboard:"仪表板"},
-hero:{eyebrow:"乌兹别克斯坦第一支付平台",titleA:"即时",titleB:"接受付款",titleC:"。",lead:"FoxPay — 为AI代理、自由职业者和企业提供的现代支付基础设施。Sub-cent计量计费、P2P、API和Webhooks。",btnStart:"免费开始",btnMore:"了解更多",stat1:"活跃商户",stat2:"月度交易量",stat3:"正常运行时间",todayIncome:"今日收入"},
-features:{title:"一站式解决方案",sub:"从收款到AI代理计费。",f1t:"快速支付",f1d:"Uzcard、Humo、Payme、Click — 一键完成。1.2秒。",f2t:"安全",f2d:"复式记账、PCI DSS、2FA、HMAC Webhooks。",f3t:"轻松集成",f3d:"REST API、Webhook、SDK。15分钟开始。",f4t:"P2P转账",f4d:"通过电话或电子邮件即时。1.5%手续费。",f5t:"AI代理计费",f5d:"Sub-cent计量计费。按token支付。",f6t:"国际",f6d:"通过SWIFT和SEPA支持40多种货币。"},
-pricing:{title:"公平透明",sub:"无隐藏费用。",start:"开始",popular:"热门",plan1:"入门",plan2:"商务",plan3:"企业",perTx:"/ 交易",plan1d:"适合初学者",plan2d:"适合成长型企业",plan3d:"适合大型企业",negotiable:"定制",monthlyNo:"无月费",apiAccess:"REST API + Webhook",prioritySupport:"优先支持",aiBilling:"AI代理计费",enterpriseSLA:"SLA 99.99%",dedicated:"专属经理",contact:"联系我们",paymentLink:"Payment link",emailSupport:"Email支持"},
-faq:{title:"常见问题",q1:"FoxPay是什么？",a1:"FoxPay是乌兹别克斯坦的在线支付平台。",q2:"手续费多少？",a2:"入门1.8%，商务1.5%，企业定制。",q3:"支持哪些卡？",a3:"Uzcard、Humo、Visa、Mastercard。还有Payme、Click。",q4:"什么是AI代理计费？",a4:"AI代理按token支付。每1000个token $0.0001。",q5:"安全性如何？",a5:"复式记账、PCI DSS、2FA、HMAC Webhooks、完整审计日志。"},
-cta:{title:"今天接受第一笔付款",sub:"免费注册。5分钟开始。",btn:"免费开始"},
-footer:{product:"产品",company:"公司",legal:"法律",features:"功能",pricing:"价格",apiDocs:"API文档",register:"注册",how:"使用方法",faq:"常见问题",contactLink:"联系",privacy:"隐私",terms:"条款",security:"安全",rights:"保留所有权利。"},
-auth:{login:"登录",register:"注册",welcomeBack:"欢迎回来",createAccount:"创建账户",loginSub:"登录您的账户",registerSub:"创建免费账户",name:"全名",email:"邮箱",password:"密码",namePlaceholder:"张三",emailPlaceholder:"you@email.com",passwordPlaceholder:"至少6个字符",invalidEmail:"邮箱格式无效",shortPassword:"密码至少6个字符",nameRequired:"请输入全名",loading:"加载中...",sessionExpired:"会话过期",networkError:"无法连接服务器",sideTitle:"支付的未来。即时。",sideDesc:"为AI代理和B2B提供高性能金融基础设施。"},
-menu:{home:"仪表板",wallet:"钱包",p2p:"P2P转账",payments:"付款",links:"支付链接",invoices:"发票",agents:"AI代理",subscriptions:"订阅",dev:"开发者",settings:"设置",logout:"退出"},
-dash:{totalBalance:"总余额",add:"充值",send:"发送",sent:"已发送",commission:"手续费",transactions:"交易",intents:"意图",recentActivity:"最近活动",viewAll:"查看全部",p2pTransfer:"P2P转账",noData:"无数据",currentBalance:"当前余额",fundBalance:"充值余额",amountSom:"金额",depositBtn:"充值",linkCard:"关联银行卡",linkCardSub:"Uzcard、Humo、Visa、Mastercard",addCard:"添加银行卡",ledgerEntries:"账本记录",credit:"收入",debit:"支出",source:"来源",time:"时间",sendMoney:"发送资金",recipientEmail:"收件人邮箱",amount:"金额",note:"备注",sendBtn:"发送",transferHistory:"转账历史",createIntent:"创建支付意图",description:"描述",customerEmail:"客户邮箱",createBtn:"创建",intentsList:"意图",confirmBtn:"确认",apiKeys:"API密钥",newKey:"+ 新建",profile:"个人资料",security:"安全",twoFA:"2FA身份验证",disabled:"已禁用",enable:"启用",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"设置",keysEmpty:"无密钥",agentName:"代理名称",createKey:"创建密钥",meteredBilling:"计量计费",last24h:"过去24小时使用的token已计费。",currentPlan:"当前计划",nextPayment:"下次付款",apiLimit:"API限制",manage:"管理",payNow:"立即付款",autoCharge:"自动扣款",agentDesc:"AI代理的专用密钥。",webhookUrl:"Webhook URL",urlAddress:"URL地址",save:"保存"},
-toast:{welcome:"欢迎",funded:"余额已充值！",minAmount:"最低100",transferSuccess:"转账成功！",intentCreated:"意图已创建！",intentConfirmed:"付款已确认！",keyCreated:"API密钥已创建",keyRevoked:"密钥已撤销",confirmRevoke:"撤销此密钥？",saved:"已保存！",agentNameRequired:"请输入代理名称",comingSoon:"即将推出！",error:"错误",copied:"已复制！"},
-empty:{noTransfers:"无转账",noLedger:"无记录",noIntents:"无意向"}},
-
-fr:{flag:'🇫🇷',name:"Français",
-nav:{features:"Fonctionnalités",how:"Comment ça marche",pricing:"Tarifs",faq:"FAQ",login:"Connexion",start:"Commencer",dashboard:"Tableau de bord"},
-hero:{eyebrow:"Plateforme n°1 en Ouzbékistan",titleA:"Acceptez les paiements ",titleB:"instantanément",titleC:".",lead:"FoxPay — infrastructure de paiement moderne pour agents IA, freelances et entreprises. Facturation au sous-centime, P2P, API et webhooks.",btnStart:"Commencer gratuitement",btnMore:"En savoir plus",stat1:"Marchands actifs",stat2:"Volume mensuel",stat3:"SLA de disponibilité",todayIncome:"Revenus du jour"},
-features:{title:"Tout au même endroit",sub:"De l'acceptation des paiements à la facturation des agents IA.",f1t:"Paiements rapides",f1d:"Uzcard, Humo, Payme, Click — un clic. 1,2s.",f2t:"Sécurisé",f2d:"Comptabilité en partie double, PCI DSS, 2FA, webhooks HMAC.",f3t:"Intégration facile",f3d:"API REST, webhook, SDK. 15 minutes.",f4t:"Transfert P2P",f4d:"Instantané par téléphone ou email. 1,5%.",f5t:"Facturation agents IA",f5d:"Facturation sub-cent. Paiement par jetons.",f6t:"International",f6d:"40+ devises via SWIFT et SEPA."},
-pricing:{title:"Juste et transparent",sub:"Pas de frais cachés.",start:"Commencer",popular:"Populaire",plan1:"Démarrage",plan2:"Business",plan3:"Entreprise",perTx:"/ transaction",plan1d:"Pour les débutants",plan2d:"Pour les entreprises en croissance",plan3d:"Pour les grandes entreprises",negotiable:"Sur mesure",monthlyNo:"Pas de frais mensuels",apiAccess:"API REST + Webhook",prioritySupport:"Support prioritaire",aiBilling:"Facturation agents IA",enterpriseSLA:"SLA 99,99%",dedicated:"Gestionnaire dédié",contact:"Contactez-nous",paymentLink:"Payment link",emailSupport:"Support email"},
-faq:{title:"Questions fréquentes",q1:"Qu'est-ce que FoxPay?",a1:"FoxPay est une plateforme de paiement en ligne pour l'Ouzbékistan.",q2:"Quelle est la commission?",a2:"1,8% sur Démarrage, 1,5% sur Business, sur mesure pour Entreprise.",q3:"Quelles cartes?",a3:"Uzcard, Humo, Visa, Mastercard. Également Payme, Click.",q4:"Qu'est-ce que la facturation agents IA?",a4:"Les agents IA paient par jetons. 0,0001$ pour 1000 jetons.",q5:"Quelle sécurité?",a5:"Partie double, PCI DSS, 2FA, webhooks HMAC, journal d'audit."},
-cta:{title:"Acceptez votre premier paiement aujourd'hui",sub:"Inscription gratuite. Commencez en 5 minutes.",btn:"Commencer gratuitement"},
-footer:{product:"Produit",company:"Entreprise",legal:"Mentions légales",features:"Fonctionnalités",pricing:"Tarifs",apiDocs:"Docs API",register:"S'inscrire",how:"Comment ça marche",faq:"FAQ",contactLink:"Contact",privacy:"Confidentialité",terms:"Conditions",security:"Sécurité",rights:"Tous droits réservés."},
-auth:{login:"Connexion",register:"Inscription",welcomeBack:"Bon retour",createAccount:"Créer un compte",loginSub:"Connectez-vous",registerSub:"Créez un compte gratuit",name:"Nom complet",email:"Email",password:"Mot de passe",namePlaceholder:"Jean Dupont",emailPlaceholder:"vous@email.com",passwordPlaceholder:"Au moins 6 caractères",invalidEmail:"Format d'email invalide",shortPassword:"Mot de passe au moins 6 caractères",nameRequired:"Entrez votre nom",loading:"Chargement...",sessionExpired:"Session expirée",networkError:"Serveur inaccessible",sideTitle:"L'avenir des paiements. Instantané.",sideDesc:"Infrastructure financière haute performance pour agents IA et B2B."},
-menu:{home:"Tableau de bord",wallet:"Portefeuille",p2p:"Transfert P2P",payments:"Paiements",links:"Liens",invoices:"Factures",agents:"Agents IA",subscriptions:"Abonnements",dev:"Développeurs",settings:"Paramètres",logout:"Déconnexion"},
-dash:{totalBalance:"Solde total",add:"Ajouter des fonds",send:"Envoyer",sent:"Envoyé",commission:"Commission",transactions:"Transactions",intents:"Intentions",recentActivity:"Activité récente",viewAll:"Tout voir",p2pTransfer:"Transfert P2P",noData:"Aucune donnée",currentBalance:"Solde actuel",fundBalance:"Recharger le solde",amountSom:"Montant",depositBtn:"Déposer",linkCard:"Lier une carte",linkCardSub:"Uzcard, Humo, Visa, Mastercard",addCard:"Ajouter une carte",ledgerEntries:"Écritures comptables",credit:"Crédit",debit:"Débit",source:"Source",time:"Heure",sendMoney:"Envoyer de l'argent",recipientEmail:"Email destinataire",amount:"Montant",note:"Note",sendBtn:"Envoyer",transferHistory:"Historique",createIntent:"Créer Payment Intent",description:"Description",customerEmail:"Email client",createBtn:"Créer",intentsList:"Intentions",confirmBtn:"Confirmer",apiKeys:"Clés API",newKey:"+ Nouvelle",profile:"Profil",security:"Sécurité",twoFA:"Authentification 2FA",disabled:"Désactivé",enable:"Activer",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"Configurer",keysEmpty:"Aucune clé",agentName:"Nom de l'agent",createKey:"Créer une clé",meteredBilling:"Facturation au compteur",last24h:"Jetons utilisés dans les dernières 24h facturés.",currentPlan:"Forfait actuel",nextPayment:"Prochain paiement",apiLimit:"Limite API",manage:"Gérer",payNow:"Payer maintenant",autoCharge:"Débit automatique",agentDesc:"Clé spéciale pour agents IA.",webhookUrl:"URL Webhook",urlAddress:"Adresse URL",save:"Enregistrer"},
-toast:{welcome:"Bienvenue",funded:"Solde rechargé!",minAmount:"Minimum 100",transferSuccess:"Transfert réussi!",intentCreated:"Intention créée!",intentConfirmed:"Paiement confirmé!",keyCreated:"Clé API créée",keyRevoked:"Clé révoquée",confirmRevoke:"Révoquer cette clé?",saved:"Enregistré!",agentNameRequired:"Entrez le nom de l'agent",comingSoon:"Bientôt disponible!",error:"Erreur",copied:"Copié!"},
-empty:{noTransfers:"Aucun transfert",noLedger:"Aucune écriture",noIntents:"Aucune intention"}},
-
-it:{flag:'🇮🇹',name:"Italiano",
-nav:{features:"Funzionalità",how:"Come funziona",pricing:"Prezzi",faq:"FAQ",login:"Accedi",start:"Inizia",dashboard:"Dashboard"},
-hero:{eyebrow:"Piattaforma #1 in Uzbekistan",titleA:"Accetta pagamenti ",titleB:"istantaneamente",titleC:".",lead:"FoxPay — infrastruttura di pagamento moderna per agenti IA, freelance e aziende. Fatturazione sub-cent, P2P, API e webhook.",btnStart:"Inizia gratis",btnMore:"Scopri di più",stat1:"Commercianti attivi",stat2:"Volume mensile",stat3:"Uptime SLA",todayIncome:"Entrate oggi"},
-features:{title:"Tutto in un unico posto",sub:"Dall'accettazione dei pagamenti alla fatturazione degli agenti IA.",f1t:"Pagamenti veloci",f1d:"Uzcard, Humo, Payme, Click — un pulsante. 1,2s.",f2t:"Sicuro",f2d:"Partita doppia, PCI DSS, 2FA, webhook HMAC.",f3t:"Integrazione facile",f3d:"API REST, webhook, SDK. Inizia in 15 minuti.",f4t:"Trasferimento P2P",f4d:"Istantaneo via telefono o email. 1,5%.",f5t:"Fatturazione agenti IA",f5d:"Fatturazione sub-cent. Pagamento per token.",f6t:"Internazionale",f6d:"40+ valute tramite SWIFT e SEPA."},
-pricing:{title:"Giusto e trasparente",sub:"Nessun costo nascosto.",start:"Inizia",popular:"Popolare",plan1:"Base",plan2:"Business",plan3:"Enterprise",perTx:"/ transazione",plan1d:"Per principianti",plan2d:"Per aziende in crescita",plan3d:"Per grandi aziende",negotiable:"Personalizzato",monthlyNo:"Nessun costo mensile",apiAccess:"API REST + Webhook",prioritySupport:"Supporto prioritario",aiBilling:"Fatturazione agenti IA",enterpriseSLA:"SLA 99,99%",dedicated:"Manager dedicato",contact:"Contattaci",paymentLink:"Payment link",emailSupport:"Supporto email"},
-faq:{title:"Domande frequenti",q1:"Cos'è FoxPay?",a1:"FoxPay è una piattaforma di pagamento online per l'Uzbekistan.",q2:"Qual è la commissione?",a2:"1,8% su Base, 1,5% su Business, personalizzata per Enterprise.",q3:"Quali carte?",a3:"Uzcard, Humo, Visa, Mastercard. Anche Payme, Click.",q4:"Cos'è la fatturazione agenti IA?",a4:"Gli agenti IA pagano per token. 0,0001$ per 1000 token.",q5:"Quanto è sicuro?",a5:"Partita doppia, PCI DSS, 2FA, webhook HMAC, audit log."},
-cta:{title:"Accetta il tuo primo pagamento oggi",sub:"Registrazione gratuita. Inizia in 5 minuti.",btn:"Inizia gratis"},
-footer:{product:"Prodotto",company:"Azienda",legal:"Legale",features:"Funzionalità",pricing:"Prezzi",apiDocs:"Docs API",register:"Registrati",how:"Come funziona",faq:"FAQ",contactLink:"Contatti",privacy:"Privacy",terms:"Termini",security:"Sicurezza",rights:"Tutti i diritti riservati."},
-auth:{login:"Accedi",register:"Registrati",welcomeBack:"Bentornato",createAccount:"Crea account",loginSub:"Accedi al tuo account",registerSub:"Crea un account gratuito",name:"Nome completo",email:"Email",password:"Password",namePlaceholder:"Mario Rossi",emailPlaceholder:"tu@email.com",passwordPlaceholder:"Almeno 6 caratteri",invalidEmail:"Formato email non valido",shortPassword:"Password almeno 6 caratteri",nameRequired:"Inserisci il nome",loading:"Caricamento...",sessionExpired:"Sessione scaduta",networkError:"Server non raggiungibile",sideTitle:"Il futuro dei pagamenti. Istantaneo.",sideDesc:"Infrastruttura finanziaria ad alte prestazioni per agenti IA e B2B."},
-menu:{home:"Dashboard",wallet:"Portafoglio",p2p:"Trasferimento P2P",payments:"Pagamenti",links:"Link",invoices:"Fatture",agents:"Agenti IA",subscriptions:"Abbonamenti",dev:"Sviluppatori",settings:"Impostazioni",logout:"Esci"},
-dash:{totalBalance:"Saldo totale",add:"Aggiungi fondi",send:"Invia",sent:"Inviato",commission:"Commissione",transactions:"Transazioni",intents:"Intenti",recentActivity:"Attività recente",viewAll:"Vedi tutto",p2pTransfer:"Trasferimento P2P",noData:"Nessun dato",currentBalance:"Saldo attuale",fundBalance:"Ricarica saldo",amountSom:"Importo",depositBtn:"Deposita",linkCard:"Collega carta",linkCardSub:"Uzcard, Humo, Visa, Mastercard",addCard:"Aggiungi carta",ledgerEntries:"Registrazioni contabili",credit:"Entrata",debit:"Uscita",source:"Origine",time:"Ora",sendMoney:"Invia denaro",recipientEmail:"Email destinatario",amount:"Importo",note:"Nota",sendBtn:"Invia",transferHistory:"Storico trasferimenti",createIntent:"Crea Payment Intent",description:"Descrizione",customerEmail:"Email cliente",createBtn:"Crea",intentsList:"Intenti",confirmBtn:"Conferma",apiKeys:"Chiavi API",newKey:"+ Nuova",profile:"Profilo",security:"Sicurezza",twoFA:"Autenticazione 2FA",disabled:"Disabilitato",enable:"Abilita",passkey:"Passkey",faceid:"Face ID / Touch ID",setup:"Configura",keysEmpty:"Nessuna chiave",agentName:"Nome agente",createKey:"Crea chiave",meteredBilling:"Fatturazione a consumo",last24h:"Token utilizzati nelle ultime 24 ore fatturati.",currentPlan:"Piano attuale",nextPayment:"Prossimo pagamento",apiLimit:"Limite API",manage:"Gestisci",payNow:"Paga ora",autoCharge:"Addebito automatico",agentDesc:"Chiave speciale per agenti IA.",webhookUrl:"URL Webhook",urlAddress:"Indirizzo URL",save:"Salva"},
-toast:{welcome:"Benvenuto",funded:"Saldo ricaricato!",minAmount:"Minimo 100",transferSuccess:"Trasferimento riuscito!",intentCreated:"Intento creato!",intentConfirmed:"Pagamento confermato!",keyCreated:"Chiave API creata",keyRevoked:"Chiave revocata",confirmRevoke:"Revocare questa chiave?",saved:"Salvato!",agentNameRequired:"Inserisci il nome dell'agente",comingSoon:"Prossimamente!",error:"Errore",copied:"Copiato!"},
-empty:{noTransfers:"Nessun trasferimento",noLedger:"Nessuna registrazione",noIntents:"Nessun intento"}}
+/* ============================================================
+   SVG ICONS & LOGO
+   ============================================================ */
+const Icons = {
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  wallet: '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',
+  send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+  card: '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+  link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  bot: '<rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>',
+  repeat: '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+  code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+  sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>',
+  moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+  plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  x: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  refresh: '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+  trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  menu: '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>'
 };
 
-/* ═══════════════════════════════════════════════
-   2. LANGUAGE ENGINE
-   ═══════════════════════════════════════════════ */
-var LANG_KEY='foxpay.lang';
-var currentLang=localStorage.getItem(LANG_KEY)||'uz';
-if(!I18N[currentLang])currentLang='uz';
-
-function t(path){
-  var keys=path.split('.');
-  var obj=I18N[currentLang];
-  for(var i=0;i<keys.length;i++){if(!obj)return path;obj=obj[keys[i]];}
-  return obj||path;
-}
-function setLang(code){
-  if(!I18N[code])return;
-  currentLang=code;
-  localStorage.setItem(LANG_KEY,code);
-  document.documentElement.lang=code;
-  router();
-}
-function langSwitcher(){
-  var h='<div class="lang-switch"><button class="lang-btn" data-lang-toggle>'+I18N[currentLang].flag+' '+currentLang.toUpperCase()+'</button><div class="lang-menu" data-lang-menu>';
-  Object.keys(I18N).forEach(function(c){
-    h+='<div class="lang-opt '+(c===currentLang?'active':'')+'" data-lang="'+c+'">'+I18N[c].flag+' '+I18N[c].name+'</div>';
-  });
-  return h+'</div></div>';
-}
-function bindLang(){
-  document.querySelectorAll('[data-lang-toggle]').forEach(function(btn){
-    btn.onclick=function(e){
-      e.stopPropagation();
-      var menu=btn.nextElementSibling;
-      document.querySelectorAll('[data-lang-menu]').forEach(function(m){if(m!==menu)m.classList.remove('open');});
-      menu.classList.toggle('open');
-    };
-  });
-  document.querySelectorAll('[data-lang]').forEach(function(el){
-    el.onclick=function(e){e.stopPropagation();setLang(el.getAttribute('data-lang'));};
-  });
-  document.addEventListener('click',function(){
-    document.querySelectorAll('[data-lang-menu]').forEach(function(m){m.classList.remove('open');});
-  });
-}
-
-/* ═══════════════════════════════════════════════
-   3. ICONS
-   ═══════════════════════════════════════════════ */
-var Icons={
-home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-wallet:'<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',
-send:'<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
-card:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
-link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
-file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
-bot:'<rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>',
-repeat:'<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
-code:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
-logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
-sun:'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>',
-moon:'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
-plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
-x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
-check:'<polyline points="20 6 9 17 4 12"/>',
-trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
-menu:'<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
-zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-arrowRight:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
-chevronDown:'<polyline points="6 9 12 15 18 9"/>',
-star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
-copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
-globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'
-};
-function ic(n,s){s=s||16;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(Icons[n]||'')+'</svg>';}
-
-/* ═══════════════════════════════════════════════
-   4. LOGO (from user's SVG)
-   ═══════════════════════════════════════════════ */
-function LogoSVG(size){
-  size=size||36;
-  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 100 100">'+
-  '<defs><linearGradient id="fg'+size+'" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6B00"/><stop offset="100%" stop-color="#E64A00"/></linearGradient></defs>'+
-  '<rect width="100" height="100" rx="18" fill="#0B1120"/>'+
-  '<g transform="translate(10, 8)">'+
-  '<path d="M 26 21 A 18 18 0 0 1 54 21 L 59 15 A 24 24 0 0 0 21 15 Z" fill="#0B2545"/>'+
-  '<path d="M 30 26 A 12 12 0 0 1 50 26 L 54 21 A 18 18 0 0 0 26 21 Z" fill="#133863"/>'+
-  '<circle cx="40" cy="31" r="3.2" fill="#0B2545"/><circle cx="40" cy="31" r="1.6" fill="url(#fg'+size+')"/>'+
-  '<path d="M 18 33 C 10 40 8 52 17 61 C 26 70 39 70 46 62 C 53 54 51 44 46 39 C 42 35 37 36 37 36 C 37 36 42 44 38 49 C 34 54 26 54 22 49 C 18 44 20 37 24 33 Z" fill="url(#fg'+size+')"/>'+
-  '<path d="M 44 40 C 48 41 55 45 62 50 C 64 52 61 52 60 52 C 55 52 50 49 46 47 C 44 46 42 45 44 40 Z" fill="url(#fg'+size+')"/>'+
-  '<path d="M 46 47 C 50 49 55 52 60 52 C 61 52 64 52 62 50 C 58 47 53 44 49 42 C 48 41 47 43 46 47 Z" fill="#0B2545"/>'+
-  '<path d="M 53 33 L 56 40 L 51 39 Z" fill="#0B2545"/>'+
-  '</g></svg>';
-}
-function LogoFull(size){return '<div style="display:inline-flex;align-items:center;gap:10px">'+LogoSVG(size||36)+'<span style="font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--text)">FOX<span style="color:var(--cyan)">PAY</span></span></div>';}
-
-/* ═══════════════════════════════════════════════
-   5. STATE & UTILS
-   ═══════════════════════════════════════════════ */
-var Config={tokenKey:'foxpay.token',userKey:'foxpay.user',themeKey:'foxpay.theme'};
-var State={
-  token:localStorage.getItem(Config.tokenKey)||null,
-  user:JSON.parse(localStorage.getItem(Config.userKey)||'null'),
-  wallet:{balance_tiyin:0,currency:'UZS'},
-  activeView:'/'
-};
-var $=function(s,e){return(e||document).querySelector(s);};
-var $$=function(s,e){return Array.prototype.slice.call((e||document).querySelectorAll(s));};
-var fmtUZS=function(tiyin){return tiyin==null?'—':(tiyin/100).toLocaleString(currentLang==='uz'?'uz-UZ':'en-US',{maximumFractionDigits:2})+' UZS';};
-var fmtDate=function(iso){return iso?new Date(iso).toLocaleString(currentLang==='uz'?'uz-UZ':'en-US',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';};
-var initials=function(name){return name?name.trim().split(/\s+/).map(function(n){return n[0];}).join('').slice(0,2).toUpperCase():'?';};
-var isValidEmail=function(e){return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);};
-var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
-var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
-var copyText=function(text){
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(function(){toast(t('toast.copied'),'success');}).catch(function(){toast('Copy failed','error');});
-  }else{
-    var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
-    try{document.execCommand('copy');toast(t('toast.copied'),'success');}catch(e){toast('Copy failed','error');}
-    document.body.removeChild(ta);
-  }
+const getIcon = (name, size = 16) => {
+  const path = Icons[name] || '';
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 };
 
-/* ═══════════════════════════════════════════════
-   6. THEME
-   ═══════════════════════════════════════════════ */
-function getTheme(){return localStorage.getItem(Config.themeKey)||'dark';}
-function setTheme(th){document.documentElement.setAttribute('data-theme',th);localStorage.setItem(Config.themeKey,th);}
-function toggleTheme(){setTheme(getTheme()==='dark'?'light':'dark');router();}
-setTheme(getTheme());
+const LogoSVG = (size = 36) => `
+<svg width="${size}" height="${size}" viewBox="0 0 100 100">
+  <defs><linearGradient id="foxGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6B00"/><stop offset="100%" stop-color="#E64A00"/></linearGradient></defs>
+  <rect width="100" height="100" rx="18" fill="#0B1120"/>
+  <g transform="translate(10, 8)">
+    <path d="M 26 21 A 18 18 0 0 1 54 21 L 59 15 A 24 24 0 0 0 21 15 Z" fill="#0B2545"/>
+    <path d="M 30 26 A 12 12 0 0 1 50 26 L 54 21 A 18 18 0 0 0 26 21 Z" fill="#133863"/>
+    <circle cx="40" cy="31" r="3.2" fill="#0B2545"/><circle cx="40" cy="31" r="1.6" fill="url(#foxGrad)"/>
+    <path d="M 18 33 C 10 40 8 52 17 61 C 26 70 39 70 46 62 C 53 54 51 44 46 39 C 42 35 37 36 37 36 C 37 36 42 44 38 49 C 34 54 26 54 22 49 C 18 44 20 37 24 33 Z" fill="url(#foxGrad)"/>
+    <path d="M 44 40 C 48 41 55 45 62 50 C 64 52 61 52 60 52 C 55 52 50 49 46 47 C 44 46 42 45 44 40 Z" fill="url(#foxGrad)"/>
+    <path d="M 46 47 C 50 49 55 52 60 52 C 61 52 64 52 62 50 C 58 47 53 44 49 42 C 48 41 47 43 46 47 Z" fill="#0B2545"/>
+    <path d="M 53 33 L 56 40 L 51 39 Z" fill="#0B2545"/>
+  </g>
+</svg>`;
 
-/* ═══════════════════════════════════════════════
-   7. TOAST & MODAL
-   ═══════════════════════════════════════════════ */
-function toast(msg,type){
-  type=type||'success';
-  var host=document.getElementById('toast-host');
-  var el=document.createElement('div');
-  el.className='toast '+type;
-  el.innerHTML=ic(type==='success'?'check':'x',16)+'<span>'+esc(msg)+'</span>';
+const LogoFull = (size = 36) => `
+<div style="display:inline-flex;align-items:center;gap:10px">
+  ${LogoSVG(size)}
+  <span style="font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--text)">FOX<span style="color:var(--cyan)">PAY</span></span>
+</div>`;
+
+/* ============================================================
+   STATE MANAGEMENT & CONFIG
+   ============================================================ */
+const Config = {
+  tokenKey: 'foxpay.token',
+  userKey: 'foxpay.user',
+  themeKey: 'foxpay.theme'
+};
+
+const State = {
+  token: localStorage.getItem(Config.tokenKey) || null,
+  user: JSON.parse(localStorage.getItem(Config.userKey) || 'null'),
+  wallet: { balance_tiyin: 0, currency: 'UZS' },
+  ledger: [],
+  transfers: [],
+  intents: [],
+  keys: [],
+  hooks: [],
+  activeView: '/'
+};
+
+/* ============================================================
+   UTILITY FUNCTIONS
+   ============================================================ */
+const $ = (s, e = document) => e.querySelector(s);
+const $$ = (s, e = document) => [...e.querySelectorAll(s)];
+
+const formatUZS = (tiyin) => tiyin == null ? '—' : (tiyin / 100).toLocaleString('uz-UZ', { maximumFractionDigits: 2 }) + " so'm";
+const formatDate = (iso) => iso ? new Date(iso).toLocaleString('uz-UZ', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+const initials = (name) => name ? name.trim().split(/\s+/).map(n => n[0]).join('').slice(0, 2).toUpperCase() : '?';
+const isValidEmail = (email) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+const escapeHTML = (str) => String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ============================================================
+   THEME ENGINE
+   ============================================================ */
+const initTheme = () => {
+  const t = localStorage.getItem(Config.themeKey) || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+};
+const toggleTheme = () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem(Config.themeKey, next);
+  renderDashboard(State.activeView); // Re-render to update icon
+};
+initTheme();
+
+/* ============================================================
+   TOAST & MODAL ENGINE
+   ============================================================ */
+const toast = (msg, type = 'success') => {
+  const host = $('#toast-host');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${getIcon(type === 'success' ? 'check' : 'x', 16)} <span>${escapeHTML(msg)}</span>`;
   host.appendChild(el);
-  setTimeout(function(){el.classList.add('out');setTimeout(function(){el.remove();},220);},3200);
-}
-function openModal(title,body,footer){
-  var host=document.getElementById('modal-host');
-  var back=document.createElement('div');
-  back.className='modal-back';
-  back.innerHTML='<div class="modal"><div class="m-head"><div class="m-title">'+esc(title)+'</div><button onclick="closeModal()" class="btn-ghost btn-icon">'+ic('x',18)+'</button></div><div class="m-body">'+body+'</div>'+(footer?'<div class="m-foot">'+footer+'</div>':'')+'</div>';
-  back.onclick=function(e){if(e.target===back)closeModal();};
-  host.appendChild(back);
-}
-function closeModal(){document.getElementById('modal-host').innerHTML='';}
-
-/* ═══════════════════════════════════════════════
-   8. API CLIENT
-   ═══════════════════════════════════════════════ */
-var api={
-  req:async function(path,method,body){
-    var headers={'Content-Type':'application/json'};
-    if(State.token)headers['Authorization']='Bearer '+State.token;
-    try{
-      var res=await fetch(path,{method:method||'GET',headers:headers,body:body?JSON.stringify(body):undefined});
-      if(res.status===401){logout();throw new Error(t('auth.sessionExpired'));}
-      if(!res.ok){var data=await res.json().catch(function(){return{};});throw new Error(data.detail||'Error '+res.status);}
-      if(res.status===204)return null;
-      return await res.json();
-    }catch(err){throw new Error(err.message==='Failed to fetch'?t('auth.networkError'):err.message);}
-  },
-  get:function(p){return this.req(p,'GET');},
-  post:function(p,b){return this.req(p,'POST',b);},
-  put:function(p,b){return this.req(p,'PUT',b);},
-  del:function(p){return this.req(p,'DELETE');}
+  setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3000);
 };
 
-/* ═══════════════════════════════════════════════
-   9. AUTH
-   ═══════════════════════════════════════════════ */
-async function handleAuth(e,mode){
+const openModal = (title, bodyHtml, footerHtml) => {
+  const host = $('#modal-host');
+  const back = document.createElement('div');
+  back.className = 'modal-back';
+  back.innerHTML = `
+    <div class="modal">
+      <div class="modal-head">
+        <div class="t-lg fw7">${escapeHTML(title)}</div>
+        <button onclick="closeModal()" class="btn-ghost btn-icon">${getIcon('x', 18)}</button>
+      </div>
+      <div class="modal-body">${bodyHtml}</div>
+      ${footerHtml ? `<div class="modal-foot">${footerHtml}</div>` : ''}
+    </div>`;
+  back.onclick = (e) => { if (e.target === back) closeModal(); };
+  host.appendChild(back);
+};
+
+const closeModal = () => { $('#modal-host').innerHTML = ''; };
+
+/* ============================================================
+   API CLIENT
+   ============================================================ */
+const api = {
+  async req(path, method = 'GET', body = null) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (State.token) headers['Authorization'] = `Bearer ${State.token}`;
+    
+    try {
+      const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+      if (res.status === 401) {
+        logout();
+        throw new Error('Sessiya tugadi. Qayta kiring.');
+      }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.detail || `Xato: ${res.status}`);
+      }
+      if (res.status === 204) return null;
+      return await res.json();
+    } catch (err) {
+      throw new Error(err.message === 'Failed to fetch' ? 'Server bilan aloqa yo\'q' : err.message);
+    }
+  },
+  get(p) { return this.req(p, 'GET'); },
+  post(p, b) { return this.req(p, 'POST', b); },
+  put(p, b) { return this.req(p, 'PUT', b); },
+  del(p) { return this.req(p, 'DELETE'); }
+};
+
+/* ============================================================
+   AUTHENTICATION
+   ============================================================ */
+const handleAuth = async (e, mode) => {
   e.preventDefault();
-  var form=new FormData(e.target);
-  var email=form.get('email').trim();
-  var password=form.get('password');
-  var name=form.get('name')?form.get('name').trim():'';
-  if(!isValidEmail(email))return toast(t('auth.invalidEmail'),'error');
-  if(password.length<6)return toast(t('auth.shortPassword'),'error');
-  if(mode==='register'&&(!name||name.length<2))return toast(t('auth.nameRequired'),'error');
-  var btn=e.target.querySelector('button[type="submit"]');
-  var orig=btn.innerHTML;
-  btn.innerHTML=t('auth.loading');btn.disabled=true;
-  try{
-    var payload=mode==='register'?{name:name,email:email,password:password}:{email:email,password:password};
-    var data=await api.post('/api/auth/'+mode,payload);
-    State.token=data.token;State.user=data.user;
-    localStorage.setItem(Config.tokenKey,State.token);
-    localStorage.setItem(Config.userKey,JSON.stringify(State.user));
-    toast(t('toast.welcome')+', '+data.user.name+'!');
-    window.location.hash='#/';
-  }catch(err){
-    toast(err.message,'error');
-    btn.innerHTML=orig;btn.disabled=false;
+  const form = new FormData(e.target);
+  const email = form.get('email').trim();
+  const password = form.get('password');
+  const name = form.get('name')?.trim();
+  
+  if (!isValidEmail(email)) return toast('Email formati noto\'g\'ri', 'error');
+  if (password.length < 6) return toast('Parol kamida 6 belgi bo\'lishi kerak', 'error');
+  if (mode === 'register' && (!name || name.length < 2)) return toast('Ismingizni to\'liq kiriting', 'error');
+
+  const btn = e.target.querySelector('button[type="submit"]');
+  const origText = btn.innerHTML;
+  btn.innerHTML = 'Yuklanmoqda...';
+  btn.disabled = true;
+
+  try {
+    const payload = mode === 'register' ? { name, email, password } : { email, password };
+    const data = await api.post(`/api/auth/${mode}`, payload);
+    
+    State.token = data.token;
+    State.user = data.user;
+    localStorage.setItem(Config.tokenKey, State.token);
+    localStorage.setItem(Config.userKey, JSON.stringify(State.user));
+    
+    toast(`Xush kelibsiz, ${data.user.name}!`);
+    window.location.hash = '#/';
+  } catch (err) {
+    toast(err.message, 'error');
+    btn.innerHTML = origText;
+    btn.disabled = false;
   }
-}
-function logout(){
-  State.token=null;State.user=null;
+};
+
+const logout = () => {
+  State.token = null; State.user = null;
   localStorage.removeItem(Config.tokenKey);
   localStorage.removeItem(Config.userKey);
-  window.location.hash='#/login';
-}
+  window.location.hash = '#/login';
+};
 
-/* ═══════════════════════════════════════════════
-   10. ROUTER
-   ═══════════════════════════════════════════════ */
-function router(){
-  var hash=window.location.hash.replace('#','')||'/';
-  if(!State.token){
-    if(hash==='/register')renderAuth('register');else renderAuth('login');
+/* ============================================================
+   ROUTER
+   ============================================================ */
+const router = () => {
+  const hash = window.location.hash.replace('#', '') || '/';
+  
+  if (!State.token) {
+    if (hash === '/register') renderAuth('register');
+    else renderAuth('login');
     return;
   }
-  if(hash==='/login'||hash==='/register'||hash==='/')renderDashboard('/');
-  else renderDashboard(hash);
-}
 
-/* ═══════════════════════════════════════════════
-   11. LANDING
-   ═══════════════════════════════════════════════ */
-function renderLanding(){
-  var fk=['f1','f2','f3','f4','f5','f6'];
-  var fi=['zap','shield','code','send','bot','globe'];
-  document.getElementById('app').innerHTML=
-  '<div class="landing">'+
-  '<header class="topnav"><div class="tn-inner">'+
-    '<a class="logo" onclick="window.location.hash=\'#/\'">'+LogoFull(36)+'</a>'+
-    '<nav class="nav-links">'+
-      '<a class="nl" onclick="scrollTo(\'features\')">'+t('nav.features')+'</a>'+
-      '<a class="nl" onclick="scrollTo(\'pricing\')">'+t('nav.pricing')+'</a>'+
-      '<a class="nl" onclick="scrollTo(\'faq\')">'+t('nav.faq')+'</a>'+
-    '</nav>'+
-    '<div class="nav-actions">'+langSwitcher()+
-      '<button class="btn btn-ghost btn-icon" onclick="toggleTheme()">'+ic(getTheme()==='dark'?'sun':'moon',16)+'</button>'+
-      (State.user?'<a href="#/" class="btn btn-primary btn-sm">'+t('nav.dashboard')+'</a>':'<a href="#/login" class="btn btn-ghost btn-sm">'+t('nav.login')+'</a><a href="#/register" class="btn btn-primary btn-sm">'+t('nav.start')+'</a>')+
-    '</div>'+
-  '</div></header>'+
-  '<section class="hero"><div>'+
-    '<div class="hero-eyebrow">'+ic('zap',13)+' '+esc(t('hero.eyebrow'))+'</div>'+
-    '<h1>'+esc(t('hero.titleA'))+'<span class="grad">'+esc(t('hero.titleB'))+'</span>'+esc(t('hero.titleC'))+'</h1>'+
-    '<p class="lead">'+esc(t('hero.lead'))+'</p>'+
-    '<div class="hero-cta"><a href="#/register" class="btn btn-primary btn-lg">'+t('hero.btnStart')+' '+ic('arrowRight',15)+'</a><a onclick="scrollTo(\'features\')" class="btn btn-outline btn-lg">'+t('hero.btnMore')+'</a></div>'+
-    '<div class="hero-stats"><div><div class="hs-num">12,400+</div><div class="hs-lbl">'+t('hero.stat1')+'</div></div><div><div class="hs-num">₣ 4.2 mlrd</div><div class="hs-lbl">'+t('hero.stat2')+'</div></div><div><div class="hs-num">99.98%</div><div class="hs-lbl">'+t('hero.stat3')+'</div></div></div>'+
-  '</div>'+
-  '<div class="hero-visual"><div class="hero-card"><div class="flex jc-b ai-c" style="margin-bottom:16px;position:relative;z-index:1"><div><div class="t-sm muted">'+t('hero.todayIncome')+'</div><div class="hero-amt">₣ 8,240,000</div></div><span class="badge b-green"><span class="bd"></span>+18.2%</span></div><div style="display:flex;align-items:flex-end;gap:6px;height:120px;position:relative;z-index:1">'+[40,55,48,70,85,100].map(function(h,i){return '<div style="flex:1;background:'+(i===5?'#FF6B00':'rgba(255,107,0,'+(0.3+i*0.12)+')')+';border-radius:4px;height:'+h+'%"></div>';}).join('')+'</div></div></div>'+
-  '</section>'+
-  '<section class="section" id="features"><div class="section-head"><div class="section-eyebrow">'+t('nav.features')+'</div><h2>'+t('features.title')+'</h2><p>'+t('features.sub')+'</p></div><div class="features">'+
-    fk.map(function(k,i){return '<article class="feature"><div class="feature-icon">'+ic(fi[i],22)+'</div><h3>'+t('features.'+k+'t')+'</h3><p>'+t('features.'+k+'d')+'</p></article>';}).join('')+
-  '</div></section>'+
-  '<section class="section" id="pricing"><div class="section-head"><div class="section-eyebrow">'+t('nav.pricing')+'</div><h2>'+t('pricing.title')+'</h2><p>'+t('pricing.sub')+'</p></div><div class="pricing-grid">'+
-    '<div class="price-card"><div class="price-name">'+t('pricing.plan1')+'</div><div class="price-amount">1.8%<span> '+t('pricing.perTx')+'</span></div><div class="price-desc">'+t('pricing.plan1d')+'</div><ul class="price-list"><li class="price-item">✓ '+t('pricing.monthlyNo')+'</li><li class="price-item">✓ '+t('pricing.paymentLink')+'</li><li class="price-item">✓ '+t('pricing.emailSupport')+'</li></ul><a href="#/register" class="btn btn-outline btn-block">'+t('pricing.start')+'</a></div>'+
-    '<div class="price-card featured"><div class="price-badge">'+t('pricing.popular')+'</div><div class="price-name">'+t('pricing.plan2')+'</div><div class="price-amount">1.5%<span> '+t('pricing.perTx')+'</span></div><div class="price-desc">'+t('pricing.plan2d')+'</div><ul class="price-list"><li class="price-item">✓ '+t('pricing.monthlyNo')+'</li><li class="price-item">✓ '+t('pricing.apiAccess')+'</li><li class="price-item">✓ '+t('pricing.prioritySupport')+'</li><li class="price-item">✓ '+t('pricing.aiBilling')+'</li></ul><a href="#/register" class="btn btn-primary btn-block">'+t('pricing.start')+'</a></div>'+
-    '<div class="price-card"><div class="price-name">'+t('pricing.plan3')+'</div><div class="price-amount">'+t('pricing.negotiable')+'</div><div class="price-desc">'+t('pricing.plan3d')+'</div><ul class="price-list"><li class="price-item">✓ '+t('pricing.monthlyNo')+'</li><li class="price-item">✓ '+t('pricing.enterpriseSLA')+'</li><li class="price-item">✓ '+t('pricing.dedicated')+'</li></ul><a href="#/register" class="btn btn-outline btn-block">'+t('pricing.contact')+'</a></div>'+
-  '</div></section>'+
-  '<section class="section"><div class="section-head"><div class="section-eyebrow">Testimonials</div><h2>12,000+ biznes ishonadi</h2></div><div class="testimonials">'+
-    '<article class="testimonial"><div class="stars">'+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+'</div><p class="testimonial-quote">"FoxPay bilan integratsiya 2 soatda tugadi."</p><div class="testimonial-author"><div class="testimonial-avatar">AK</div><div><div class="testimonial-name">Aziz Karimov</div><div class="testimonial-role">CTO, Silk Road</div></div></div></article>'+
-    '<article class="testimonial"><div class="stars">'+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+'</div><p class="testimonial-quote">"Freelancer sifatida to\'lov qabul qilish osonlashdi."</p><div class="testimonial-author"><div class="testimonial-avatar">MY</div><div><div class="testimonial-name">Malika Yusupova</div><div class="testimonial-role">UX Designer</div></div></div></article>'+
-    '<article class="testimonial"><div class="stars">'+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+ic('star',14)+'</div><p class="testimonial-quote">"P2P real vaqtda ishlaydi."</p><div class="testimonial-author"><div class="testimonial-avatar">JT</div><div><div class="testimonial-name">Jasur Toshmatov</div><div class="testimonial-role">Founder, Navoi Tech</div></div></div></article>'+
-  '</div></section>'+
-  '<section class="section" id="faq"><div class="section-head"><div class="section-eyebrow">'+t('nav.faq')+'</div><h2>'+t('faq.title')+'</h2></div><div class="faq-list">'+
-    ['1','2','3','4','5'].map(function(k){return '<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>'+t('faq.q'+k)+'</span><span class="chev">'+ic('chevronDown',16)+'</span></button><div class="faq-a"><div class="faq-a-inner">'+t('faq.a'+k)+'</div></div></div>';}).join('')+
-  '</div></section>'+
-  '<section class="section"><div class="cta-box"><h2>'+t('cta.title')+'</h2><p>'+t('cta.sub')+'</p><a href="#/register" class="btn">'+t('cta.btn')+'</a></div></section>'+
-  '<footer class="site-footer"><div class="footer-grid">'+
-    '<div class="footer-col">'+LogoFull(32)+'<p style="font-size:13px;color:var(--muted);margin-top:12px;line-height:1.65;max-width:280px">'+esc(t('hero.lead').substring(0,90))+'...</p></div>'+
-    '<div class="footer-col"><h4>'+t('footer.product')+'</h4><a onclick="scrollTo(\'features\')">'+t('footer.features')+'</a><a onclick="scrollTo(\'pricing\')">'+t('footer.pricing')+'</a><a href="/docs">'+t('footer.apiDocs')+'</a><a href="#/register">'+t('footer.register')+'</a></div>'+
-    '<div class="footer-col"><h4>'+t('footer.company')+'</h4><a onclick="scrollTo(\'faq\')">'+t('footer.faq')+'</a><a href="mailto:hello@foxpay.uz">'+t('footer.contactLink')+'</a></div>'+
-    '<div class="footer-col"><h4>'+t('footer.legal')+'</h4><a href="/privacy">'+t('footer.privacy')+'</a><a href="/terms">'+t('footer.terms')+'</a><a href="/security">'+t('footer.security')+'</a></div>'+
-  '</div><div class="footer-bottom"><div>© '+new Date().getFullYear()+' FoxPay Inc. '+t('footer.rights')+'</div></div></footer>'+
-  '</div>';
-  bindLang();
-}
-function scrollTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
-function toggleFaq(btn){var item=btn.parentElement;var open=item.classList.contains('open');$$('.faq-item').forEach(function(i){i.classList.remove('open');});if(!open)item.classList.add('open');}
+  if (hash === '/login' || hash === '/register' || hash === '/') {
+    renderDashboard('/');
+  } else {
+    renderDashboard(hash);
+  }
+};
 
-/* ═══════════════════════════════════════════════
-   12. AUTH PAGE
-   ═══════════════════════════════════════════════ */
-function renderAuth(mode){
-  var isLogin=mode==='login';
-  document.getElementById('app').innerHTML=
-  '<div class="auth-wrap">'+
-  '<div class="auth-side"><div>'+LogoFull(44)+'</div><div><h1 class="t-3xl fw9" style="margin-bottom:16px;line-height:1.1">'+t('auth.sideTitle')+'</h1><p class="muted" style="max-width:400px;line-height:1.6">'+t('auth.sideDesc')+'</p></div><div class="auth-side-foot">© '+new Date().getFullYear()+' FoxPay Inc.</div></div>'+
-  '<div class="auth-main"><div class="auth-box">'+
-    '<div class="flex jc-b ai-c mb4">'+langSwitcher()+'</div>'+
-    '<h1>'+(isLogin?t('auth.welcomeBack'):t('auth.createAccount'))+'</h1>'+
-    '<p class="sub">'+(isLogin?t('auth.loginSub'):t('auth.registerSub'))+'</p>'+
-    '<div class="auth-tabs"><a href="#/login" class="auth-tab '+(isLogin?'active':'')+'">'+t('auth.login')+'</a><a href="#/register" class="auth-tab '+(!isLogin?'active':'')+'">'+t('auth.register')+'</a></div>'+
-    '<form onsubmit="handleAuth(event, \''+mode+'\')">'+
-      (!isLogin?'<div class="field"><label>'+t('auth.name')+'</label><input class="input" name="name" required placeholder="'+t('auth.namePlaceholder')+'"></div>':'')+
-      '<div class="field"><label>'+t('auth.email')+'</label><input class="input" type="email" name="email" required placeholder="'+t('auth.emailPlaceholder')+'"></div>'+
-      '<div class="field"><label>'+t('auth.password')+'</label><input class="input" type="password" name="password" required minlength="6" placeholder="'+t('auth.passwordPlaceholder')+'"></div>'+
-      '<button type="submit" class="btn btn-primary btn-block" style="margin-top:12px">'+(isLogin?t('auth.login'):t('auth.register'))+'</button>'+
-    '</form>'+
-    '<div class="auth-hint">Demo: any email + password (6+ chars)</div>'+
-  '</div></div></div>';
-  bindLang();
-}
+/* ============================================================
+   VIEW: AUTH (Login & Register)
+   ============================================================ */
+const renderAuth = (mode) => {
+  const isLogin = mode === 'login';
+  $('#app').innerHTML = `
+    <div class="auth-wrap">
+      <div class="auth-side">
+        <div>${LogoFull(44)}</div>
+        <div>
+          <h1 class="t-3xl fw9" style="margin-bottom:16px;line-height:1.1">Kelajak to'lov tizimi.<br><span style="color:var(--fox)">Bir zumda.</span></h1>
+          <p class="muted" style="max-width:400px;line-height:1.6">AI-agentlar va B2B uchun mo'ljallangan, yuqori tezlikda ishlaydigan global moliyaviy infratuzilma.</p>
+        </div>
+        <div class="t-sm" style="opacity:.6">© 2025 FoxPay Inc.</div>
+      </div>
+      <div class="auth-main">
+        <div class="auth-box">
+          <h2 class="t-2xl fw8" style="margin-bottom:8px">${isLogin ? 'Xush kelibsiz' : 'Hisob yaratish'}</h2>
+          <p class="muted t-sm" style="margin-bottom:24px">${isLogin ? 'Tizimga kirish uchun ma\'lumotlarni kiriting' : 'Bepul hisob yarating va API oling'}</p>
+          
+          <div class="auth-tabs">
+            <a href="#/login" class="auth-tab ${isLogin ? 'active' : ''}">Kirish</a>
+            <a href="#/register" class="auth-tab ${!isLogin ? 'active' : ''}">Ro'yxatdan o'tish</a>
+          </div>
 
-/* ═══════════════════════════════════════════════
-   13. DASHBOARD SHELL
-   ═══════════════════════════════════════════════ */
-var MENU_KEYS=[
-  {id:'/',key:'home',icon:'home'},{id:'/wallet',key:'wallet',icon:'wallet'},
-  {id:'/p2p',key:'p2p',icon:'send'},{id:'/payments',key:'payments',icon:'card'},
-  {id:'/links',key:'links',icon:'link'},{id:'/invoices',key:'invoices',icon:'file'},
-  {id:'/agents',key:'agents',icon:'bot'},{id:'/subscriptions',key:'subscriptions',icon:'repeat'},
-  {id:'/dev',key:'dev',icon:'code'},{id:'/settings',key:'settings',icon:'settings'}
+          <form onsubmit="handleAuth(event, '${mode}')">
+            ${!isLogin ? `<div class="field"><label>Ism</label><input class="input" name="name" required placeholder="Aziz Karimov"></div>` : ''}
+            <div class="field"><label>Email</label><input class="input" type="email" name="email" required placeholder="siz@email.com"></div>
+            <div class="field"><label>Parol</label><input class="input" type="password" name="password" required minlength="6" placeholder="Kamida 6 belgi"></div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px">${isLogin ? 'Kirish' : 'Ro\'yxatdan o\'tish'}</button>
+          </form>
+        </div>
+      </div>
+    </div>`;
+};
+
+/* ============================================================
+   VIEW: DASHBOARD SHELL (Sidebar & Topbar)
+   ============================================================ */
+const MENU_ITEMS = [
+  { id: '/', label: 'Boshqaruv', icon: 'home' },
+  { id: '/wallet', label: 'Hamyon', icon: 'wallet' },
+  { id: '/p2p', label: 'P2P O\'tkazma', icon: 'send' },
+  { id: '/payments', label: 'To\'lovlar', icon: 'card' },
+  { id: '/links', label: 'Havolalar', icon: 'link' },
+  { id: '/invoices', label: 'Invoyslar', icon: 'file' },
+  { id: '/agents', label: 'AI Agentlar', icon: 'bot' },
+  { id: '/subscriptions', label: 'Obunalar', icon: 'repeat' },
+  { id: '/dev', label: 'Developers', icon: 'code' },
+  { id: '/settings', label: 'Sozlamalar', icon: 'settings' }
 ];
 
-function renderDashboard(active){
-  State.activeView=active;
-  var user=State.user||{name:'User',email:'user@mail.com'};
-  var inits=initials(user.name);
-  var pageTitle=t('menu.'+(MENU_KEYS.find(function(m){return m.id===active;})?.key||'home'));
-  document.getElementById('app').innerHTML=
-  '<div class="dash">'+
-  '<div class="sb-back" id="sbBack"></div>'+
-  '<aside class="sidebar" id="sidebar">'+
-    '<div style="padding:10px;margin-bottom:20px">'+LogoFull(32)+'</div>'+
-    '<nav class="side-nav">'+MENU_KEYS.map(function(m){return '<a href="#/app'+(m.id==='/'?'':m.id)+'" class="si '+(active===m.id?'active':'')+'">'+ic(m.icon,18)+' '+t('menu.'+m.key)+'</a>';}).join('')+'</nav>'+
-    '<div class="side-foot"><div class="side-user"><div class="avatar sm">'+esc(inits)+'</div><div class="grow" style="min-width:0"><div class="t-sm fw6 trunc">'+esc(user.name)+'</div><div class="t-xs muted trunc">'+esc(user.email)+'</div></div></div><button class="si w100" style="color:var(--red)" onclick="logout()">'+ic('logout',18)+' '+t('menu.logout')+'</button></div>'+
-  '</aside>'+
-  '<main class="main">'+
-    '<header class="topbar"><div class="flex ai-c g4"><button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn">'+ic('menu',20)+'</button><div><div class="tb-title">'+pageTitle+'</div></div></div><div class="tb-actions">'+langSwitcher()+'<button class="btn btn-ghost btn-icon" onclick="toggleTheme()">'+ic(getTheme()==='dark'?'sun':'moon',18)+'</button><div class="avatar sm">'+esc(inits)+'</div></div></header>'+
-    '<div class="content" id="view-content"></div>'+
-  '</main></div>';
-  bindLang();
-  if(window.innerWidth<=768)document.getElementById('menuBtn').style.display='inline-flex';
-  window.onresize=function(){document.getElementById('menuBtn').style.display=window.innerWidth<=768?'inline-flex':'none';};
+const renderDashboard = (active) => {
+  State.activeView = active;
+  const user = State.user || { name: 'User', email: 'user@mail.com' };
+  const inits = initials(user.name);
+  const pageTitle = MENU_ITEMS.find(m => m.id === active)?.label || 'Dashboard';
+
+  $('#app').innerHTML = `
+    <div class="dash">
+      <aside class="sidebar" id="sidebar">
+        <div style="padding:10px;margin-bottom:20px">${LogoFull(32)}</div>
+        <nav class="side-nav">
+          ${MENU_ITEMS.map(m => `
+            <a href="#${m.id}" class="si ${active === m.id ? 'active' : ''}">
+              ${getIcon(m.icon, 18)} ${m.label}
+            </a>
+          `).join('')}
+        </nav>
+        <div style="padding-top:16px;border-top:1px solid var(--border)">
+          <button class="si" style="width:100%;color:var(--red)" onclick="logout()">
+            ${getIcon('logout', 18)} Chiqish
+          </button>
+        </div>
+      </aside>
+      
+      <main class="main">
+        <header class="topbar">
+          <div class="flex ai-c g4">
+            <button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn">${getIcon('menu', 20)}</button>
+            <div class="t-xl fw7">${pageTitle}</div>
+          </div>
+          <div class="flex ai-c g4">
+            <button class="btn btn-ghost btn-icon" onclick="toggleTheme()">
+              ${getIcon(document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon', 18)}
+            </button>
+            <div class="avatar sm" style="width:36px;height:36px;border-radius:50%;background:var(--fox);display:grid;place-items:center;font-weight:800;color:#fff">${inits}</div>
+          </div>
+        </header>
+        <div class="content" id="view-content"></div>
+      </main>
+    </div>`;
+
+  if (window.innerWidth <= 1024) $('#menuBtn').style.display = 'inline-flex';
+  window.onresize = () => { $('#menuBtn').style.display = window.innerWidth <= 1024 ? 'inline-flex' : 'none'; };
+
   renderView(active);
-}
-function toggleSidebar(){
-  var sb=document.getElementById('sidebar'),bk=document.getElementById('sbBack');
-  sb.classList.toggle('open');bk.classList.toggle('open');
-}
+};
 
-/* ═══════════════════════════════════════════════
-   14. VIEW ROUTER
-   ═══════════════════════════════════════════════ */
-async function renderView(view){
-  var c=document.getElementById('view-content');
-  c.innerHTML='<div class="card"><div class="t-md muted">'+t('auth.loading')+'</div></div>';
-  try{
-    switch(view){
-      case '/':await viewOverview(c);break;
-      case '/wallet':await viewWallet(c);break;
-      case '/p2p':await viewP2P(c);break;
-      case '/payments':await viewPayments(c);break;
-      case '/links':viewStatic(c,'🔗','menu.links');break;
-      case '/invoices':viewStatic(c,'📄','menu.invoices');break;
-      case '/agents':viewAgents(c);break;
-      case '/subscriptions':viewSubscriptions(c);break;
-      case '/dev':await viewDev(c);break;
-      case '/settings':viewSettings(c);break;
+const toggleSidebar = () => { $('#sidebar').classList.toggle('open'); };
+
+/* ============================================================
+   VIEW ROUTER (Renders specific view)
+   ============================================================ */
+const renderView = async (view) => {
+  const c = $('#view-content');
+  c.innerHTML = '<div class="card"><div class="t-md muted">Yuklanmoqda...</div></div>'; // Loader
+
+  try {
+    switch (view) {
+      case '/': await viewOverview(c); break;
+      case '/wallet': await viewWallet(c); break;
+      case '/p2p': await viewP2P(c); break;
+      case '/payments': await viewPayments(c); break;
+      case '/links': viewLinks(c); break;
+      case '/invoices': viewInvoices(c); break;
+      case '/agents': viewAgents(c); break;
+      case '/subscriptions': viewSubscriptions(c); break;
+      case '/dev': await viewDev(c); break;
+      case '/settings': await viewSettings(c); break;
+      default: c.innerHTML = '<div class="card">Sahifa topilmadi</div>';
     }
-  }catch(e){
-    c.innerHTML='<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">'+t('toast.error')+'</div><div class="t-sm muted mt2">'+esc(e.message)+'</div></div>';
+  } catch (e) {
+    c.innerHTML = `<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Xatolik</div><div class="t-sm muted mt2">${escapeHTML(e.message)}</div></div>`;
   }
-}
+};
 
-/* ═══════════════════════════════════════════════
-   15. VIEW: OVERVIEW
-   ═══════════════════════════════════════════════ */
-async function viewOverview(c){
-  var results=await Promise.all([
-    api.get('/api/wallet').catch(function(){return{balance_tiyin:0};}),
-    api.get('/api/p2p/transfers?limit=5').catch(function(){return[];}),
-    api.get('/api/pay/intents').catch(function(){return[];})
+/* ============================================================
+   VIEW: OVERVIEW (Boshqaruv)
+   ============================================================ */
+const viewOverview = async (c) => {
+  const [wallet, transfers, intents] = await Promise.all([
+    api.get('/api/wallet').catch(() => ({ balance_tiyin: 0 })),
+    api.get('/api/p2p/transfers?limit=5').catch(() => []),
+    api.get('/api/pay/intents').catch(() => [])
   ]);
-  var wallet=results[0],transfers=results[1],intents=results[2];
-  State.wallet=wallet;
-  var sent=transfers.filter(function(tr){return tr.from_user_id===State.user.id;});
-  var totalSent=sent.reduce(function(s,tr){return s+tr.amount_tiyin;},0);
-  c.innerHTML=
-  '<div class="wallet-banner"><div class="wallet-label">'+t('dash.totalBalance')+'</div><div class="wallet-amount">'+fmtUZS(wallet.balance_tiyin)+'</div><div class="wallet-meta">'+(wallet.balance_tiyin||0).toLocaleString()+' tiyin</div>'+
-  '<div class="wallet-actions"><a href="#/app/wallet" class="btn btn-sm">'+ic('plus',13)+' '+t('dash.add')+'</a><a href="#/app/p2p" class="btn btn-sm">'+ic('send',13)+' '+t('dash.send')+'</a></div></div>'+
-  '<div class="kpis"><div class="kpi"><div class="kpi-h"><div class="kpi-l">'+t('dash.sent')+'</div><div class="kpi-i">'+ic('send',14)+'</div></div><div class="kpi-v">'+fmtUZS(totalSent)+'</div></div><div class="kpi"><div class="kpi-h"><div class="kpi-l">'+t('dash.commission')+'</div><div class="kpi-i">'+ic('zap',14)+'</div></div><div class="kpi-v" style="color:var(--fox)">'+fmtUZS(Math.floor(totalSent*0.015))+'</div></div><div class="kpi"><div class="kpi-h"><div class="kpi-l">'+t('dash.transactions')+'</div><div class="kpi-i">'+ic('check',14)+'</div></div><div class="kpi-v" style="color:var(--green)">'+transfers.length+'</div></div><div class="kpi"><div class="kpi-h"><div class="kpi-l">'+t('dash.intents')+'</div><div class="kpi-i">'+ic('card',14)+'</div></div><div class="kpi-v" style="color:var(--cyan)">'+intents.length+'</div></div></div>'+
-  '<div class="table-card"><div class="tc-head"><h3>'+t('dash.recentActivity')+'</h3><a href="#/app/p2p" class="btn btn-outline btn-sm">'+t('dash.viewAll')+'</a></div><div style="overflow-x:auto"><table><thead><tr><th>'+t('dash.p2pTransfer')+'</th><th>'+t('dash.amount')+'</th><th>'+t('dash.source')+'</th><th>'+t('dash.time')+'</th></tr></thead><tbody>'+
-  (transfers.length?transfers.map(function(tr){return '<tr><td class="fw6">'+t('dash.p2pTransfer')+'</td><td style="color:'+(tr.to_user_id===State.user.id?'var(--green)':'var(--text)')+';font-weight:600">'+(tr.to_user_id===State.user.id?'+':'-')+fmtUZS(tr.amount_tiyin)+'</td><td><span class="badge '+(tr.status==='succeeded'?'b-green':'b-amber')+'"><span class="bd"></span>'+esc(tr.status)+'</span></td><td class="muted t-sm">'+fmtDate(tr.created_at)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="text-c muted">'+t('dash.noData')+'</td></tr>')+
-  '</tbody></table></div></div>';
-}
 
-/* ═══════════════════════════════════════════════
-   16. VIEW: WALLET
-   ═══════════════════════════════════════════════ */
-async function viewWallet(c){
-  var results=await Promise.all([api.get('/api/wallet'),api.get('/api/wallet/ledger?limit=50')]);
-  var wallet=results[0],ledger=results[1];
-  State.wallet=wallet;
-  c.innerHTML=
-  '<div class="wallet-banner"><div class="wallet-label">'+t('dash.currentBalance')+'</div><div class="wallet-amount">'+fmtUZS(wallet.balance_tiyin)+'</div><div class="wallet-meta">'+(wallet.balance_tiyin||0).toLocaleString()+' tiyin</div><div class="wallet-actions"><button class="btn btn-sm" onclick="fundDemo(100000)">+ 1,000</button><button class="btn btn-sm" onclick="fundDemo(1000000)">+ 10,000</button><button class="btn btn-sm" onclick="fundDemo(10000000)">+ 100,000</button></div></div>'+
-  '<div class="grid-2 mb4"><div class="card"><h3 class="card-title mb4">'+t('dash.fundBalance')+'</h3><div class="field"><label>'+t('dash.amountSom')+'</label><input type="number" class="input" id="depositAmt" placeholder="100000"></div><button class="btn btn-primary btn-block" onclick="handleDeposit()">'+t('dash.depositBtn')+'</button></div><div class="card"><h3 class="card-title mb4">'+t('dash.linkCard')+'</h3><p class="t-sm muted mb4">'+t('dash.linkCardSub')+'</p><button class="btn btn-outline btn-block" onclick="toast(\''+t('toast.comingSoon')+'\')">+ '+t('dash.addCard')+'</button></div></div>'+
-  '<div class="table-card"><div class="tc-head"><h3>'+t('dash.ledgerEntries')+'</h3><span class="muted t-sm">'+ledger.length+'</span></div><div style="overflow-x:auto"><table><thead><tr><th>'+t('dash.credit')+'</th><th>'+t('dash.amount')+'</th><th>'+t('dash.source')+'</th><th>'+t('dash.time')+'</th></tr></thead><tbody>'+
-  (ledger.length?ledger.map(function(r){return '<tr><td><span class="badge '+(r.direction==='credit'?'b-green':'b-red')+'"><span class="bd"></span>'+(r.direction==='credit'?t('dash.credit'):t('dash.debit'))+'</span></td><td class="fw6" style="color:'+(r.direction==='credit'?'var(--green)':'var(--red')+';font-weight:600">'+(r.direction==='credit'?'+':'-')+fmtUZS(r.amount_tiyin)+'</td><td class="muted t-sm">'+esc(r.ref_type||'—')+'</td><td class="muted t-sm">'+fmtDate(r.created_at)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="text-c muted">'+t('empty.noLedger')+'</td></tr>')+
-  '</tbody></table></div></div>';
-}
+  State.wallet = wallet; State.transfers = transfers; State.intents = intents;
+  const sent = transfers.filter(t => t.from_user_id === State.user.id);
+  const totalSent = sent.reduce((s, t) => s + t.amount_tiyin, 0);
 
-function fundDemo(amount){
-  api.post('/api/dev/fund',{amount_tiyin:amount}).then(function(){
-    toast(t('toast.funded'));
+  c.innerHTML = `
+    <div class="wallet-banner">
+      <div class="t-sm" style="opacity:.8">Umumiy Balans</div>
+      <div class="wallet-amount">${formatUZS(wallet.balance_tiyin)}</div>
+      <div class="wallet-actions">
+        <a href="#/wallet" class="btn">${getIcon('plus', 14)} To'ldirish</a>
+        <a href="#/p2p" class="btn">${getIcon('send', 14)} Yuborish</a>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-l">Yuborilgan</div><div class="kpi-v">${formatUZS(totalSent)}</div></div>
+      <div class="kpi"><div class="kpi-l">Komissiya</div><div class="kpi-v" style="color:var(--fox)">${formatUZS(totalSent * 0.015)}</div></div>
+      <div class="kpi"><div class="kpi-l">Tranzaksiyalar</div><div class="kpi-v" style="color:var(--green)">${transfers.length}</div></div>
+      <div class="kpi"><div class="kpi-l">Intentlar</div><div class="kpi-v" style="color:var(--cyan)">${intents.length}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="flex jc-b ai-c mb4"><h3 class="t-lg fw7">So'nggi Faoliyat</h3><a href="#/p2p" class="btn btn-outline btn-sm">Barchasi</a></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tur</th><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead>
+          <tbody>
+            ${transfers.length ? transfers.map(t => `
+              <tr>
+                <td class="fw6">P2P O'tkazma</td>
+                <td style="color:${t.to_user_id === State.user.id ? 'var(--green)' : 'var(--text)'}">${t.to_user_id === State.user.id ? '+' : '-'}${formatUZS(t.amount_tiyin)}</td>
+                <td><span class="badge b-green">${t.status}</span></td>
+                <td class="muted t-sm">${formatDate(t.created_at)}</td>
+              </tr>
+            `).join('') : '<tr><td colspan="4" class="text-c muted">Ma\'lumot yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+};
+
+/* ============================================================
+   VIEW: WALLET (Hamyon)
+   ============================================================ */
+const viewWallet = async (c) => {
+  const [wallet, ledger] = await Promise.all([
+    api.get('/api/wallet'),
+    api.get('/api/wallet/ledger?limit=50')
+  ]);
+  State.wallet = wallet; State.ledger = ledger;
+
+  c.innerHTML = `
+    <div class="wallet-banner">
+      <div class="t-sm" style="opacity:.8">Joriy Balans</div>
+      <div class="wallet-amount">${formatUZS(wallet.balance_tiyin)}</div>
+      <div class="wallet-actions">
+        <button class="btn" onclick="fundDemo(100000)">+ 1,000 so'm</button>
+        <button class="btn" onclick="fundDemo(1000000)">+ 10,000 so'm</button>
+        <button class="btn" onclick="fundDemo(10000000)">+ 100,000 so'm</button>
+      </div>
+    </div>
+
+    <div class="grid-2 mb4">
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Balansni To'ldirish</h3>
+        <div class="field"><label>Summa (so'm)</label><input type="number" class="input" id="depositAmt" placeholder="100000"></div>
+        <button class="btn btn-primary btn-block" onclick="handleDeposit()">To'ldirish</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Karta Ulash</h3>
+        <p class="t-sm muted mb4">Uzcard, Humo, Visa, Mastercard</p>
+        <button class="btn btn-outline btn-block" onclick="toast('Karta ulash tez orada!')">+ Yangi Karta</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="t-lg fw7 mb4">Ledger Yozuvlari</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tur</th><th>Summa</th><th>Manba</th><th>Vaqt</th></tr></thead>
+          <tbody>
+            ${ledger.length ? ledger.map(r => `
+              <tr>
+                <td><span class="badge ${r.direction === 'credit' ? 'b-green' : 'b-red'}">${r.direction === 'credit' ? 'Kirim' : 'Chiqim'}</span></td>
+                <td class="fw6" style="color:${r.direction === 'credit' ? 'var(--green)' : 'var(--red)'}">${r.direction === 'credit' ? '+' : '-'}${formatUZS(r.amount_tiyin)}</td>
+                <td class="muted t-sm">${r.ref_type || '—'}</td>
+                <td class="muted t-sm">${formatDate(r.created_at)}</td>
+              </tr>
+            `).join('') : '<tr><td colspan="4" class="text-c muted">Yozuvlar yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+};
+
+const fundDemo = async (amount) => {
+  try {
+    await api.post('/api/dev/fund', { amount_tiyin: amount });
+    toast('Balans to\'ldirildi!');
     renderView('/wallet');
-  }).catch(function(e){toast(e.message,'error');});
-}
+  } catch (e) { toast(e.message, 'error'); }
+};
 
-function handleDeposit(){
-  var amt=parseFloat(document.getElementById('depositAmt').value);
-  if(!amt||amt<100)return toast(t('toast.minAmount'),'error');
-  fundDemo(amt*100);
-}
+const handleDeposit = () => {
+  const amt = parseFloat($('#depositAmt').value);
+  if (!amt || amt < 100) return toast('Kamida 100 so\'m kiriting', 'error');
+  fundDemo(amt * 100);
+};
 
-/* ═══════════════════════════════════════════════
-   17. VIEW: P2P
-   ═══════════════════════════════════════════════ */
-async function viewP2P(c){
-  var list=await api.get('/api/p2p/transfers').catch(function(){return[];});
-  c.innerHTML=
-  '<div class="grid-2">'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.sendMoney')+'</h3>'+
-    '<form onsubmit="handleP2P(event)">'+
-    '<div class="field"><label>'+t('dash.recipientEmail')+'</label><input class="input" name="email" type="email" required placeholder="friend@mail.uz"></div>'+
-    '<div class="field"><label>'+t('dash.amount')+'</label><input class="input" type="number" name="amount" required min="100" placeholder="50000"></div>'+
-    '<div class="field"><label>'+t('dash.note')+'</label><input class="input" name="note" placeholder="..."></div>'+
-    '<button type="submit" class="btn btn-primary btn-block">'+t('dash.sendBtn')+'</button>'+
-    '</form></div>'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.transferHistory')+'</h3>'+
-    '<div class="table-wrap" style="overflow-x:auto"><table><thead><tr><th>'+t('dash.amount')+'</th><th>'+t('dash.source')+'</th><th>'+t('dash.time')+'</th></tr></thead><tbody>'+
-    (list.length?list.map(function(tr){
-      var inOut=tr.to_user_id===State.user.id;
-      return '<tr><td style="color:'+(inOut?'var(--green)':'var(--text)')+';font-weight:600">'+(inOut?'+':'-')+fmtUZS(tr.amount_tiyin)+'</td><td><span class="badge '+(tr.status==='succeeded'?'b-green':'b-amber')+'"><span class="bd"></span>'+esc(tr.status)+'</span></td><td class="muted t-sm">'+fmtDate(tr.created_at)+'</td></tr>';
-    }).join(''):'<tr><td colspan="3" class="text-c muted">'+t('empty.noTransfers')+'</td></tr>')+
-    '</tbody></table></div></div>'+
-  '</div>';
-}
+/* ============================================================
+   VIEW: P2P (O'tkazmalar)
+   ============================================================ */
+const viewP2P = async (c) => {
+  const list = await api.get('/api/p2p/transfers').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Pul Yuborish</h3>
+        <form onsubmit="handleP2P(event)">
+          <div class="field"><label>Qabul qiluvchi Email</label><input class="input" name="email" required placeholder="friend@mail.uz"></div>
+          <div class="field"><label>Summa (so'm)</label><input class="input" type="number" name="amount" required placeholder="50000"></div>
+          <div class="field"><label>Izoh</label><input class="input" name="note" placeholder="Tushlik uchun"></div>
+          <button type="submit" class="btn btn-primary btn-block">Yuborish</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">O'tkazmalar Tarixi</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead>
+            <tbody>
+              ${list.length ? list.map(t => `
+                <tr>
+                  <td class="fw6">${formatUZS(t.amount_tiyin)}</td>
+                  <td><span class="badge ${t.status === 'succeeded' ? 'b-green' : 'b-amber'}">${t.status}</span></td>
+                  <td class="muted t-sm">${formatDate(t.created_at)}</td>
+                </tr>
+              `).join('') : '<tr><td colspan="3" class="text-c muted">Tranzaksiyalar yo\'q</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+};
 
-async function handleP2P(e){
+const handleP2P = async (e) => {
   e.preventDefault();
-  var form=new FormData(e.target);
-  var btn=e.target.querySelector('button');
-  var orig=btn.innerHTML;
-  btn.disabled=true;btn.textContent=t('auth.loading');
-  try{
-    await api.post('/api/p2p/transfers',{
-      to_email:form.get('email').trim(),
-      amount_tiyin:Math.round(parseFloat(form.get('amount'))*100),
-      note:form.get('note')||''
+  const form = new FormData(e.target);
+  const btn = e.target.querySelector('button');
+  btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+
+  try {
+    await api.post('/api/p2p/transfers', {
+      to_email: form.get('email'),
+      amount_tiyin: parseFloat(form.get('amount')) * 100,
+      note: form.get('note')
     });
-    toast(t('toast.transferSuccess'));
+    toast('O\'tkazma muvaffaqiyatli!');
     renderView('/p2p');
-  }catch(err){
-    toast(err.message,'error');
-    btn.disabled=false;btn.innerHTML=orig;
+  } catch (err) {
+    toast(err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Yuborish';
   }
-}
+};
 
-/* ═══════════════════════════════════════════════
-   18. VIEW: PAYMENTS
-   ═══════════════════════════════════════════════ */
-async function viewPayments(c){
-  var intents=await api.get('/api/pay/intents').catch(function(){return[];});
-  c.innerHTML=
-  '<div class="grid-2">'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.createIntent')+'</h3>'+
-    '<form onsubmit="handleIntent(event)">'+
-    '<div class="field"><label>'+t('dash.amount')+'</label><input class="input" type="number" name="amount" required min="100" placeholder="100000"></div>'+
-    '<div class="field"><label>'+t('dash.description')+'</label><input class="input" name="desc" placeholder="..."></div>'+
-    '<div class="field"><label>'+t('dash.customerEmail')+'</label><input class="input" type="email" name="email" placeholder="client@mail.uz"></div>'+
-    '<button type="submit" class="btn btn-primary btn-block">'+t('dash.createBtn')+'</button>'+
-    '</form></div>'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.intentsList')+'</h3>'+
-    '<div class="table-wrap" style="overflow-x:auto"><table><thead><tr><th>'+t('dash.amount')+'</th><th>'+t('dash.source')+'</th><th>'+t('dash.confirmBtn')+'</th></tr></thead><tbody>'+
-    (intents.length?intents.map(function(i){
-      return '<tr><td class="fw6">'+fmtUZS(i.amount_tiyin)+'</td><td><span class="badge '+(i.status==='succeeded'?'b-green':i.status==='failed'?'b-red':'b-amber')+'"><span class="bd"></span>'+esc(i.status)+'</span></td><td>'+(i.status==='requires_payment'?'<button class="btn btn-primary btn-sm" onclick="confirmIntent(\''+esc(i.intent_id)+'\')">'+t('dash.confirmBtn')+'</button>':'—')+'</td></tr>';
-    }).join(''):'<tr><td colspan="3" class="text-c muted">'+t('empty.noIntents')+'</td></tr>')+
-    '</tbody></table></div></div>'+
-  '</div>';
-}
+/* ============================================================
+   VIEW: PAYMENTS (To'lov Intentlari)
+   ============================================================ */
+const viewPayments = async (c) => {
+  const intents = await api.get('/api/pay/intents').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Payment Intent Yaratish</h3>
+        <form onsubmit="handleIntent(event)">
+          <div class="field"><label>Summa (so'm)</label><input class="input" type="number" name="amount" required placeholder="100000"></div>
+          <div class="field"><label>Izoh</label><input class="input" name="desc" placeholder="Kurs to'lovi"></div>
+          <div class="field"><label>Mijoz Email</label><input class="input" type="email" name="email" placeholder="client@mail.uz"></div>
+          <button type="submit" class="btn btn-primary btn-block">Yaratish</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Intentlar</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Summa</th><th>Holat</th><th>Amal</th></tr></thead>
+            <tbody>
+              ${intents.length ? intents.map(i => `
+                <tr>
+                  <td class="fw6">${formatUZS(i.amount_tiyin)}</td>
+                  <td><span class="badge ${i.status === 'succeeded' ? 'b-green' : 'b-amber'}">${i.status}</span></td>
+                  <td>${i.status === 'requires_payment' ? `<button class="btn btn-primary btn-sm" onclick="confirmIntent('${i.intent_id}')">Tasdiqlash</button>` : '—'}</td>
+                </tr>
+              `).join('') : '<tr><td colspan="3" class="text-c muted">Intentlar yo\'q</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+};
 
-async function handleIntent(e){
+const handleIntent = async (e) => {
   e.preventDefault();
-  var form=new FormData(e.target);
-  var btn=e.target.querySelector('button');
-  var orig=btn.innerHTML;
-  btn.disabled=true;btn.textContent=t('auth.loading');
-  try{
-    await api.post('/api/pay/intents',{
-      amount_tiyin:Math.round(parseFloat(form.get('amount'))*100),
-      description:form.get('desc')||'',
-      customer_email:form.get('email')||null
+  const form = new FormData(e.target);
+  try {
+    await api.post('/api/pay/intents', {
+      amount_tiyin: parseFloat(form.get('amount')) * 100,
+      description: form.get('desc'),
+      customer_email: form.get('email')
     });
-    toast(t('toast.intentCreated'));
+    toast('Intent yaratildi!');
     renderView('/payments');
-  }catch(err){
-    toast(err.message,'error');
-    btn.disabled=false;btn.innerHTML=orig;
-  }
-}
+  } catch (err) { toast(err.message, 'error'); }
+};
 
-async function confirmIntent(id){
-  try{
-    await api.post('/api/pay/intents/'+id+'/confirm');
-    toast(t('toast.intentConfirmed'));
+const confirmIntent = async (id) => {
+  try {
+    await api.post(`/api/pay/intents/${id}/confirm`);
+    toast('To\'lov tasdiqlandi!');
     renderView('/payments');
-  }catch(err){toast(err.message,'error');}
-}
+  } catch (err) { toast(err.message, 'error'); }
+};
 
-/* ═══════════════════════════════════════════════
-   19. STATIC VIEW
-   ═══════════════════════════════════════════════ */
-function viewStatic(c,emoji,key){
-  c.innerHTML='<div class="card text-c" style="padding:60px 20px"><div class="t-5xl mb4">'+emoji+'</div><h3 class="t-2xl fw7 mb2">'+t(key)+'</h3><p class="muted mb6">'+t('toast.comingSoon')+'</p><button class="btn btn-outline" onclick="toast(\''+t('toast.comingSoon')+'\')">'+t('toast.comingSoon')+'</button></div>';
-}
+/* ============================================================
+   VIEW: LINKS & INVOICES (Static for now)
+   ============================================================ */
+const viewLinks = (c) => {
+  c.innerHTML = `
+    <div class="card text-c" style="padding:60px 20px">
+      <div class="t-3xl mb4">🔗</div>
+      <h3 class="t-xl fw7 mb2">To'lov Havolalari</h3>
+      <p class="muted mb4">Tez orada ushbu bo'lim orqali mijozlarga maxsus havolalar yuborishingiz mumkin bo'ladi.</p>
+      <button class="btn btn-primary" onclick="toast('Tez orada!')">Kutilmoqda</button>
+    </div>`;
+};
 
-/* ═══════════════════════════════════════════════
-   20. VIEW: AI AGENTS
-   ═══════════════════════════════════════════════ */
-function viewAgents(c){
-  c.innerHTML=
-  '<div class="grid-2">'+
-    '<div class="card"><h3 class="card-title mb2">'+t('dash.createKey')+'</h3><p class="t-sm muted mb4">'+t('dash.agentDesc')+'</p>'+
-    '<div class="field"><label>'+t('dash.agentName')+'</label><input class="input" id="agentName" placeholder="ChatGPT-Bot-1"></div>'+
-    '<button class="btn btn-primary btn-block" onclick="generateAgentKey()">'+t('dash.createKey')+'</button></div>'+
-    '<div class="card"><h3 class="card-title mb2">'+t('dash.meteredBilling')+'</h3>'+
-    '<div class="t-5xl fw9" style="color:var(--cyan);margin:12px 0">$0.0042</div>'+
-    '<p class="muted t-sm">'+t('dash.last24h')+'</p></div>'+
-  '</div>';
-}
+const viewInvoices = (c) => {
+  c.innerHTML = `
+    <div class="card text-c" style="padding:60px 20px">
+      <div class="t-3xl mb4">📄</div>
+      <h3 class="t-xl fw7 mb2">Invoyslar</h3>
+      <p class="muted mb4">Professional hisob-fakturalar yaratish moduli ustida ishlanmoqda.</p>
+      <button class="btn btn-outline" onclick="toast('Tez orada!')">Kutilmoqda</button>
+    </div>`;
+};
 
-function generateAgentKey(){
-  var el=document.getElementById('agentName');
-  var name=el?el.value:'';
-  if(!name||!name.trim())return toast(t('toast.agentNameRequired'),'error');
-  var key='agent_live_'+Math.random().toString(36).slice(2,14)+Math.random().toString(36).slice(2,14);
-  openModal(
-    t('toast.keyCreated'),
-    '<p class="t-sm muted mb4">'+t('toast.keyCreated')+'</p><div class="code-block"><span class="mono">'+esc(key)+'</span><button class="btn btn-ghost btn-icon" style="color:#fff" onclick="copyText(\''+key+'\')">'+ic('copy',14)+'</button></div>',
-    '<button class="btn btn-primary" onclick="closeModal()">OK</button>'
-  );
-}
+/* ============================================================
+   VIEW: AI AGENTS
+   ============================================================ */
+const viewAgents = (c) => {
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Agent API Kaliti Yaratish</h3>
+        <p class="t-sm muted mb4">AI agentlar uchun maxsus kalit. Sub-cent billing avtomatik ishlaydi.</p>
+        <div class="field"><label>Agent Nomi</label><input class="input" id="agentName" placeholder="ChatGPT-Bot-1"></div>
+        <button class="btn btn-primary btn-block" onclick="generateAgentKey()">Kalit Yaratish</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb2">Metered Billing</h3>
+        <div class="t-3xl fw9" style="color:var(--cyan)">$0.0042</div>
+        <p class="muted t-sm mt2">Oxirgi 24 soatda ishlatilgan tokenlar uchun yechilgan to'lov.</p>
+      </div>
+    </div>`;
+};
 
-/* ═══════════════════════════════════════════════
-   21. VIEW: SUBSCRIPTIONS
-   ═══════════════════════════════════════════════ */
-function viewSubscriptions(c){
-  c.innerHTML=
-  '<div class="grid-3">'+
-    '<div class="card"><div class="t-sm muted mb2">'+t('dash.currentPlan')+'</div><div class="t-2xl fw8 mb2">Business Pro</div><div class="t-sm muted mb4">$49 / mo</div><button class="btn btn-outline btn-block" onclick="toast(\''+t('toast.comingSoon')+'\')">'+t('dash.manage')+'</button></div>'+
-    '<div class="card"><div class="t-sm muted mb2">'+t('dash.nextPayment')+'</div><div class="t-2xl fw8 mb2">Nov 12</div><div class="t-sm muted mb4">'+t('dash.autoCharge')+'</div><button class="btn btn-primary btn-block" onclick="toast(\''+t('toast.comingSoon')+'\')">'+t('dash.payNow')+'</button></div>'+
-    '<div class="card"><div class="t-sm muted mb2">'+t('dash.apiLimit')+'</div><div class="t-2xl fw8 mb2">10,000/min</div><div class="t-sm muted">Enterprise</div></div>'+
-  '</div>';
-}
+const generateAgentKey = () => {
+  const name = $('#agentName').value;
+  if (!name) return toast('Agent nomini kiriting', 'error');
+  const mockKey = 'agent_live_' + Math.random().toString(36).slice(2, 20);
+  openModal('Agent Kaliti Yaratildi', `
+    <p class="t-sm muted mb4">Bu kalitni nusxalab saqlang. U boshqa ko'rinmaydi!</p>
+    <div class="input mono" style="background:var(--bg);padding:12px">${mockKey}</div>
+  `, `<button class="btn btn-primary" onclick="closeModal()">Tushundim</button>`);
+};
 
-/* ═══════════════════════════════════════════════
-   22. VIEW: DEVELOPERS
-   ═══════════════════════════════════════════════ */
-async function viewDev(c){
-  var keys=await api.get('/api/keys').catch(function(){return[];});
-  c.innerHTML=
-  '<div class="grid-2">'+
-    '<div class="card"><div class="flex jc-b ai-c mb4"><h3 class="card-title">'+t('dash.apiKeys')+'</h3><button class="btn btn-primary btn-sm" onclick="createApiKey()">'+t('dash.newKey')+'</button></div>'+
-    (keys.length?keys.map(function(k){
-      return '<div class="flex jc-b ai-c" style="padding:12px 0;border-bottom:1px solid var(--border)"><div style="min-width:0"><div class="fw6 mono t-sm">'+esc(k.prefix)+'...</div><div class="t-xs muted">'+esc(k.label||'default')+' • '+(k.is_active?'✓':'✗')+'</div></div>'+(k.is_active?'<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="revokeKey('+k.id+')">'+ic('trash',14)+'</button>':'')+'</div>';
-    }).join(''):'<div class="t-sm muted">'+t('dash.keysEmpty')+'</div>')+
-    '</div>'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.webhookUrl')+'</h3>'+
-    '<div class="field"><label>'+t('dash.urlAddress')+'</label><input class="input" placeholder="https://mysite.uz/webhook"></div>'+
-    '<button class="btn btn-primary btn-block" onclick="toast(\''+t('toast.saved')+'\')">'+t('dash.save')+'</button></div>'+
-  '</div>';
-}
+/* ============================================================
+   VIEW: SUBSCRIPTIONS (Obunalar)
+   ============================================================ */
+const viewSubscriptions = (c) => {
+  c.innerHTML = `
+    <div class="grid-3">
+      <div class="card">
+        <div class="t-sm muted">Joriy Reja</div>
+        <div class="t-2xl fw8 mt2">Business Pro</div>
+        <div class="t-sm muted mt2">$49 / oy</div>
+        <button class="btn btn-outline btn-block mt4" onclick="toast('Boshqarilmoqda')">Boshqarish</button>
+      </div>
+      <div class="card">
+        <div class="t-sm muted">Keyingi To'lov</div>
+        <div class="t-2xl fw8 mt2">12-Noyabr</div>
+        <div class="t-sm muted mt2">Avtomatik yechiladi</div>
+        <button class="btn btn-primary btn-block mt4" onclick="toast('To\'landi!')">To'lash</button>
+      </div>
+      <div class="card">
+        <div class="t-sm muted">API Limit</div>
+        <div class="t-2xl fw8 mt2">10,000/min</div>
+        <div class="t-sm muted mt2">Enterprise darajasi</div>
+      </div>
+    </div>`;
+};
 
-async function createApiKey(){
-  try{
-    var res=await api.post('/api/keys',{label:'Default Key'});
-    openModal(
-      t('toast.keyCreated'),
-      '<p class="t-sm muted mb4">'+t('toast.keyCreated')+'</p><div class="code-block"><span class="mono">'+esc(res.full_key)+'</span><button class="btn btn-ghost btn-icon" style="color:#fff" onclick="copyText(\''+res.full_key+'\')">'+ic('copy',14)+'</button></div>',
-      '<button class="btn btn-primary" onclick="closeModal();renderView(\'/dev\')">OK</button>'
-    );
-  }catch(e){toast(e.message,'error');}
-}
+/* ============================================================
+   VIEW: DEVELOPERS (API Keys & Webhooks)
+   ============================================================ */
+const viewDev = async (c) => {
+  const keys = await api.get('/api/keys').catch(() => []);
+  
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <div class="flex jc-b ai-c mb4">
+          <h3 class="t-lg fw7">API Kalitlar</h3>
+          <button class="btn btn-primary btn-sm" onclick="createApiKey()">+ Yangi</button>
+        </div>
+        ${keys.length ? keys.map(k => `
+          <div class="flex jc-b ai-c" style="padding:12px 0;border-bottom:1px solid var(--border)">
+            <div>
+              <div class="fw6 mono">${k.prefix}...</div>
+              <div class="t-xs muted">${k.label} • ${k.is_active ? 'Faol' : 'O\'chirilgan'}</div>
+            </div>
+            ${k.is_active ? `<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="revokeKey(${k.id})">O'chirish</button>` : ''}
+          </div>
+        `).join('') : '<div class="t-sm muted">Kalitlar yo\'q</div>'}
+      </div>
+      
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Webhook URL</h3>
+        <div class="field"><label>URL Manzil</label><input class="input" placeholder="https://sizning-sayt.uz/webhook"></div>
+        <button class="btn btn-primary btn-block" onclick="toast('Saqlandi!')">Saqlash</button>
+      </div>
+    </div>`;
+};
 
-async function revokeKey(id){
-  if(!confirm(t('toast.confirmRevoke')))return;
-  try{
-    await api.del('/api/keys/'+id);
-    toast(t('toast.keyRevoked'));
+const createApiKey = async () => {
+  try {
+    const res = await api.post('/api/keys', { label: 'Default Key' });
+    openModal('API Kalit Yaratildi', `
+      <p class="t-sm muted mb4">Bu kalit faqat bir marta ko'rsatiladi.</p>
+      <div class="input mono" style="background:var(--bg);padding:12px;word-break:break-all">${res.full_key}</div>
+    `, `<button class="btn btn-primary" onclick="closeModal(); renderView('/dev')">Yopish</button>`);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+const revokeKey = async (id) => {
+  if (!confirm('Bu kalitni o\'chirmoqchimisiz?')) return;
+  try {
+    await api.del(`/api/keys/${id}`);
+    toast('O\'chirildi');
     renderView('/dev');
-  }catch(e){toast(e.message,'error');}
-}
+  } catch (e) { toast(e.message, 'error'); }
+};
 
-/* ═══════════════════════════════════════════════
-   23. VIEW: SETTINGS
-   ═══════════════════════════════════════════════ */
-function viewSettings(c){
-  var u=State.user||{};
-  c.innerHTML=
-  '<div class="grid-2">'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.profile')+'</h3>'+
-    '<div class="field"><label>'+t('auth.name')+'</label><input class="input" id="sName" value="'+esc(u.name||'')+'"></div>'+
-    '<div class="field"><label>'+t('auth.email')+'</label><input class="input" type="email" id="sEmail" value="'+esc(u.email||'')+'"></div>'+
-    '<button class="btn btn-primary" onclick="handleSaveProfile()">'+t('dash.save')+'</button></div>'+
-    '<div class="card"><h3 class="card-title mb4">'+t('dash.security')+'</h3>'+
-    '<div class="setting-row"><div class="si-info"><h4>'+t('dash.twoFA')+'</h4><p>'+t('dash.disabled')+'</p></div><button class="btn btn-outline btn-sm" onclick="toast(\''+t('toast.comingSoon')+'\')">'+t('dash.enable')+'</button></div>'+
-    '<div class="setting-row"><div class="si-info"><h4>'+t('dash.passkey')+'</h4><p>'+t('dash.faceid')+'</p></div><button class="btn btn-outline btn-sm" onclick="toast(\''+t('toast.comingSoon')+'\')">'+t('dash.setup')+'</button></div>'+
-    '<div class="setting-row"><div class="si-info"><h4>Dark / Light</h4><p>'+getTheme()+'</p></div><button class="btn btn-outline btn-sm" onclick="toggleTheme()">'+t('dash.manage')+'</button></div>'+
-    '</div>'+
-  '</div>';
-}
+/* ============================================================
+   VIEW: SETTINGS (Sozlamalar)
+   ============================================================ */
+const viewSettings = async (c) => {
+  c.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Profil</h3>
+        <div class="field"><label>Ism</label><input class="input" value="${State.user?.name || ''}"></div>
+        <div class="field"><label>Email</label><input class="input" value="${State.user?.email || ''}"></div>
+        <button class="btn btn-primary" onclick="toast('Saqlandi!')">Saqlash</button>
+      </div>
+      <div class="card">
+        <h3 class="t-lg fw7 mb4">Xavfsizlik</h3>
+        <div class="flex jc-b ai-c" style="padding:12px 0;border-bottom:1px solid var(--border)">
+          <div><div class="fw6 t-sm">2FA Autentifikatsiya</div><div class="muted t-xs">O'chirilgan</div></div>
+          <button class="btn btn-outline btn-sm" onclick="toast('Tez orada!')">Yoqish</button>
+        </div>
+        <div class="flex jc-b ai-c" style="padding:12px 0">
+          <div><div class="fw6 t-sm">Passkey</div><div class="muted t-xs">Face ID / Touch ID</div></div>
+          <button class="btn btn-outline btn-sm" onclick="toast('Tez orada!')">Sozlash</button>
+        </div>
+      </div>
+    </div>`;
+};
 
-async function handleSaveProfile(){
-  try{
-    var name=document.getElementById('sName').value.trim();
-    var email=document.getElementById('sEmail').value.trim();
-    if(!isValidEmail(email))return toast(t('auth.invalidEmail'),'error');
-    if(name.length<2)return toast(t('auth.nameRequired'),'error');
-    var r=await api.put('/api/settings',{name:name,email:email});
-    State.user=r;
-    localStorage.setItem(Config.userKey,JSON.stringify(r));
-    toast(t('toast.saved'));
-    renderDashboard(State.activeView);
-  }catch(e){toast(e.message,'error');}
-}
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+window.addEventListener('hashchange', router);
+window.addEventListener('load', router);
 
-/* ═══════════════════════════════════════════════
-   24. ROUTER (TUZATILGAN)
-   ═══════════════════════════════════════════════ */
-function router(){
-  var hash=window.location.hash.replace('#','')||'/';
-  if(!State.token){
-    if(hash==='/register')renderAuth('register');else renderAuth('login');
-    return;
-  }
-  // /app/ prefiksini olib tashlash — kritik bug fix
-  if(hash.indexOf('/app')===0)hash=hash.replace(/^\/app/,'')||'/';
-  if(hash==='/login'||hash==='/register'){renderDashboard('/');return;}
-  renderDashboard(hash);
-}
-
-/* ═══════════════════════════════════════════════
-   25. INIT & EXPORTS
-   ═══════════════════════════════════════════════ */
-window.addEventListener('hashchange',router);
-window.addEventListener('load',function(){
-  document.documentElement.lang=currentLang;
-  router();
-});
-
-window.handleAuth=handleAuth;
-window.logout=logout;
-window.toggleSidebar=toggleSidebar;
-window.toggleTheme=toggleTheme;
-window.closeModal=closeModal;
-window.fundDemo=fundDemo;
-window.handleDeposit=handleDeposit;
-window.handleP2P=handleP2P;
-window.handleIntent=handleIntent;
-window.confirmIntent=confirmIntent;
-window.generateAgentKey=generateAgentKey;
-window.createApiKey=createApiKey;
-window.revokeKey=revokeKey;
-window.handleSaveProfile=handleSaveProfile;
-window.renderView=renderView;
-window.toast=toast;
-window.scrollTo=scrollTo;
-window.toggleFaq=toggleFaq;
-window.copyText=copyText;
+// Global expose for inline HTML events
+window.handleAuth = handleAuth;
+window.logout = logout;
+window.toggleSidebar = toggleSidebar;
+window.toggleTheme = toggleTheme;
+window.closeModal = closeModal;
+window.fundDemo = fundDemo;
+window.handleDeposit = handleDeposit;
+window.handleP2P = handleP2P;
+window.handleIntent = handleIntent;
+window.confirmIntent = confirmIntent;
+window.generateAgentKey = generateAgentKey;
+window.createApiKey = createApiKey;
+window.revokeKey = revokeKey;
+window.renderView = renderView;
+window.toast = toast;
 </script>
 </body>
 </html>
-<script>
-(function(){
-'use strict';
-
-// Wait for main app
-function ready() {
-  if (typeof window.renderView !== 'function' || typeof State === 'undefined') {
-    setTimeout(ready, 100);
-    return;
-  }
-  init();
-}
-
-function init() {
-  // 1. Offline detection
-  var offlineBanner = document.createElement('div');
-  offlineBanner.id = 'offline-banner';
-  offlineBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:var(--red);color:#fff;padding:8px;text-align:center;z-index:99999;display:none;font-size:13px;font-weight:600';
-  offlineBanner.textContent = '⚠️ ' + t('auth.networkError');
-  document.body.appendChild(offlineBanner);
-  
-  window.addEventListener('offline', function() { offlineBanner.style.display = 'block'; });
-  window.addEventListener('online', function() { offlineBanner.style.display = 'none'; toast('Online'); });
-  if (!navigator.onLine) offlineBanner.style.display = 'block';
-  
-  // 2. Keyboard shortcuts
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeModal(); }
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-      e.preventDefault();
-      openSearch();
-    }
-  });
-  
-  // 3. Copy buttons via event delegation
-  document.addEventListener('click', function(e) {
-    var target = e.target.closest('[data-copy]');
-    if (target) {
-      e.preventDefault();
-      copyText(target.getAttribute('data-copy'));
-    }
-  });
-  
-  // 4. Wait for view render and enhance
-  function observe() {
-    var el = document.getElementById('view-content');
-    if (!el) { setTimeout(observe, 100); return; }
-    var mo = new MutationObserver(function(muts) {
-      setTimeout(enhanceView, 50);
-    });
-    mo.observe(el, {childList: true, subtree: true});
-  }
-  observe();
-}
-
-function enhanceView() {
-  var content = document.getElementById('view-content');
-  if (!content) return;
-  
-  // Add chart to Overview
-  if (content.querySelector('.wallet-banner') && !content.querySelector('#overview-chart')) {
-    var chartCard = document.createElement('div');
-    chartCard.className = 'chart-card';
-    chartCard.innerHTML = '<div class="chart-head"><h3>7-day Volume</h3></div><canvas id="overview-chart" style="height:160px"></canvas>';
-    var firstTable = content.querySelector('.table-card');
-    if (firstTable) {
-      content.insertBefore(chartCard, firstTable);
-    } else {
-      content.appendChild(chartCard);
-    }
-    drawOverviewChart();
-  }
-  
-  // Add search to P2P
-  if (content.querySelector('#p2p-table') === null && content.querySelector('input[name="email"]')) {
-    // This is P2P view
-    var table = content.querySelector('.table-card');
-    if (table && !table.querySelector('.search-input')) {
-      var searchWrap = document.createElement('div');
-      searchWrap.style.cssText = 'padding:12px 20px;border-bottom:1px solid var(--border)';
-      searchWrap.innerHTML = '<input type="text" class="input search-input" placeholder="Search..." oninput="filterP2P(this.value)">';
-      table.insertBefore(searchWrap, table.firstChild);
-    }
-  }
-}
-
-function drawOverviewChart() {
-  var canvas = document.getElementById('overview-chart');
-  if (!canvas) return;
-  
-  // Fetch data and draw
-  api.get('/api/p2p/transfers?limit=50').then(function(transfers) {
-    var buckets = [0,0,0,0,0,0,0];
-    var now = new Date();
-    transfers.forEach(function(t) {
-      if (t.status !== 'succeeded' || !t.created_at) return;
-      var diff = Math.floor((now - new Date(t.created_at)) / 86400000);
-      if (diff >= 0 && diff < 7) buckets[6 - diff] += t.amount_tiyin / 100;
-    });
-    
-    var dpr = window.devicePixelRatio || 1;
-    var rect = canvas.getBoundingClientRect();
-    var W = Math.max(rect.width, 200), H = 160;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    canvas.style.height = H + 'px';
-    var ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
-    
-    var pad = {t: 20, r: 12, b: 28, l: 44};
-    var cw = W - pad.l - pad.r, ch = H - pad.t - pad.b;
-    var max = Math.max.apply(null, buckets) || 1;
-    var stepX = cw / 6;
-    
-    // grid
-    ctx.strokeStyle = 'rgba(148,163,184,.2)';
-    ctx.lineWidth = 1;
-    for (var i = 0; i <= 4; i++) {
-      var y = pad.t + ch * i / 4;
-      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
-      ctx.fillStyle = '#64748B';
-      ctx.font = '10px Inter';
-      ctx.textAlign = 'right';
-      ctx.fillText(((max * (4-i) / 4) / 1000).toFixed(0) + 'k', pad.l - 6, y + 4);
-    }
-    
-    // area
-    var grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + ch);
-    grad.addColorStop(0, 'rgba(255,107,0,.3)');
-    grad.addColorStop(1, 'rgba(255,107,0,0)');
-    ctx.beginPath();
-    ctx.moveTo(pad.l, pad.t + ch);
-    buckets.forEach(function(v, i) {
-      var x = pad.l + stepX * i;
-      var y = pad.t + ch - (v / max) * ch;
-      ctx.lineTo(x, y);
-    });
-    ctx.lineTo(pad.l + cw, pad.t + ch);
-    ctx.closePath();
-    ctx.fillStyle = grad; ctx.fill();
-    
-    // line
-    ctx.beginPath();
-    buckets.forEach(function(v, i) {
-      var x = pad.l + stepX * i;
-      var y = pad.t + ch - (v / max) * ch;
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    });
-    ctx.strokeStyle = '#FF6B00';
-    ctx.lineWidth = 2.5;
-    ctx.lineJoin = 'round';
-    ctx.stroke();
-    
-    // dots
-    buckets.forEach(function(v, i) {
-      var x = pad.l + stepX * i;
-      var y = pad.t + ch - (v / max) * ch;
-      ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#fff'; ctx.fill();
-      ctx.strokeStyle = '#FF6B00'; ctx.lineWidth = 2; ctx.stroke();
-    });
-    
-    // labels
-    ctx.fillStyle = '#64748B';
-    ctx.font = '10px Inter';
-    ctx.textAlign = 'center';
-    for (var i = 0; i < 7; i++) {
-      var d = new Date(now); d.setDate(d.getDate() - (6 - i));
-      ctx.fillText(d.getDate() + '/' + (d.getMonth()+1), pad.l + stepX * i, H - 8);
-    }
-  });
-}
-
-function filterP2P(q) {
-  var rows = document.querySelectorAll('#view-content table tbody tr');
-  rows.forEach(function(row) {
-    var txt = row.textContent.toLowerCase();
-    row.style.display = q === '' || txt.indexOf(q.toLowerCase()) >= 0 ? '' : 'none';
-  });
-}
-
-function openSearch() {
-  openModal('Search', '<div class="field"><input class="input" id="searchInput" placeholder="Type to search..." oninput="doSearch(this.value)"></div><div id="searchResults" class="mt4"></div>', null);
-  setTimeout(function() { document.getElementById('searchInput').focus(); }, 100);
-}
-
-window.doSearch = function(q) {
-  if (q.length < 2) { document.getElementById('searchResults').innerHTML = ''; return; }
-  var results = [];
-  api.get('/api/p2p/transfers?limit=50').then(function(list) {
-    list.forEach(function(t) {
-      if (t.transfer_id.toLowerCase().indexOf(q.toLowerCase()) >= 0) {
-        results.push({type: 'transfer', id: t.transfer_id, amount: t.amount_tiyin, date: t.created_at});
-      }
-    });
-    renderSearchResults(results);
-  }).catch(function() { renderSearchResults([]); });
-};
-
-function renderSearchResults(results) {
-  var el = document.getElementById('searchResults');
-  if (!el) return;
-  if (!results.length) { el.innerHTML = '<div class="t-sm muted">No results</div>'; return; }
-  el.innerHTML = results.slice(0, 10).map(function(r) {
-    return '<div class="flex jc-b ai-c" style="padding:10px 0;border-bottom:1px solid var(--border)"><div><div class="fw6 t-sm mono">' + r.id + '</div><div class="t-xs muted">' + fmtDate(r.date) + '</div></div><div class="fw6">' + fmtUZS(r.amount) + '</div></div>';
-  }).join('');
-}
-
-window.openSearch = openSearch;
-
-ready();
-})();
-</script>
