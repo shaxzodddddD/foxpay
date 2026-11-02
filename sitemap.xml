@@ -113,3 +113,8 @@
   </url>
 
 </urlset>
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/private/
+Sitemap: https://foxpay.ai/sitemap.xml
