@@ -1,393 +1,361 @@
 <!DOCTYPE html>
-<html lang="uz" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- ═══ PRIMARY SEO ═══ -->
-<title>FoxPay — O'zbekistonda onlayn to'lovlar, P2P o'tkazmalar va API</title>
-<meta name="description" content="FoxPay — freelancerlar va biznes uchun tez, xavfsiz onlayn to'lov platformasi. P2P o'tkazmalar, REST API, webhooks. 1.5% komissiya. Bepul ro'yxatdan o'ting.">
-<meta name="keywords" content="FoxPay, to'lov tizimi, onlayn to'lov, P2P o'tkazma, payment API, Uzcard, Humo, Payme, Click, fintech O'zbekiston, merchant account">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="googlebot" content="index, follow">
-<meta name="author" content="FoxPay">
+<title>FoxPay — Global Payments Platform</title>
+<meta name="description" content="FoxPay — global payment platform. Stripe, J.P. Morgan, multi-currency wallet, P2P transfers, REST API. For freelancers and businesses.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#FF6B00">
-<meta name="language" content="Uzbek">
-<meta name="geo.region" content="UZ">
-<meta name="geo.placename" content="Tashkent">
-
-<!-- ═══ CANONICAL ═══ -->
 <link rel="canonical" href="https://foxpay.uz/">
-<link rel="alternate" hreflang="uz" href="https://foxpay.uz/">
-<link rel="alternate" hreflang="x-default" href="https://foxpay.uz/">
 
-<!-- ═══ OPEN GRAPH ═══ -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="FoxPay">
-<meta property="og:locale" content="uz_UZ">
-<meta property="og:title" content="FoxPay — To'lov bir zumda">
-<meta property="og:description" content="Freelancerlar va biznes uchun onlayn to'lov platformasi. 1.5% komissiya, bepul boshlash.">
+<meta property="og:title" content="FoxPay — Global Payments Platform">
+<meta property="og:description" content="Global payments with Stripe, J.P. Morgan, multi-currency.">
 <meta property="og:url" content="https://foxpay.uz/">
-<meta property="og:image" content="https://foxpay.uz/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<!-- ═══ TWITTER ═══ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="FoxPay — To'lov bir zumda">
-<meta name="twitter:description" content="Freelancerlar va biznes uchun onlayn to'lov platformasi.">
-<meta name="twitter:image" content="https://foxpay.uz/og.png">
 
-<!-- ═══ ICONS ═══ -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B1120'/%3E%3Cpath d='M30 30l20 20 20-20v30a20 20 0 0 1-40 0V30z' fill='%23FF6B00'/%3E%3C/svg%3E">
-<link rel="manifest" href="/manifest.webmanifest">
-
-<!-- ═══ FONTS ═══ -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- ═══ STRUCTURED DATA — Organization ═══ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "FoxPay",
-  "url": "https://foxpay.uz",
-  "logo": "https://foxpay.uz/logo.png",
-  "description": "O'zbekistonda onlayn to'lovlar, P2P o'tkazmalar va payment API platformasi",
-  "email": "hello@foxpay.uz",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Tashkent",
-    "addressCountry": "UZ"
-  },
-  "sameAs": [
-    "https://t.me/foxpay_uz"
-  ]
-}
-</script>
-
-<!-- ═══ STRUCTURED DATA — WebSite ═══ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "url": "https://foxpay.uz",
-  "name": "FoxPay",
-  "inLanguage": "uz",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://foxpay.uz/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-
-<!-- ═══ STRUCTURED DATA — SoftwareApplication ═══ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "FoxPay",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "url": "https://foxpay.uz",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "UZS",
-    "description": "Bepul boshlash. Faqat muvaffaqiyatli tranzaksiyadan 1.5% komissiya."
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1248",
-    "bestRating": "5"
-  }
-}
-</script>
-
-<!-- ═══ STRUCTURED DATA — FAQ (Google rich results) ═══ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "FoxPay nima?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "FoxPay — O'zbekiston uchun onlayn to'lov platformasi. Freelancerlar, kichik biznes va merchantlar uchun P2P o'tkazmalar, payment API va webhooks."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Komissiya qancha?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Start rejasida 1.8%, Business rejasida 1.5%. Oylik to'lov yo'q, faqat muvaffaqiyatli tranzaksiyadan komissiya olinadi."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Qaysi kartalar qo'llab-quvvatlanadi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Uzcard, Humo, Visa va Mastercard. Shuningdek Payme, Click va bank o'tkazmalari orqali to'lov qabul qilinadi."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Pul qancha vaqtda tushadi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "P2P o'tkazmalar real vaqtda (bir zumda). Merchant to'lovlari 1 ish kuni ichida kartaga tushadi."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "API bormi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ha, REST API, webhook va tayyor SDK. 15 daqiqada integratsiya qilish mumkin. Batafsil /docs da."
-      }
-    }
-  ]
-}
-</script>
 
 <style>
-/* ═══ RESET ═══ */
+/* ================================================================
+   SECTION 1 — RESET & TOKENS
+   ================================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0B1120;color:#F8FAFC;line-height:1.5;font-size:14px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
-input,textarea,select{font:inherit;color:inherit;background:none;border:0;outline:none}
+input,select,textarea{font:inherit;color:inherit;background:none;border:0;outline:none}
 ul,ol{list-style:none}
 
-/* ═══ TOKENS ═══ */
 :root{
---bg:#0B1120;--panel:#0F172A;--panel2:#141E33;--border:#1E293B;--border2:#2A3A50;
---fox:#FF6B00;--fox2:#E64A00;--cyan:#00F2FE;
---text:#F8FAFC;--muted:#94A3B8;--muted2:#64748B;
---green:#10B981;--red:#EF4444;--amber:#F59E0B;
+--bg:#0B1120;--panel:#0F172A;--panel-2:#141E33;--border:#1E293B;--border-2:#2A3A50;
+--fox:#FF6B00;--fox-2:#E64A00;--cyan:#00F2FE;
+--text:#F8FAFC;--muted:#94A3B8;--muted-2:#64748B;
+--green:#10B981;--green-bg:rgba(16,185,129,.12);
+--red:#EF4444;--red-bg:rgba(239,68,68,.12);
+--amber:#F59E0B;--amber-bg:rgba(245,158,11,.12);
+--blue:#3B82F6;--blue-bg:rgba(59,130,246,.12);
+--purple:#8B5CF6;--purple-bg:rgba(139,92,246,.12);
 --r:10px;--r-lg:14px;--r-xl:18px;
+--sh:0 2px 8px rgba(0,0,0,.3);
 --sh-lg:0 12px 40px rgba(0,0,0,.5);
---sidebar:240px;
+--sidebar-w:240px;
 }
 [data-theme="light"]{
---bg:#F8FAFC;--panel:#FFFFFF;--panel2:#F1F5F9;--border:#E2E8F0;--border2:#CBD5E1;
---text:#0F172A;--muted:#475569;--muted2:#64748B;
---sh-lg:0 12px 40px rgba(0,0,0,.08);
+--bg:#F8FAFC;--panel:#FFFFFF;--panel-2:#F1F5F9;--border:#E2E8F0;--border-2:#CBD5E1;
+--text:#0F172A;--muted:#475569;--muted-2:#64748B;
+--sh:0 2px 8px rgba(0,0,0,.05);--sh-lg:0 12px 40px rgba(0,0,0,.1);
 }
 
-/* ═══ UTILS ═══ */
-.flex{display:flex}.fcol{flex-direction:column}.ai-c{align-items:center}.ai-s{align-items:flex-start}
-.jc-b{justify-content:space-between}.jc-c{justify-content:center}
-.g1{gap:4px}.g2{gap:8px}.g3{gap:12px}.g4{gap:16px}.g6{gap:24px}.g8{gap:32px}
-.grow{flex:1;min-width:0}.wrap{flex-wrap:wrap}
-.t-xs{font-size:11px}.t-sm{font-size:12px}.t-md{font-size:13px}.t-lg{font-size:15px}
-.t-xl{font-size:18px}.t-2xl{font-size:24px}.t-3xl{font-size:32px}.t-4xl{font-size:42px}.t-5xl{font-size:56px}
+/* ================================================================
+   SECTION 2 — UTILITIES
+   ================================================================ */
+.flex{display:flex}.fcol{flex-direction:column}.ai-c{align-items:center}.ai-s{align-items:flex-start}.ai-e{align-items:flex-end}
+.jc-b{justify-content:space-between}.jc-c{justify-content:center}.jc-e{justify-content:flex-end}
+.g1{gap:4px}.g2{gap:8px}.g3{gap:12px}.g4{gap:16px}.g5{gap:20px}.g6{gap:24px}.g8{gap:32px}
+.grow{flex:1;min-width:0}.wrap{flex-wrap:wrap}.shrink{flex-shrink:0}
+.hide{display:none!important}
+.t-xs{font-size:11px}.t-sm{font-size:12px}.t-md{font-size:13px}.t-base{font-size:14px}.t-lg{font-size:15px}
+.t-xl{font-size:18px}.t-2xl{font-size:22px}.t-3xl{font-size:28px}.t-4xl{font-size:36px}.t-5xl{font-size:48px}
 .fw5{font-weight:500}.fw6{font-weight:600}.fw7{font-weight:700}.fw8{font-weight:800}.fw9{font-weight:900}
-.muted{color:var(--muted)}.text-c{text-align:center}.text-r{text-align:right}
+.muted{color:var(--muted)}.muted-2{color:var(--muted-2)}
+.text-r{text-align:right}.text-c{text-align:center}
 .trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mono{font-family:ui-monospace,monospace}
-.mt2{margin-top:8px}.mt4{margin-top:16px}.mt6{margin-top:24px}
-.mb2{margin-bottom:8px}.mb3{margin-bottom:12px}.mb4{margin-bottom:16px}.mb6{margin-bottom:24px}
-.w100{width:100%}.hide{display:none!important}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.w100{width:100%}.h100{height:100%}.rel{position:relative}
+.mt1{margin-top:4px}.mt2{margin-top:8px}.mt3{margin-top:12px}.mt4{margin-top:16px}.mt6{margin-top:24px}
+.mb1{margin-bottom:4px}.mb2{margin-bottom:8px}.mb3{margin-bottom:12px}.mb4{margin-bottom:16px}.mb6{margin-bottom:24px}
+.divider{height:1px;background:var(--border);margin:12px 0}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
-/* ═══ BUTTONS ═══ */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:var(--r);font-weight:600;font-size:14px;transition:all .15s;border:1px solid transparent;white-space:nowrap;cursor:pointer;line-height:1.2}
+/* ================================================================
+   SECTION 3 — BUTTONS
+   ================================================================ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--r);font-weight:600;font-size:13px;transition:all .15s;border:1px solid transparent;white-space:nowrap;line-height:1.2;user-select:none}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-primary{background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;box-shadow:0 2px 10px rgba(255,107,0,.3)}
-.btn-primary:hover:not(:disabled){box-shadow:0 4px 20px rgba(255,107,0,.45)}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.btn-primary{background:linear-gradient(135deg,var(--fox),var(--fox-2));color:#fff;box-shadow:0 2px 8px rgba(255,107,0,.25)}
+.btn-primary:hover:not(:disabled){box-shadow:0 4px 16px rgba(255,107,0,.4)}
 .btn-outline{border-color:var(--border);background:rgba(255,255,255,.02);color:var(--text)}
-.btn-outline:hover:not(:disabled){background:rgba(255,255,255,.06);border-color:var(--border2)}
+.btn-outline:hover:not(:disabled){background:rgba(255,255,255,.06);border-color:var(--border-2)}
 .btn-ghost{color:var(--muted)}
-.btn-ghost:hover:not(:disabled){color:var(--text);background:var(--panel2)}
-.btn-sm{padding:7px 13px;font-size:13px}
-.btn-lg{padding:14px 26px;font-size:15px;border-radius:12px}
+.btn-ghost:hover:not(:disabled){background:var(--panel-2);color:var(--text)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover:not(:disabled){background:#DC2626}
+.btn-success{background:var(--green);color:#fff}
+.btn-sm{padding:6px 11px;font-size:12px}
+.btn-xs{padding:4px 9px;font-size:11px}
+.btn-lg{padding:12px 24px;font-size:14px;border-radius:12px}
 .btn-block{width:100%}
-.btn-icon{width:38px;height:38px;padding:0;border-radius:var(--r)}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--r)}
 
-/* ═══ INPUTS ═══ */
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.field label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.input{width:100%;padding:11px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;transition:all .15s}
-.input:focus{border-color:var(--fox);box-shadow:0 0 0 3px rgba(255,107,0,.15)}
-.input::placeholder{color:var(--muted2)}
+/* ================================================================
+   SECTION 4 — INPUTS
+   ================================================================ */
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;text-transform:uppercase}
+.input,.select,.textarea{width:100%;padding:10px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;transition:all .15s}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--fox);box-shadow:0 0 0 3px rgba(255,107,0,.15)}
+.input::placeholder{color:var(--muted-2)}
+.textarea{resize:vertical;min-height:70px}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.err{color:var(--red);font-size:11px;min-height:14px;margin-top:1px}
+.field-hint{color:var(--muted-2);font-size:11px;margin-top:2px}
 
-/* ═══ CARDS ═══ */
-.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600}
-.b-green{background:rgba(16,185,129,.12);color:var(--green)}
-.b-red{background:rgba(239,68,68,.12);color:var(--red)}
-.b-amber{background:rgba(245,158,11,.12);color:var(--amber)}
+/* ================================================================
+   SECTION 5 — CARDS & BADGES
+   ================================================================ */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.card-lg{padding:24px;border-radius:var(--r-xl)}
+.card-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.card-title{font-size:15px;font-weight:700;color:var(--text)}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;line-height:1.4}
+.bd{width:5px;height:5px;border-radius:50%;background:currentColor}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-blue{background:var(--blue-bg);color:var(--blue)}
 .b-cyan{background:rgba(0,242,254,.12);color:var(--cyan)}
+.b-fox{background:rgba(255,107,0,.12);color:var(--fox)}
+.b-purple{background:var(--purple-bg);color:var(--purple)}
+.b-gray{background:var(--panel-2);color:var(--muted)}
 
-/* ═══ TOAST ═══ */
-.toast-host{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;max-width:360px;pointer-events:none}
-.toast{padding:14px 18px;border-radius:var(--r);background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:500;box-shadow:var(--sh-lg);animation:slideIn .25s;pointer-events:auto;line-height:1.5}
+/* ================================================================
+   SECTION 6 — TOAST
+   ================================================================ */
+.toast-host{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px}
+.toast{display:flex;align-items:center;gap:8px;padding:11px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--border);color:var(--text);box-shadow:var(--sh-lg);font-size:13px;font-weight:500;pointer-events:auto;animation:ti .2s cubic-bezier(.2,.9,.3,1.2);min-width:220px;line-height:1.4}
 .toast.success{border-color:var(--green);color:var(--green)}
 .toast.error{border-color:var(--red);color:var(--red)}
-@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.toast.info{border-color:var(--blue);color:var(--blue)}
+.toast.warning{border-color:var(--amber);color:var(--amber)}
+.toast.out{animation:to .2s ease forwards}
+.toast-icon{flex-shrink:0;display:inline-flex}
+@keyframes ti{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes to{to{opacity:0;transform:translateX(24px)}}
 
-/* ═══ MODAL ═══ */
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:20px}
-.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lg)}
-.m-head{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.m-title{font-size:16px;font-weight:700}
-.m-body{padding:22px}
-.m-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+/* ================================================================
+   SECTION 7 — MODAL
+   ================================================================ */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:16px;animation:fadeIn .15s}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lg);animation:scaleIn .2s}
+.modal-lg{max-width:640px}
+.modal-hd{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:15px;font-weight:700}
+.modal-body{padding:22px}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--border);flex-wrap:wrap}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.96) translateY(6px)}to{opacity:1;transform:none}}
 
-/* ═══ HEADER (Landing) ═══ */
+/* ================================================================
+   SECTION 8 — SKELETON
+   ================================================================ */
+.skel{background:linear-gradient(90deg,var(--panel-2) 25%,var(--border) 50%,var(--panel-2) 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:8px}
+.skel-line{height:14px;margin:8px 0}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ================================================================
+   SECTION 9 — LANDING
+   ================================================================ */
+.landing{min-height:100vh}
 .site-header{position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);background:rgba(11,17,32,.85);border-bottom:1px solid var(--border)}
 [data-theme="light"] .site-header{background:rgba(248,250,252,.85)}
-.nav{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.02em}
-.logo-mark{width:36px;height:36px}
-.nav-links{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
-.nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .15s}
+.site-nav{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.02em;cursor:pointer}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--fox),var(--fox-2));display:grid;place-items:center;box-shadow:0 4px 14px rgba(255,107,0,.4);flex-shrink:0;color:#fff;font-weight:900;font-size:16px}
+.logo-text{color:var(--text)}
+.logo-text .accent{color:var(--cyan)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);transition:color .15s;cursor:pointer}
 .nav-links a:hover{color:var(--text)}
 .nav-actions{display:flex;gap:8px;align-items:center}
 
-/* ═══ HERO ═══ */
 .hero{max-width:1200px;margin:0 auto;padding:80px 24px 100px;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:99px;background:rgba(255,107,0,.1);color:var(--fox);font-size:12px;font-weight:600;margin-bottom:24px;border:1px solid rgba(255,107,0,.2)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,107,0,.1);color:var(--fox);font-size:12px;font-weight:600;margin-bottom:24px;border:1px solid rgba(255,107,0,.2)}
 .hero h1{font-size:56px;line-height:1.05;letter-spacing:-.03em;font-weight:900;margin-bottom:20px;color:var(--text)}
-.hero h1 .grad{background:linear-gradient(135deg,var(--fox),var(--fox2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .lead{font-size:17px;line-height:1.65;color:var(--muted);margin-bottom:32px;max-width:540px}
+.hero h1 .grad{background:linear-gradient(135deg,var(--fox),var(--fox-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:17px;line-height:1.65;color:var(--muted);margin-bottom:32px;max-width:520px}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
 .hero-stats{display:flex;gap:40px;flex-wrap:wrap}
 .hs-num{font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
 .hs-lbl{font-size:12px;color:var(--muted);margin-top:2px}
-.hero-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);padding:26px;box-shadow:var(--sh-lg);position:relative;overflow:hidden}
+.hero-visual{position:relative}
+.hero-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;box-shadow:var(--sh-lg);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.2),transparent 70%);top:-80px;right:-80px}
+.hero-card-inner{position:relative;z-index:1}
 .hero-amt{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:6px 0;color:var(--text)}
 
-/* ═══ SECTION ═══ */
 .section{max-width:1200px;margin:0 auto;padding:80px 24px}
 .section-head{text-align:center;max-width:640px;margin:0 auto 48px}
 .section-eyebrow{font-size:12px;font-weight:700;color:var(--fox);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-.section-head h2{font-size:42px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin-bottom:16px;color:var(--text)}
-.section-head p{font-size:17px;color:var(--muted);line-height:1.6}
+.section-head h2{font-size:42px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin-bottom:14px;color:var(--text)}
+.section-head p{font-size:16px;color:var(--muted);line-height:1.65}
 
-/* Features */
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.feature{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:26px;transition:all .2s}
+.feature{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:all .2s}
 .feature:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);border-color:var(--fox)}
-.feature-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,107,0,.12);color:var(--fox);display:grid;place-items:center;margin-bottom:18px;font-size:22px}
-.feature h3{font-size:16px;font-weight:700;margin-bottom:10px;color:var(--text)}
-.feature p{font-size:14px;color:var(--muted);line-height:1.65}
+.feature-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,107,0,.12);color:var(--fox);display:grid;place-items:center;margin-bottom:16px;font-size:22px}
+.feature h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.feature p{font-size:13px;color:var(--muted);line-height:1.6}
 
-/* Pricing */
 .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-.price-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:30px;display:flex;flex-direction:column;position:relative}
-.price-card.featured{border:2px solid var(--fox);box-shadow:0 20px 60px rgba(255,107,0,.2)}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;padding:4px 16px;border-radius:99px;font-size:11px;font-weight:700}
-.price-name{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
-.price-amount{font-size:36px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;color:var(--text)}
+.price-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;position:relative}
+.price-card.featured{border:2px solid var(--fox);box-shadow:0 16px 50px rgba(255,107,0,.2)}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--fox),var(--fox-2));color:#fff;padding:4px 16px;border-radius:999px;font-size:11px;font-weight:700}
+.price-name{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.price-amount{font-size:34px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;color:var(--text)}
 .price-amount span{font-size:14px;font-weight:500;color:var(--muted)}
-.price-desc{font-size:13px;color:var(--muted);margin-bottom:24px;min-height:40px}
-.price-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;flex:1}
-.price-list li{display:flex;gap:10px;font-size:14px;color:var(--muted);line-height:1.5}
-.price-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.price-desc{font-size:12px;color:var(--muted);margin-bottom:20px;min-height:38px}
+.price-list{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;flex:1}
+.price-item{display:flex;gap:8px;font-size:13px;color:var(--muted);line-height:1.5}
+.price-item::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
 
-/* FAQ */
-.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.faq-item{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.faq-q{width:100%;text-align:left;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;transition:background .15s}
-.faq-q:hover{background:var(--panel2)}
-.faq-q::after{content:'+';font-size:22px;font-weight:400;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.faq-list{max-width:760px;margin:0 auto}
+.faq-item{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:12px;overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;transition:background .15s;list-style:none}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q:hover{background:var(--panel-2)}
+.faq-q::after{content:'+';color:var(--muted);font-size:20px;font-weight:400;flex-shrink:0;transition:transform .2s}
 .faq-item[open] .faq-q::after{transform:rotate(45deg)}
-.faq-item[open] .faq-q{background:var(--panel2)}
-.faq-a{padding:0 22px 20px;font-size:14px;color:var(--muted);line-height:1.7}
-.faq-item summary{list-style:none}
-.faq-item summary::-webkit-details-marker{display:none}
+.faq-a{padding:0 20px 16px;font-size:13px;color:var(--muted);line-height:1.7}
 
-/* CTA */
-.cta-box{background:linear-gradient(135deg,var(--fox),var(--fox2));border-radius:var(--r-xl);padding:60px 40px;text-align:center;color:#fff;box-shadow:0 24px 70px rgba(255,107,0,.3)}
-.cta-box h2{font-size:38px;line-height:1.15;font-weight:800;margin-bottom:16px}
-.cta-box p{font-size:16px;opacity:.92;margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto}
-.cta-box .btn{background:#fff;color:var(--fox2);font-weight:700;padding:14px 32px}
+.cta-box{background:linear-gradient(135deg,var(--fox),var(--fox-2));border-radius:var(--r-xl);padding:56px 40px;text-align:center;color:#fff;box-shadow:0 20px 60px rgba(255,107,0,.3);position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.08);top:-100px;right:-100px}
+.cta-box h2{font-size:36px;line-height:1.15;font-weight:800;margin-bottom:14px;position:relative;z-index:1}
+.cta-box p{font-size:15px;opacity:.92;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+.cta-box .btn{background:#fff;color:var(--fox-2);font-weight:700;position:relative;z-index:1}
 
-/* Footer */
-.site-footer{border-top:1px solid var(--border);padding:60px 24px 32px;max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;color:var(--text)}
-.footer-col a,.footer-col p{display:block;font-size:13px;color:var(--muted);padding:5px 0;transition:color .15s}
+.site-footer{border-top:1px solid var(--border);padding:56px 24px 32px;max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px}
+.footer-col h4{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:var(--muted);padding:5px 0;transition:color .15s;cursor:pointer}
 .footer-col a:hover{color:var(--text)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
 
-/* ═══ AUTH / APP SHELL ═══ */
-.app-shell{min-height:100vh;background:var(--bg)}
-.auth-container{min-height:100vh;display:grid;place-items:center;padding:20px}
+/* ================================================================
+   SECTION 10 — AUTH
+   ================================================================ */
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:var(--bg)}
 .auth-box{width:100%;max-width:420px}
+.auth-header{text-align:center;margin-bottom:28px}
+.auth-title{font-size:26px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;color:var(--text)}
+.auth-sub{font-size:13px;color:var(--muted)}
 .auth-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px;box-shadow:var(--sh-lg)}
-.auth-logo{margin-bottom:24px}
-.auth-title{font-size:22px;font-weight:800;margin-bottom:6px;color:var(--text)}
-.auth-sub{font-size:13px;color:var(--muted);margin-bottom:26px}
 .auth-tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:var(--r);margin-bottom:22px;border:1px solid var(--border)}
 .auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s}
-.auth-tab.active{background:var(--panel2);color:var(--text)}
+.auth-tab.active{background:var(--panel-2);color:var(--text)}
+.auth-footer{text-align:center;margin-top:20px;font-size:12px;color:var(--muted)}
+.auth-footer a{color:var(--fox);font-weight:600;cursor:pointer}
 
-/* Dashboard */
-.dash{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh}
-.sidebar{background:var(--panel);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
-.sidebar-logo{padding:8px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+/* ================================================================
+   SECTION 11 — DASHBOARD
+   ================================================================ */
+.dash{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
+.sidebar{background:var(--panel);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;overscroll-behavior:contain}
+.sidebar-logo{padding:6px 10px;margin-bottom:22px;display:flex;align-items:center;gap:10px}
 .side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-.si{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
-.si:hover{background:var(--panel2);color:var(--text)}
-.si.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600;border-left-color:var(--fox)}
+.side-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;border-left:3px solid transparent;width:100%;text-align:left}
+.side-item:hover{background:var(--panel-2);color:var(--text)}
+.side-item.active{background:rgba(255,107,0,.1);color:var(--fox);font-weight:600;border-left-color:var(--fox)}
+.side-item-icon{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.side-sep{height:1px;background:var(--border);margin:10px 6px}
 .side-foot{padding-top:14px;border-top:1px solid var(--border)}
-.side-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;background:var(--panel2);margin-bottom:10px}
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--fox),var(--fox2));color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center;flex-shrink:0}
-.avatar.sm{width:28px;height:28px;font-size:10px}
-.main-content{display:flex;flex-direction:column;min-width:0}
-.topbar{background:rgba(15,23,42,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:50;flex-wrap:wrap}
-[data-theme="light"] .topbar{background:rgba(248,250,252,.85)}
-.tb-title{font-size:18px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
-.content{padding:24px;max-width:1280px;width:100%;margin:0 auto;flex:1}
+.side-user{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;background:var(--panel-2);margin-bottom:8px}
+.side-user-info{min-width:0;flex:1}
 
-/* Dashboard widgets */
-.wallet-banner{background:linear-gradient(135deg,var(--fox),var(--fox2));border-radius:var(--r-xl);padding:28px;color:#fff;box-shadow:0 16px 40px rgba(255,107,0,.25);margin-bottom:24px;position:relative;overflow:hidden}
-.wallet-banner::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.1);top:-90px;right:-90px}
-.wallet-label{font-size:13px;opacity:.85;font-weight:500;margin-bottom:6px;position:relative;z-index:1}
-.wallet-amount{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1.1;position:relative;z-index:1}
-.wallet-actions{display:flex;gap:12px;margin-top:22px;position:relative;z-index:1;flex-wrap:wrap}
-.wallet-actions .btn{background:rgba(255,255,255,.2);color:#fff;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25)}
-.wallet-actions .btn:hover{background:rgba(255,255,255,.3)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
-.kpi-l{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
-.kpi-v{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{background:rgba(15,23,42,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:50;flex-wrap:wrap}
+[data-theme="light"] .topbar{background:rgba(248,250,252,.85)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+.tb-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.tb-actions{display:flex;gap:8px;align-items:center}
+.content{padding:24px;max-width:1280px;width:100%;margin:0 auto;flex:1;min-height:60vh}
+
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--fox),var(--fox-2));color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center;flex-shrink:0}
+.avatar.sm{width:28px;height:28px;font-size:10px}
+.avatar.lg{width:44px;height:44px;font-size:14px}
+
+/* Overview */
+.balance-banner{background:linear-gradient(135deg,var(--fox),var(--fox-2));border-radius:var(--r-xl);padding:24px;color:#fff;box-shadow:0 16px 40px rgba(255,107,0,.25);margin-bottom:20px;position:relative;overflow:hidden}
+.balance-banner::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.1);top:-90px;right:-90px}
+.balance-label{font-size:12px;opacity:.85;font-weight:500;margin-bottom:6px;position:relative;z-index:1}
+.balance-amt{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1;position:relative;z-index:1}
+.balance-meta{font-size:11px;opacity:.8;margin-top:6px;position:relative;z-index:1}
+.balance-actions{display:flex;gap:10px;margin-top:20px;position:relative;z-index:1;flex-wrap:wrap}
+.balance-actions .btn{background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}
+.balance-actions .btn:hover{background:rgba(255,255,255,.28)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px}
+.kpi-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.kpi-value{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+
+/* Tables */
 .table-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.tc-head{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.tc-head h3{font-size:15px;font-weight:700;color:var(--text)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{text-align:left;padding:12px 22px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
-td{padding:14px 22px;border-bottom:1px solid var(--border);color:var(--text)}
-tbody tr:hover td{background:rgba(255,255,255,.02)}
+.tc-head{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tc-head h3{font-size:14px;font-weight:700;color:var(--text)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 20px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
+tbody td{padding:13px 20px;border-bottom:1px solid var(--border);color:var(--text)}
+tbody tr:hover{background:rgba(255,255,255,.02)}
 tbody tr:last-child td{border-bottom:0}
-.empty{padding:48px 22px;text-align:center;color:var(--muted);font-size:14px}
-.empty h4{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px}
+.table-scroll{overflow-x:auto}
+
+.empty{padding:48px 20px;text-align:center;color:var(--muted);font-size:13px}
+.empty-icon{font-size:36px;margin-bottom:10px;opacity:.5}
+.empty h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.empty p{font-size:12px}
+
+/* Grid */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.code-block{background:#020617;color:#E5E5E5;padding:14px 16px;border-radius:var(--r);font-family:ui-monospace,monospace;font-size:12px;overflow-x:auto;border:1px solid var(--border);word-break:break-all;line-height:1.6}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 
-/* ═══ RESPONSIVE ═══ */
+/* Code block */
+.code-block{background:#020617;color:#E5E5E5;padding:14px 16px;border-radius:var(--r);font-family:ui-monospace,monospace;font-size:12px;overflow-x:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--border);word-break:break-all;line-height:1.6}
+[data-theme="light"] .code-block{background:#1E293B}
+
+/* Setting rows */
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);gap:12px}
+.setting-row:last-child{border-bottom:0}
+.setting-info h4{font-size:13px;font-weight:600;margin-bottom:2px;color:var(--text)}
+.setting-info p{font-size:11px;color:var(--muted)}
+
+/* Status card */
+.status-card{display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--r);background:var(--panel-2);border:1px solid var(--border);margin-bottom:12px}
+.status-icon{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;font-size:18px}
+.status-icon.ok{background:var(--green-bg);color:var(--green)}
+.status-icon.off{background:var(--panel);color:var(--muted-2);border:1px solid var(--border)}
+.status-info{min-width:0;flex:1}
+.status-title{font-size:13px;font-weight:600;color:var(--text)}
+.status-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Balance mini-grid */
+.balances{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.balance-chip{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:14px}
+.balance-chip-cur{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.balance-chip-val{font-size:18px;font-weight:800;color:var(--text);margin-top:6px;letter-spacing:-.02em}
+
+/* Toast buttons */
+.toast-inline-btn{padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;background:rgba(255,255,255,.1);margin-left:6px;cursor:pointer}
+
+/* ================================================================
+   SECTION 12 — RESPONSIVE
+   ================================================================ */
 @media (max-width:1024px){
 .hero{grid-template-columns:1fr;padding:48px 20px 64px;gap:32px}
 .hero h1{font-size:42px}
-.hero-card{display:none}
+.hero-visual{display:none}
 .features,.pricing{grid-template-columns:1fr}
 .kpis{grid-template-columns:repeat(2,1fr)}
-.grid-2,.grid-3{grid-template-columns:1fr}
+.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
 .section{padding:48px 20px}
 .section-head h2{font-size:30px}
 .footer-grid{grid-template-columns:1fr 1fr}
@@ -396,774 +364,1698 @@ tbody tr:last-child td{border-bottom:0}
 .dash{grid-template-columns:1fr}
 .sidebar{position:fixed;left:-100%;top:0;bottom:0;width:260px;z-index:200;transition:left .25s;box-shadow:var(--sh-lg)}
 .sidebar.open{left:0}
+.side-back{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199;display:none;backdrop-filter:blur(4px)}
+.side-back.open{display:block}
+.topbar{padding:12px 16px}
 .content{padding:16px}
-.tb-title{font-size:16px}
+.tb-title{font-size:15px}
 .nav-links{display:none}
 .hero h1{font-size:34px}
 .hero .lead{font-size:15px}
 .kpis{grid-template-columns:1fr}
-.wallet-amount{font-size:30px}
+.balance-amt{font-size:30px}
 .footer-grid{grid-template-columns:1fr}
 .section-head h2{font-size:24px}
 .cta-box{padding:40px 24px}
 .cta-box h2{font-size:26px}
 table{font-size:12px}
-th,td{padding:10px 14px}
+thead th,tbody td{padding:10px 14px}
 }
 </style>
 </head>
 <body>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     LANDING PAGE — STATIC HTML (Google bot o'qiydi)
-     ═══════════════════════════════════════════════════════════════ -->
-<div id="landing">
-
-  <header class="site-header">
-    <nav class="nav" aria-label="Asosiy navigatsiya">
-      <a href="/" class="logo" aria-label="FoxPay bosh sahifa">
-        <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
-          <defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6B00"/><stop offset="100%" stop-color="#E64A00"/></linearGradient></defs>
-          <rect width="100" height="100" rx="18" fill="#0B1120"/>
-          <g transform="translate(10, 8)">
-            <path d="M 26 21 A 18 18 0 0 1 54 21 L 59 15 A 24 24 0 0 0 21 15 Z" fill="#0B2545"/>
-            <path d="M 30 26 A 12 12 0 0 1 50 26 L 54 21 A 18 18 0 0 0 26 21 Z" fill="#133863"/>
-            <circle cx="40" cy="31" r="3.2" fill="#0B2545"/><circle cx="40" cy="31" r="1.6" fill="url(#lg1)"/>
-            <path d="M 18 33 C 10 40 8 52 17 61 C 26 70 39 70 46 62 C 53 54 51 44 46 39 C 42 35 37 36 37 36 C 37 36 42 44 38 49 C 34 54 26 54 22 49 C 18 44 20 37 24 33 Z" fill="url(#lg1)"/>
-            <path d="M 44 40 C 48 41 55 45 62 50 C 64 52 61 52 60 52 C 55 52 50 49 46 47 C 44 46 42 45 44 40 Z" fill="url(#lg1)"/>
-            <path d="M 46 47 C 50 49 55 52 60 52 C 61 52 64 52 62 50 C 58 47 53 44 49 42 C 48 41 47 43 46 47 Z" fill="#0B2545"/>
-            <path d="M 53 33 L 56 40 L 51 39 Z" fill="#0B2545"/>
-          </g>
-        </svg>
-        FOX<span style="color:var(--cyan)">PAY</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Imkoniyatlar</a></li>
-        <li><a href="#pricing">Narxlar</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="/docs">API</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="#/login" class="btn btn-ghost btn-sm">Kirish</a>
-        <a href="#/register" class="btn btn-primary btn-sm">Boshlash</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <span class="hero-eyebrow">⚡ O'zbekistonda #1 to'lovlar platformasi</span>
-        <h1>To'lovni <span class="grad">bir zumda</span> qabul qiling.</h1>
-        <p class="lead">FoxPay — freelancerlar, onlayn do'konlar va kichik biznes uchun tez, ishonchli va arzon to'lov infratuzilmasi. P2P o'tkazmalar, REST API va webhooks. Atigi 1.5% komissiya.</p>
-        <div class="hero-cta">
-          <a href="#/register" class="btn btn-primary btn-lg">Bepul boshlash →</a>
-          <a href="#features" class="btn btn-outline btn-lg">Batafsil</a>
-        </div>
-        <div class="hero-stats">
-          <div><div class="hs-num">12,400+</div><div class="hs-lbl">Faol merchant</div></div>
-          <div><div class="hs-num">₣ 4.2 mlrd</div><div class="hs-lbl">Oylik aylanma</div></div>
-          <div><div class="hs-num">99.98%</div><div class="hs-lbl">Uptime SLA</div></div>
-        </div>
-      </div>
-      <aside class="hero-card" aria-label="Bugungi tushum">
-        <div class="flex jc-b ai-c mb2">
-          <div><div class="t-sm muted">Bugungi tushum</div><div class="hero-amt">₣ 8,240,000</div></div>
-          <span class="badge b-green">+18.2%</span>
-        </div>
-        <div style="display:flex;align-items:flex-end;gap:6px;height:120px;margin-top:20px">
-          <div style="flex:1;background:rgba(255,107,0,.3);border-radius:4px;height:40%"></div>
-          <div style="flex:1;background:rgba(255,107,0,.4);border-radius:4px;height:55%"></div>
-          <div style="flex:1;background:rgba(255,107,0,.5);border-radius:4px;height:48%"></div>
-          <div style="flex:1;background:rgba(255,107,0,.6);border-radius:4px;height:70%"></div>
-          <div style="flex:1;background:rgba(255,107,0,.75);border-radius:4px;height:85%"></div>
-          <div style="flex:1;background:#FF6B00;border-radius:4px;height:100%"></div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="section" id="features">
-      <div class="section-head">
-        <div class="section-eyebrow">Imkoniyatlar</div>
-        <h2>Hammasi bitta joyda</h2>
-        <p>To'lov qabul qilishdan API integratsiyagacha — biznesingiz uchun zarur bo'lgan barcha vositalar</p>
-      </div>
-      <div class="features">
-        <article class="feature">
-          <div class="feature-icon">⚡</div>
-          <h3>Tez to'lov</h3>
-          <p>Uzcard, Humo, Payme, Click — barchasi bir tugmada. O'rtacha tranzaksiya vaqti 1.2 soniya.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">🛡️</div>
-          <h3>Xavfsiz</h3>
-          <p>Double-entry ledger, PCI DSS standartlari, 2FA va har bir tranzaksiya uchun to'liq audit log.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">💻</div>
-          <h3>Oson integratsiya</h3>
-          <p>REST API, webhook va tayyor SDK. 15 daqiqada to'lov qabul qilishni boshlang.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">💸</div>
-          <h3>P2P o'tkazma</h3>
-          <p>Telefon yoki email orqali bir zumda pul o'tkazing. Komissiya faqat 1.5%.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">📊</div>
-          <h3>Analitika</h3>
-          <p>Real vaqtdagi dashboard, KPI ko'rsatkichlar va avtomatik hisobotlar.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">🌍</div>
-          <h3>Xalqaro</h3>
-          <p>SWIFT va SEPA tarmoqlari orqali 40+ valyutada pul qabul qiling va yuboring.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="section" id="pricing">
-      <div class="section-head">
-        <div class="section-eyebrow">Narxlar</div>
-        <h2>Halol va shaffof narxlar</h2>
-        <p>Yashirin to'lovlar yo'q. Faqat muvaffaqiyatli tranzaksiyadan komissiya</p>
-      </div>
-      <div class="pricing">
-        <div class="price-card">
-          <div class="price-name">Start</div>
-          <div class="price-amount">1.8%<span> / tx</span></div>
-          <div class="price-desc">Yangi boshlovchilar va freelancerlar uchun</div>
-          <ul class="price-list">
-            <li>Oylik to'lov yo'q</li>
-            <li>Payment link</li>
-            <li>Email qo'llab-quvvatlash</li>
-          </ul>
-          <a href="#/register" class="btn btn-outline btn-block">Boshlash</a>
-        </div>
-        <div class="price-card featured">
-          <div class="price-badge">Ommabop</div>
-          <div class="price-name">Business</div>
-          <div class="price-amount">1.5%<span> / tx</span></div>
-          <div class="price-desc">O'sib borayotgan biznes uchun</div>
-          <ul class="price-list">
-            <li>Barcha Start xususiyatlari</li>
-            <li>REST API + Webhook</li>
-            <li>Ustuvor qo'llab-quvvatlash</li>
-            <li>Analitika va hisobotlar</li>
-          </ul>
-          <a href="#/register" class="btn btn-primary btn-block">Boshlash</a>
-        </div>
-        <div class="price-card">
-          <div class="price-name">Enterprise</div>
-          <div class="price-amount">Kelishiladi</div>
-          <div class="price-desc">Yirik kompaniyalar uchun</div>
-          <ul class="price-list">
-            <li>Individual komissiya</li>
-            <li>SLA 99.99%</li>
-            <li>Dedicated manager</li>
-          </ul>
-          <a href="#/register" class="btn btn-outline btn-block">Bog'lanish</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="section-head">
-        <div class="section-eyebrow">FAQ</div>
-        <h2>Ko'p beriladigan savollar</h2>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary class="faq-q">FoxPay nima?</summary>
-          <div class="faq-a">FoxPay — O'zbekiston uchun onlayn to'lov platformasi. Freelancerlar, kichik biznes va merchantlar to'lov qabul qilishi, P2P pul o'tkazmalari va shaxsiy API integratsiyasi uchun.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-q">Komissiya qancha?</summary>
-          <div class="faq-a">Start rejasida 1.8%, Business rejasida 1.5%, Enterprise uchun individual komissiya. Oylik to'lov yo'q — faqat muvaffaqiyatli tranzaksiyadan komissiya olinadi.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-q">Qaysi kartalar qo'llab-quvvatlanadi?</summary>
-          <div class="faq-a">Uzcard, Humo, xalqaro Visa va Mastercard. Shuningdek Payme, Click va bank o'tkazmalari orqali to'lov qabul qilinadi.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-q">Pul qancha vaqtda tushadi?</summary>
-          <div class="faq-a">P2P o'tkazmalar real vaqtda (bir zumda). Merchant to'lovlari 1 ish kuni ichida bank kartasiga tushadi.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-q">API bormi?</summary>
-          <div class="faq-a">Ha, REST API, webhook va tayyor SDK. 15 daqiqada integratsiya qilish mumkin. Batafsil <a href="/docs" style="color:var(--fox)">/docs</a> da.</div>
-        </details>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section">
-      <div class="cta-box">
-        <h2>Bugun birinchi to'lovni qabul qiling</h2>
-        <p>Ro'yxatdan o'tish bepul. Karta talab qilinmaydi. 5 daqiqada boshlang.</p>
-        <a href="#/register" class="btn">Bepul boshlash →</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <div class="logo" style="margin-bottom:12px">FOX<span style="color:var(--cyan)">PAY</span></div>
-        <p style="max-width:280px">O'zbekistonda onlayn to'lovlar, P2P o'tkazmalar va payment API platformasi.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Mahsulot</h4>
-        <a href="#features">Imkoniyatlar</a>
-        <a href="#pricing">Narxlar</a>
-        <a href="/docs">API Docs</a>
-        <a href="#/register">Ro'yxatdan o'tish</a>
-      </div>
-      <div class="footer-col">
-        <h4>Kompaniya</h4>
-        <a href="#faq">FAQ</a>
-        <a href="mailto:hello@foxpay.uz">Bog'lanish</a>
-      </div>
-      <div class="footer-col">
-        <h4>Huquqiy</h4>
-        <a href="/privacy">Maxfiylik</a>
-        <a href="/terms">Shartlar</a>
-        <a href="/security">Xavfsizlik</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>© <span id="year">2025</span> FoxPay Inc. Barcha huquqlar himoyalangan.</div>
-      <div class="t-xs">Toshkent, O'zbekiston</div>
-    </div>
-  </footer>
-
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     APP (hidden by default, shown for #/login, #/register, #/app/*)
-     ═══════════════════════════════════════════════════════════════ -->
-<div id="app" style="display:none"></div>
-
+<div id="app"></div>
 <div id="toast-host" class="toast-host" aria-live="polite"></div>
 <div id="modal-host"></div>
-
-<noscript>
-  <div style="max-width:720px;margin:40px auto;padding:24px;background:#0F172A;color:#F8FAFC;border-radius:14px;font-family:system-ui,sans-serif">
-    <h2 style="margin-bottom:12px">JavaScript kerak</h2>
-    <p style="color:#94A3B8;line-height:1.7">FoxPay dashboard'i ishlashi uchun JavaScript'ni yoqing. Landing sahifa JavaScript'siz ham ishlaydi.</p>
-    <p style="margin-top:16px"><a href="mailto:hello@foxpay.uz" style="color:#FF6B00">hello@foxpay.uz</a></p>
-  </div>
-</noscript>
 
 <script>
 'use strict';
 
-/* ═══════ CONSTANTS ═══════ */
+/* ================================================================
+   SECTION 13 — CONSTANTS
+   ================================================================ */
 var TOKEN_KEY = 'foxpay.token';
 var USER_KEY = 'foxpay.user';
 var THEME_KEY = 'foxpay.theme';
+var LANG_KEY = 'foxpay.lang';
 
-/* ═══════ STATE ═══════ */
-var S = {
+var SUPPORTED_CURRENCIES = ['UZS', 'USD', 'EUR', 'GBP', 'RUB'];
+
+/* ================================================================
+   SECTION 14 — STATE
+   ================================================================ */
+var State = {
   token: localStorage.getItem(TOKEN_KEY) || null,
-  user: (function(){ try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch(e){ return null; } })()
+  user: (function(){ try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch(e){ return null; } })(),
+  wallet: { balance_tiyin: 0, currency: 'UZS' },
+  activeView: '/',
+  gen: 0
 };
 
-/* ═══════ UTILS ═══════ */
+/* ================================================================
+   SECTION 15 — UTILITIES
+   ================================================================ */
 function $(sel, root){ return (root || document).querySelector(sel); }
 function $$(sel, root){ return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function fmtUZS(tiyin){ return tiyin == null ? '—' : (tiyin / 100).toLocaleString('uz-UZ', {maximumFractionDigits: 2}) + ' UZS'; }
-function fmtDate(iso){ return iso ? new Date(iso).toLocaleString('uz-UZ', {day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'}) : '—'; }
-function initials(name){ return name ? name.trim().split(/\s+/).map(function(n){ return n[0]; }).join('').slice(0, 2).toUpperCase() : '?'; }
-function isValidEmail(e){ return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e); }
+function fmtTiyin(tiyin, currency){
+  currency = currency || 'UZS';
+  if (tiyin == null) return '—';
+  var n = (tiyin / 100).toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  return n + ' ' + currency;
+}
+function fmtNumber(tiyin){
+  if (tiyin == null) return '0';
+  return (tiyin / 100).toLocaleString('en-US', { maximumFractionDigits: 2 });
+}
+function fmtDate(iso){
+  if (!iso) return '—';
+  try {
+    return new Date(iso).toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch(e) { return '—'; }
+}
+function fmtDateShort(iso){
+  if (!iso) return '—';
+  try {
+    return new Date(iso).toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
+  } catch(e) { return '—'; }
+}
+function initials(name){
+  if (!name) return '?';
+  return name.trim().split(/\s+/).map(function(n){ return n[0]; }).join('').slice(0, 2).toUpperCase();
+}
+function isValidEmail(email){ return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email); }
+function debounce(fn, ms){
+  ms = ms || 200;
+  var t;
+  return function(){
+    var a = arguments, c = this;
+    clearTimeout(t);
+    t = setTimeout(function(){ fn.apply(c, a); }, ms);
+  };
+}
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function copyToClipboard(text){
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ toast('Copied to clipboard', 'success'); }).catch(function(){ toast('Copy failed', 'error'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); toast('Copied', 'success'); }
+    catch(e) { toast('Copy failed', 'error'); }
+    document.body.removeChild(ta);
+  }
+}
 
-/* ═══════ THEME ═══════ */
+/* ================================================================
+   SECTION 16 — THEME
+   ================================================================ */
 function getTheme(){ return localStorage.getItem(THEME_KEY) || 'dark'; }
 function setTheme(t){ document.documentElement.setAttribute('data-theme', t); localStorage.setItem(THEME_KEY, t); }
+function toggleTheme(){
+  var next = getTheme() === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+  route();
+  return next;
+}
 setTheme(getTheme());
 
-/* ═══════ TOAST ═══════ */
-function toast(msg, type){
-  type = type || 'success';
-  var host = document.getElementById('toast-host');
+/* ================================================================
+   SECTION 17 — TOAST
+   ================================================================ */
+var _toastHost = null;
+function toast(msg, type, ms){
+  type = type || 'info';
+  ms = ms || 3400;
+  if (!_toastHost) _toastHost = document.getElementById('toast-host');
+  var icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
   var el = document.createElement('div');
   el.className = 'toast ' + type;
-  el.textContent = msg;
-  host.appendChild(el);
-  setTimeout(function(){ el.style.opacity = '0'; setTimeout(function(){ el.remove(); }, 250); }, 3200);
+  el.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span>' + esc(msg) + '</span>';
+  _toastHost.appendChild(el);
+  setTimeout(function(){
+    el.classList.add('out');
+    setTimeout(function(){ el.remove(); }, 220);
+  }, ms);
 }
 
-/* ═══════ MODAL ═══════ */
-function openModal(title, body, footer){
-  var host = document.getElementById('modal-host');
+/* ================================================================
+   SECTION 18 — MODAL
+   ================================================================ */
+var _modalHost = null;
+function openModal(opts){
+  if (!_modalHost) _modalHost = document.getElementById('modal-host');
   var back = document.createElement('div');
   back.className = 'modal-back';
-  back.innerHTML = '<div class="modal"><div class="m-head"><div class="m-title">' + esc(title) + '</div><button class="btn btn-ghost btn-icon" onclick="closeModal()" aria-label="Yopish">✕</button></div><div class="m-body">' + body + '</div>' + (footer ? '<div class="m-foot">' + footer + '</div>' : '') + '</div>';
-  back.addEventListener('click', function(e){ if (e.target === back) closeModal(); });
-  host.appendChild(back);
-}
-function closeModal(){ document.getElementById('modal-host').innerHTML = ''; }
+  var box = document.createElement('div');
+  box.className = 'modal' + (opts.size === 'lg' ? ' modal-lg' : '');
 
-/* ═══════ API ═══════ */
-async function api(path, method, body){
-  var headers = { 'Content-Type': 'application/json' };
-  if (S.token) headers['Authorization'] = 'Bearer ' + S.token;
-  try {
-    var res = await fetch(path, {
-      method: method || 'GET',
-      headers: headers,
-      body: body ? JSON.stringify(body) : undefined
-    });
-    if (res.status === 401) { logout(); throw new Error('Sessiya tugadi. Qayta kiring.'); }
-    if (!res.ok) {
-      var data = await res.json().catch(function(){ return {}; });
-      throw new Error(data.detail || ('Xato ' + res.status));
-    }
-    if (res.status === 204) return null;
-    return await res.json();
-  } catch (e) {
-    if (e.message === 'Failed to fetch' || e.message === 'NetworkError') throw new Error('Server bilan aloqa yo\'q');
-    throw e;
+  box.innerHTML =
+    '<div class="modal-hd">' +
+      '<div class="modal-title">' + esc(opts.title || '') + '</div>' +
+      '<button class="btn btn-ghost btn-icon" data-close aria-label="Close">✕</button>' +
+    '</div>' +
+    '<div class="modal-body">' + (opts.body || '') + '</div>';
+
+  if (opts.footer) {
+    box.innerHTML += '<div class="modal-foot">' + opts.footer + '</div>';
   }
+
+  back.appendChild(box);
+  _modalHost.appendChild(back);
+
+  var close = function(){ back.remove(); };
+  back.addEventListener('click', function(e){ if (e.target === back) close(); });
+  var closeBtn = box.querySelector('[data-close]');
+  if (closeBtn) closeBtn.addEventListener('click', close);
+
+  return { close: close, el: box };
 }
 
-/* ═══════ AUTH ═══════ */
-function saveAuth(token, user){
-  S.token = token; S.user = user;
-  localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-}
-function logout(){
-  S.token = null; S.user = null;
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
-  location.hash = '#/login';
-}
-
-/* ═══════ ROUTER ═══════ */
-function route(){
-  var hash = window.location.hash || '#/';
-  var landing = document.getElementById('landing');
-  var app = document.getElementById('app');
-  
-  var isLanding = (hash === '' || hash === '#/' || hash === '#');
-  
-  if (isLanding) {
-    landing.style.display = 'block';
-    app.style.display = 'none';
-    window.scrollTo(0, 0);
-    return;
-  }
-  
-  landing.style.display = 'none';
-  app.style.display = 'block';
-  
-  var path = hash.replace(/^#/, '');
-  
-  // Protect app routes
-  if (path !== '/login' && path !== '/register' && !S.token) {
-    location.hash = '#/login';
-    return;
-  }
-  
-  if (path === '/login') renderAuth('login');
-  else if (path === '/register') renderAuth('register');
-  else if (path.indexOf('/app') === 0) {
-    var view = path.replace(/^\/app/, '') || '/';
-    renderDashboard(view);
-  } else {
-    location.hash = '#/';
-  }
-}
-
-/* ═══════ AUTH UI ═══════ */
-function renderAuth(mode){
-  var isLogin = mode === 'login';
-  document.getElementById('app').innerHTML =
-    '<div class="auth-container"><div class="auth-box">' +
-      '<div class="auth-logo flex ai-c g2" style="justify-content:center;margin-bottom:20px">' +
-        '<span class="fw9" style="font-size:26px;letter-spacing:-.02em">FOX<span style="color:var(--cyan)">PAY</span></span>' +
-      '</div>' +
-      '<div class="auth-card">' +
-        '<div class="auth-tabs">' +
-          '<a href="#/login" class="auth-tab ' + (isLogin ? 'active' : '') + '">Kirish</a>' +
-          '<a href="#/register" class="auth-tab ' + (!isLogin ? 'active' : '') + '">Ro\'yxatdan o\'tish</a>' +
-        '</div>' +
-        '<h1 class="auth-title">' + (isLogin ? 'Xush kelibsiz' : 'Hisob yarating') + '</h1>' +
-        '<p class="auth-sub">' + (isLogin ? 'Hisobingizga kiring' : 'Bepul hisob — karta talab qilinmaydi') + '</p>' +
-        '<form id="authForm" novalidate>' +
-          (!isLogin ? '<div class="field"><label>To\'liq ism</label><input class="input" name="name" required minlength="2" placeholder="Aziz Karimov" autocomplete="name"></div>' : '') +
-          '<div class="field"><label>Email</label><input class="input" type="email" name="email" required placeholder="siz@email.com" autocomplete="email"></div>' +
-          '<div class="field"><label>Parol</label><input class="input" type="password" name="password" required minlength="6" placeholder="Kamida 6 belgi" autocomplete="' + (isLogin ? 'current-password' : 'new-password') + '"></div>' +
-          '<button type="submit" class="btn btn-primary btn-block" id="authBtn" style="margin-top:8px">' + (isLogin ? 'Kirish' : 'Ro\'yxatdan o\'tish') + '</button>' +
-        '</form>' +
-        '<p class="t-sm muted text-c mt4">Demo: istalgan email va parol (6+ belgi)</p>' +
-        '<p class="t-sm text-c mt4"><a href="#/" style="color:var(--fox)">← Bosh sahifaga</a></p>' +
-      '</div>' +
-    '</div></div>';
-  
-  document.getElementById('authForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    handleAuth(e.target, mode);
+function confirmDialog(title, message, onConfirm, danger){
+  var footer =
+    '<button class="btn btn-outline" data-cancel>Cancel</button>' +
+    '<button class="btn ' + (danger ? 'btn-danger' : 'btn-primary') + '" data-confirm>Confirm</button>';
+  var m = openModal({ title: title, body: '<div class="t-md muted" style="line-height:1.65">' + esc(message) + '</div>', footer: footer });
+  m.el.querySelector('[data-cancel]').addEventListener('click', m.close);
+  m.el.querySelector('[data-confirm]').addEventListener('click', function(){
+    m.close();
+    onConfirm();
   });
 }
 
-async function handleAuth(form, mode){
+/* ================================================================
+   SECTION 19 — API CLIENT
+   ================================================================ */
+var api = {
+  base: '',
+  inflight: new Set(),
+  req: async function(path, method, body){
+    var headers = { 'Content-Type': 'application/json' };
+    if (State.token) headers['Authorization'] = 'Bearer ' + State.token;
+
+    var ctrl = new AbortController();
+    this.inflight.add(ctrl);
+
+    try {
+      var res = await fetch(path, {
+        method: method || 'GET',
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined,
+        signal: ctrl.signal
+      });
+
+      if (res.status === 401) {
+        logout();
+        throw new Error('Session expired');
+      }
+
+      if (!res.ok) {
+        var data = await res.json().catch(function(){ return {}; });
+        var msg = data.detail || ('Error ' + res.status);
+        if (Array.isArray(msg)) msg = msg.map(function(e){ return e.msg; }).join(', ');
+        throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+      }
+
+      if (res.status === 204) return null;
+      return await res.json();
+    } catch (e) {
+      if (e.message === 'Failed to fetch' || e.message === 'NetworkError') {
+        throw new Error('Cannot reach server');
+      }
+      throw e;
+    } finally {
+      this.inflight.delete(ctrl);
+    }
+  },
+  get: function(p){ return this.req(p, 'GET'); },
+  post: function(p, b){ return this.req(p, 'POST', b); },
+  put: function(p, b){ return this.req(p, 'PUT', b); },
+  del: function(p){ return this.req(p, 'DELETE'); }
+};
+
+/* ================================================================
+   SECTION 20 — AUTH
+   ================================================================ */
+function saveAuth(token, user){
+  State.token = token;
+  State.user = user;
+  localStorage.setItem(TOKEN_KEY, token);
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+function logout(){
+  State.token = null;
+  State.user = null;
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+  window.location.hash = '#/login';
+}
+
+function isLoggedIn(){ return !!State.token; }
+function isAdmin(){ return State.user && State.user.is_admin; }
+
+/* ================================================================
+   SECTION 21 — ROUTER
+   ================================================================ */
+function route(){
+  var hash = window.location.hash || '#/';
+  State.gen++;
+
+  // Public landing
+  if (hash === '#/' || hash === '' || hash === '#') {
+    renderLanding();
+    return;
+  }
+
+  // Auth pages
+  if (hash === '#/login') { renderAuth('login'); return; }
+  if (hash === '#/register') { renderAuth('register'); return; }
+
+  // Protected
+  if (!isLoggedIn()) {
+    window.location.hash = '#/login';
+    return;
+  }
+
+  // Admin routes
+  if (hash.indexOf('#/admin') === 0) {
+    var adminView = hash.replace('#/admin', '') || '/';
+    renderAdmin(adminView);
+    return;
+  }
+
+  // Dashboard routes
+  var view = hash.replace('#/app', '') || '/';
+  renderDashboard(view);
+}
+
+/* ================================================================
+   SECTION 22 — LANDING PAGE
+   ================================================================ */
+function renderLanding(){
+  document.getElementById('app').innerHTML =
+    '<div class="landing">' +
+      '<header class="site-header"><nav class="site-nav">' +
+        '<a class="logo" onclick="window.location.hash=\'#/\'">' +
+          '<span class="logo-mark">F</span>' +
+          '<span class="logo-text">FOX<span class="accent">PAY</span></span>' +
+        '</a>' +
+        '<div class="nav-links">' +
+          '<a onclick="scrollToSection(\'features\')">Features</a>' +
+          '<a onclick="scrollToSection(\'pricing\')">Pricing</a>' +
+          '<a onclick="scrollToSection(\'faq\')">FAQ</a>' +
+          '<a href="/docs" target="_blank">API Docs</a>' +
+        '</div>' +
+        '<div class="nav-actions">' +
+          '<button class="btn btn-ghost btn-icon" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">' + (getTheme() === 'dark' ? '☀' : '☾') + '</button>' +
+          (isLoggedIn() ?
+            '<a href="#/app" class="btn btn-primary btn-sm">Dashboard →</a>' :
+            '<a href="#/login" class="btn btn-ghost btn-sm">Log in</a>' +
+            '<a href="#/register" class="btn btn-primary btn-sm">Get started</a>') +
+        '</div>' +
+      '</nav></header>' +
+
+      '<section class="hero"><div>' +
+        '<div class="hero-eyebrow">⚡ Global payments platform</div>' +
+        '<h1>Accept payments <span class="grad">instantly</span> worldwide.</h1>' +
+        '<p class="lead">FoxPay combines Stripe, J.P. Morgan, and P2P transfers in one platform. Multi-currency wallet, REST API, webhooks. Built for freelancers and businesses.</p>' +
+        '<div class="hero-cta">' +
+          '<a href="#/register" class="btn btn-primary btn-lg">Start for free →</a>' +
+          '<a href="/docs" class="btn btn-outline btn-lg">View API docs</a>' +
+        '</div>' +
+        '<div class="hero-stats">' +
+          '<div><div class="hs-num">12,400+</div><div class="hs-lbl">Active merchants</div></div>' +
+          '<div><div class="hs-num">₣ 4.2B</div><div class="hs-lbl">Monthly volume</div></div>' +
+          '<div><div class="hs-num">99.98%</div><div class="hs-lbl">Uptime SLA</div></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="hero-visual"><div class="hero-card"><div class="hero-card-inner">' +
+        '<div class="flex jc-b ai-c" style="margin-bottom:16px">' +
+          '<div><div class="t-sm muted">Today\'s revenue</div><div class="hero-amt">₣ 8,240,000</div></div>' +
+          '<span class="badge b-green"><span class="bd"></span>+18.2%</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:flex-end;gap:6px;height:120px">' +
+          [40,55,48,70,85,100].map(function(h,i){
+            return '<div style="flex:1;background:' + (i===5 ? '#FF6B00' : 'rgba(255,107,0,' + (0.3+i*0.12) + ')') + ';border-radius:4px;height:' + h + '%"></div>';
+          }).join('') +
+        '</div>' +
+      '</div></div></div>' +
+      '</section>' +
+
+      '<section class="section" id="features">' +
+        '<div class="section-head">' +
+          '<div class="section-eyebrow">Features</div>' +
+          '<h2>Everything in one platform</h2>' +
+          '<p>From payment acceptance to AI-agent billing — all the tools your business needs</p>' +
+        '</div>' +
+        '<div class="features">' +
+          '<article class="feature"><div class="feature-icon">💳</div><h3>Stripe integration</h3><p>Accept Visa, Mastercard, Amex worldwide. PCI compliant. Instant settlements.</p></article>' +
+          '<article class="feature"><div class="feature-icon">🏦</div><h3>J.P. Morgan</h3><p>Enterprise payments via SWIFT. High limits. Multi-currency settlement.</p></article>' +
+          '<article class="feature"><div class="feature-icon">🌍</div><h3>Multi-currency</h3><p>UZS, USD, EUR, GBP, RUB wallets. Real-time exchange rates.</p></article>' +
+          '<article class="feature"><div class="feature-icon">💸</div><h3>P2P transfers</h3><p>Send money by email instantly. Low 1.5% fee. No card required.</p></article>' +
+          '<article class="feature"><div class="feature-icon">🔐</div><h3>KYC & compliance</h3><p>Passport verification. AML standards. Full audit trail.</p></article>' +
+          '<article class="feature"><div class="feature-icon">📊</div><h3>Analytics</h3><p>Real-time dashboard. Daily charts. CSV export for accounting.</p></article>' +
+        '</div>' +
+      '</section>' +
+
+      '<section class="section" id="pricing">' +
+        '<div class="section-head">' +
+          '<div class="section-eyebrow">Pricing</div>' +
+          '<h2>Fair and transparent</h2>' +
+          '<p>No hidden fees. Commission only on successful transactions</p>' +
+        '</div>' +
+        '<div class="pricing">' +
+          '<div class="price-card">' +
+            '<div class="price-name">Start</div>' +
+            '<div class="price-amount">1.8%<span> / tx</span></div>' +
+            '<div class="price-desc">For freelancers and beginners</div>' +
+            '<ul class="price-list">' +
+              '<li class="price-item">No monthly fee</li>' +
+              '<li class="price-item">Payment links</li>' +
+              '<li class="price-item">Email support</li>' +
+              '<li class="price-item">API access</li>' +
+            '</ul>' +
+            '<a href="#/register" class="btn btn-outline btn-block">Get started</a>' +
+          '</div>' +
+          '<div class="price-card featured">' +
+            '<div class="price-badge">Popular</div>' +
+            '<div class="price-name">Business</div>' +
+            '<div class="price-amount">1.5%<span> / tx</span></div>' +
+            '<div class="price-desc">For growing businesses</div>' +
+            '<ul class="price-list">' +
+              '<li class="price-item">All Start features</li>' +
+              '<li class="price-item">Stripe + J.P. Morgan</li>' +
+              '<li class="price-item">Priority support</li>' +
+              '<li class="price-item">Webhooks</li>' +
+              '<li class="price-item">Multi-currency</li>' +
+            '</ul>' +
+            '<a href="#/register" class="btn btn-primary btn-block">Get started</a>' +
+          '</div>' +
+          '<div class="price-card">' +
+            '<div class="price-name">Enterprise</div>' +
+            '<div class="price-amount">Custom</div>' +
+            '<div class="price-desc">For large companies</div>' +
+            '<ul class="price-list">' +
+              '<li class="price-item">Individual pricing</li>' +
+              '<li class="price-item">SLA 99.99%</li>' +
+              '<li class="price-item">Dedicated manager</li>' +
+              '<li class="price-item">Custom integrations</li>' +
+            '</ul>' +
+            '<a href="mailto:hello@foxpay.uz" class="btn btn-outline btn-block">Contact us</a>' +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+
+      '<section class="section" id="faq">' +
+        '<div class="section-head">' +
+          '<div class="section-eyebrow">FAQ</div>' +
+          '<h2>Frequently asked questions</h2>' +
+        '</div>' +
+        '<div class="faq-list">' +
+          '<details class="faq-item"><summary class="faq-q">What is FoxPay?</summary><div class="faq-a">FoxPay is a global payment platform combining Stripe, J.P. Morgan, and internal P2P transfers. Multi-currency, REST API, webhooks.</div></details>' +
+          '<details class="faq-item"><summary class="faq-q">Which payment methods are supported?</summary><div class="faq-a">Stripe (Visa, Mastercard, Amex), J.P. Morgan (SWIFT enterprise), and internal P2P transfers between FoxPay users.</div></details>' +
+          '<details class="faq-item"><summary class="faq-q">What currencies?</summary><div class="faq-a">UZS, USD, EUR, GBP, RUB. Real-time exchange rates. Convert between any pair.</div></details>' +
+          '<details class="faq-item"><summary class="faq-q">How much are the fees?</summary><div class="faq-a">P2P: 1.5%. Stripe/JPM: pass-through provider fee plus platform fee. No monthly charges.</div></details>' +
+          '<details class="faq-item"><summary class="faq-q">Is there an API?</summary><div class="faq-a">Yes. REST API with API keys, webhooks, HMAC signing. Full documentation at /docs.</div></details>' +
+          '<details class="faq-item"><summary class="faq-q">How secure is it?</summary><div class="faq-a">JWT authentication, HMAC-signed webhooks, full audit log, rate limiting. PCI DSS ready via Stripe.</div></details>' +
+        '</div>' +
+      '</section>' +
+
+      '<section class="section"><div class="cta-box">' +
+        '<h2>Start accepting payments today</h2>' +
+        '<p>Free signup. No credit card required. Get started in 5 minutes.</p>' +
+        '<a href="#/register" class="btn btn-lg">Start for free →</a>' +
+      '</div></section>' +
+
+      '<footer class="site-footer">' +
+        '<div class="footer-grid">' +
+          '<div class="footer-col">' +
+            '<div class="logo" style="margin-bottom:12px">' +
+              '<span class="logo-mark">F</span>' +
+              '<span class="logo-text">FOX<span class="accent">PAY</span></span>' +
+            '</div>' +
+            '<p style="font-size:13px;color:var(--muted);max-width:280px;line-height:1.65">Global payments with Stripe, J.P. Morgan, and P2P. Built for modern businesses.</p>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h4>Product</h4>' +
+            '<a onclick="scrollToSection(\'features\')">Features</a>' +
+            '<a onclick="scrollToSection(\'pricing\')">Pricing</a>' +
+            '<a href="/docs" target="_blank">API Docs</a>' +
+            '<a href="#/register">Sign Up</a>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h4>Company</h4>' +
+            '<a onclick="scrollToSection(\'faq\')">FAQ</a>' +
+            '<a href="mailto:hello@foxpay.uz">Contact</a>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h4>Legal</h4>' +
+            '<a href="/privacy">Privacy</a>' +
+            '<a href="/terms">Terms</a>' +
+            '<a href="/security">Security</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="footer-bottom">' +
+          '<span>© ' + new Date().getFullYear() + ' FoxPay Inc. All rights reserved.</span>' +
+          '<span>Tashkent, Uzbekistan</span>' +
+        '</div>' +
+      '</footer>' +
+    '</div>';
+}
+
+function scrollToSection(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ================================================================
+   SECTION 23 — AUTH
+   ================================================================ */
+function renderAuth(mode){
+  var isLogin = mode === 'login';
+  document.getElementById('app').innerHTML =
+    '<div class="auth-wrap"><div class="auth-box">' +
+      '<div class="auth-header">' +
+        '<a class="logo" onclick="window.location.hash=\'#/\'" style="justify-content:center">' +
+          '<span class="logo-mark">F</span>' +
+          '<span class="logo-text">FOX<span class="accent">PAY</span></span>' +
+        '</a>' +
+        '<div class="auth-sub mt2">' + (isLogin ? 'Sign in to continue' : 'Create your free account') + '</div>' +
+      '</div>' +
+      '<div class="auth-card">' +
+        '<div class="auth-tabs">' +
+          '<a href="#/login" class="auth-tab ' + (isLogin ? 'active' : '') + '">Log in</a>' +
+          '<a href="#/register" class="auth-tab ' + (!isLogin ? 'active' : '') + '">Sign up</a>' +
+        '</div>' +
+        '<form id="authForm" novalidate>' +
+          (!isLogin ? '<div class="field"><label>Full name</label><input class="input" name="name" required minlength="2" placeholder="John Doe" autocomplete="name"><div class="err" data-err="name"></div></div>' : '') +
+          '<div class="field"><label>Email</label><input class="input" name="email" type="email" required placeholder="you@email.com" autocomplete="email"><div class="err" data-err="email"></div></div>' +
+          '<div class="field"><label>Password</label><input class="input" name="password" type="password" required minlength="6" placeholder="At least 6 characters" autocomplete="' + (isLogin ? 'current-password' : 'new-password') + '"><div class="err" data-err="password"></div></div>' +
+          (!isLogin ? '<div class="field"><label>Phone <span style="color:var(--muted-2);font-weight:400;text-transform:none">(optional)</span></label><input class="input" name="phone" placeholder="+998 90 123 4567" autocomplete="tel"></div>' : '') +
+          '<button type="submit" class="btn btn-primary btn-block" id="authBtn">' + (isLogin ? 'Log in' : 'Create account') + '</button>' +
+        '</form>' +
+        '<div class="auth-footer">' +
+          (isLogin ? 'No account? <a href="#/register">Sign up</a>' : 'Have an account? <a href="#/login">Log in</a>') +
+        '</div>' +
+      '</div>' +
+      '<div class="text-c mt4"><a href="#/" style="font-size:12px;color:var(--muted)">← Back to home</a></div>' +
+    '</div></div>';
+
+  document.getElementById('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    handleAuth(mode, e.target);
+  });
+}
+
+async function handleAuth(mode, form){
+  var err = function(f, m){ var e = document.querySelector('[data-err="' + f + '"]'); if (e) e.textContent = m; };
+  ['name', 'email', 'password'].forEach(function(f){ err(f, ''); });
+
   var fd = new FormData(form);
-  var email = String(fd.get('email') || '').trim();
+  var email = String(fd.get('email') || '').trim().toLowerCase();
   var password = String(fd.get('password') || '');
   var name = String(fd.get('name') || '').trim();
-  
-  if (!isValidEmail(email)) return toast('Email formati noto\'g\'ri', 'error');
-  if (password.length < 6) return toast('Parol kamida 6 belgi', 'error');
-  if (mode === 'register' && name.length < 2) return toast('Ismingizni kiriting', 'error');
-  
+  var phone = String(fd.get('phone') || '').trim();
+
+  var ok = true;
+  if (!isValidEmail(email)) { err('email', 'Please enter a valid email'); ok = false; }
+  if (password.length < 6) { err('password', 'Password must be at least 6 characters'); ok = false; }
+  if (mode === 'register' && name.length < 2) { err('name', 'Please enter your full name'); ok = false; }
+  if (!ok) return;
+
   var btn = document.getElementById('authBtn');
   var orig = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Yuklanmoqda...';
-  
+  btn.disabled = true;
+  btn.textContent = 'Please wait...';
+
   try {
-    var payload = mode === 'register' 
-      ? { name: name, email: email, password: password }
+    var payload = mode === 'register'
+      ? { name: name, email: email, password: password, phone: phone || null }
       : { email: email, password: password };
-    var data = await api('/api/auth/' + mode, 'POST', payload);
+
+    var data = await api.post('/api/auth/' + mode, payload);
     saveAuth(data.token, data.user);
-    toast('Xush kelibsiz, ' + data.user.name + '!');
-    location.hash = '#/app';
-  } catch (err) {
-    toast(err.message, 'error');
-    btn.disabled = false; btn.textContent = orig;
+    toast('Welcome, ' + data.user.name + '!', 'success');
+    window.location.hash = data.user.is_admin ? '#/admin' : '#/app';
+  } catch (err2) {
+    toast(err2.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
   }
 }
 
-/* ═══════ DASHBOARD ═══════ */
-var TABS = [
-  { id: '/', label: 'Boshqaruv', icon: '📊' },
-  { id: '/wallet', label: 'Hamyon', icon: '💳' },
-  { id: '/p2p', label: 'P2P O\'tkazma', icon: '💸' },
-  { id: '/dev', label: 'Developers', icon: '💻' }
+/* ================================================================
+   SECTION 24 — DASHBOARD SHELL
+   ================================================================ */
+var MENU_ITEMS = [
+  { id: '/', label: 'Overview', icon: '📊' },
+  { id: '/wallet', label: 'Wallet', icon: '💳' },
+  { id: '/p2p', label: 'Send money', icon: '💸' },
+  { id: '/intents', label: 'Payment intents', icon: '💰' },
+  { id: '/stripe', label: 'Stripe', icon: '💳' },
+  { id: '/jpm', label: 'J.P. Morgan', icon: '🏦' },
+  { id: '/notifications', label: 'Notifications', icon: '🔔' },
+  { id: '/kyc', label: 'KYC verification', icon: '🔐' },
+  { id: '/analytics', label: 'Analytics', icon: '📈' },
+  { id: '/developers', label: 'Developers', icon: '💻' },
+  { id: '/settings', label: 'Settings', icon: '⚙️' }
 ];
 
 function renderDashboard(view){
-  if (view === '/login' || view === '/register') view = '/';
-  var user = S.user || { name: 'User', email: '' };
+  State.activeView = view;
+  var user = State.user || { name: 'User', email: '' };
   var inits = initials(user.name);
-  var tab = TABS.find(function(t){ return t.id === view; }) || TABS[0];
-  
+  var current = MENU_ITEMS.find(function(m){ return m.id === view; }) || MENU_ITEMS[0];
+
   document.getElementById('app').innerHTML =
     '<div class="dash">' +
+      '<div class="side-back" id="sideBack"></div>' +
       '<aside class="sidebar" id="sidebar">' +
-        '<div class="sidebar-logo">FOX<span style="color:var(--cyan)">PAY</span></div>' +
+        '<div class="sidebar-logo">' +
+          '<span class="logo-mark">F</span>' +
+          '<span class="logo-text">FOX<span class="accent">PAY</span></span>' +
+        '</div>' +
         '<nav class="side-nav">' +
-          TABS.map(function(t){
-            return '<a href="#/app' + (t.id === '/' ? '' : t.id) + '" class="si ' + (view === t.id ? 'active' : '') + '">' +
-              '<span>' + t.icon + '</span>' + t.label +
+          MENU_ITEMS.map(function(m){
+            return '<a href="#/app' + (m.id === '/' ? '' : m.id) + '" class="side-item ' + (view === m.id ? 'active' : '') + '">' +
+              '<span class="side-item-icon">' + m.icon + '</span>' +
+              '<span>' + m.label + '</span>' +
             '</a>';
           }).join('') +
         '</nav>' +
         '<div class="side-foot">' +
           '<div class="side-user">' +
             '<div class="avatar sm">' + esc(inits) + '</div>' +
-            '<div class="grow" style="min-width:0"><div class="t-sm fw6 trunc">' + esc(user.name) + '</div><div class="t-xs muted trunc">' + esc(user.email) + '</div></div>' +
+            '<div class="side-user-info">' +
+              '<div class="t-sm fw6 trunc">' + esc(user.name) + '</div>' +
+              '<div class="t-xs muted trunc">' + esc(user.email) + '</div>' +
+            '</div>' +
           '</div>' +
-          '<button class="si w100" style="color:var(--red)" onclick="logout()">🚪 Chiqish</button>' +
+          (isAdmin() ? '<a href="#/admin" class="side-item" style="color:var(--fox)"><span class="side-item-icon">👑</span><span>Admin panel</span></a>' : '') +
+          '<button class="side-item" style="color:var(--red)" onclick="logout()"><span class="side-item-icon">🚪</span><span>Log out</span></button>' +
         '</div>' +
       '</aside>' +
-      '<div class="main-content">' +
+      '<main class="main">' +
         '<div class="topbar">' +
           '<div class="flex ai-c g3">' +
-            '<button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn" aria-label="Menyu">☰</button>' +
-            '<div class="tb-title">' + tab.label + '</div>' +
+            '<button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn">☰</button>' +
+            '<div>' +
+              '<div class="tb-title">' + current.label + '</div>' +
+              '<div class="tb-sub">' + getPageSubtitle(view) + '</div>' +
+            '</div>' +
           '</div>' +
-          '<div class="flex ai-c g3">' +
-            '<a href="#/" class="btn btn-ghost btn-sm">← Sayt</a>' +
+          '<div class="tb-actions">' +
+            '<button class="btn btn-ghost btn-icon" onclick="toggleTheme()" title="Theme">' + (getTheme() === 'dark' ? '☀' : '☾') + '</button>' +
             '<div class="avatar sm">' + esc(inits) + '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="content" id="view-content"><div class="card muted">Yuklanmoqda...</div></div>' +
-      '</div>' +
+        '<div class="content" id="view-content"></div>' +
+      '</main>' +
     '</div>';
-  
-  if (window.innerWidth <= 768) document.getElementById('menuBtn').style.display = 'inline-flex';
-  window.onresize = function(){ 
+
+  if (window.innerWidth <= 768) {
+    var mb = document.getElementById('menuBtn');
+    if (mb) mb.style.display = 'inline-flex';
+    var sb = document.getElementById('sideBack');
+    if (sb) sb.onclick = toggleSidebar;
+  }
+
+  window.onresize = function(){
     var mb = document.getElementById('menuBtn');
     if (mb) mb.style.display = window.innerWidth <= 768 ? 'inline-flex' : 'none';
   };
-  
-  if (view === '/') viewOverview();
-  else if (view === '/wallet') viewWallet();
-  else if (view === '/p2p') viewP2P();
-  else if (view === '/dev') viewDev();
-  else viewOverview();
+
+  renderView(view);
+}
+
+function getPageSubtitle(view){
+  var subs = {
+    '/': 'Your account at a glance',
+    '/wallet': 'Balances and transaction history',
+    '/p2p': 'Send money to other FoxPay users',
+    '/intents': 'Create and manage payment intents',
+    '/stripe': 'Card payments via Stripe',
+    '/jpm': 'Enterprise payments via J.P. Morgan',
+    '/notifications': 'Your recent activity',
+    '/kyc': 'Verify your identity',
+    '/analytics': 'Business metrics and insights',
+    '/developers': 'API keys and webhooks',
+    '/settings': 'Profile and security'
+  };
+  return subs[view] || '';
 }
 
 function toggleSidebar(){
   var sb = document.getElementById('sidebar');
+  var bk = document.getElementById('sideBack');
   if (sb) sb.classList.toggle('open');
+  if (bk) bk.classList.toggle('open');
 }
 
-/* ═══════ VIEW: OVERVIEW ═══════ */
-async function viewOverview(){
+/* ================================================================
+   SECTION 25 — VIEW ROUTER
+   ================================================================ */
+async function renderView(view){
   var c = document.getElementById('view-content');
+  if (!c) return;
+  var gen = ++State.gen;
+
+  c.innerHTML = '<div class="skel" style="height:120px;margin-bottom:16px"></div><div class="skel" style="height:60px"></div>';
+
   try {
-    var arr = await Promise.all([
-      api('/api/wallet').catch(function(){ return { balance_tiyin: 0 }; }),
-      api('/api/p2p/transfers').catch(function(){ return []; })
-    ]);
-    var wallet = arr[0], transfers = arr[1];
-    var sent = transfers.filter(function(t){ return t.from_user_id === S.user.id; });
-    var totalSent = sent.reduce(function(s, t){ return s + t.amount_tiyin; }, 0);
-    
-    c.innerHTML =
-      '<div class="wallet-banner">' +
-        '<div class="wallet-label">Umumiy balans</div>' +
-        '<div class="wallet-amount">' + fmtUZS(wallet.balance_tiyin) + '</div>' +
-        '<div class="wallet-actions">' +
-          '<a href="#/app/wallet" class="btn btn-sm">+ To\'ldirish</a>' +
-          '<a href="#/app/p2p" class="btn btn-sm">Yuborish</a>' +
-        '</div>' +
-      '</div>' +
-      '<div class="kpis">' +
-        '<div class="kpi"><div class="kpi-l">Yuborilgan</div><div class="kpi-v">' + fmtUZS(totalSent) + '</div></div>' +
-        '<div class="kpi"><div class="kpi-l">Komissiya</div><div class="kpi-v" style="color:var(--fox)">' + fmtUZS(Math.floor(totalSent * 0.015)) + '</div></div>' +
-        '<div class="kpi"><div class="kpi-l">Tranzaksiyalar</div><div class="kpi-v" style="color:var(--green)">' + transfers.length + '</div></div>' +
-        '<div class="kpi"><div class="kpi-l">Holat</div><div class="kpi-v" style="color:var(--cyan)">Faol</div></div>' +
-      '</div>' +
-      '<div class="table-card">' +
-        '<div class="tc-head"><h3>So\'nggi faoliyat</h3><a href="#/app/p2p" class="btn btn-outline btn-sm">Barchasi</a></div>' +
-        (transfers.length 
-          ? '<div style="overflow-x:auto"><table><thead><tr><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead><tbody>' +
-            transfers.slice(0, 8).map(function(t){
-              var inout = t.to_user_id === S.user.id;
-              return '<tr>' +
-                '<td style="color:' + (inout ? 'var(--green)' : 'var(--text)') + ';font-weight:600">' + (inout ? '+' : '−') + fmtUZS(t.amount_tiyin) + '</td>' +
-                '<td><span class="badge b-green">' + esc(t.status) + '</span></td>' +
-                '<td class="muted t-sm">' + fmtDate(t.created_at) + '</td>' +
-              '</tr>';
-            }).join('') +
-            '</tbody></table></div>'
-          : '<div class="empty"><h4>Faoliyat yo\'q</h4><p>Birinchi o\'tkazmani amalga oshiring</p></div>'
-        ) +
-      '</div>';
+    switch(view) {
+      case '/': await viewOverview(c, gen); break;
+      case '/wallet': await viewWallet(c, gen); break;
+      case '/p2p': await viewP2P(c, gen); break;
+      case '/intents': await viewIntents(c, gen); break;
+      case '/stripe': await viewStripe(c, gen); break;
+      case '/jpm': await viewJPM(c, gen); break;
+      case '/notifications': await viewNotifications(c, gen); break;
+      case '/kyc': await viewKYC(c, gen); break;
+      case '/analytics': await viewAnalytics(c, gen); break;
+      case '/developers': await viewDevelopers(c, gen); break;
+      case '/settings': viewSettings(c, gen); break;
+      default: c.innerHTML = '<div class="card muted">Not found</div>';
+    }
   } catch (e) {
-    c.innerHTML = '<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Xato</div><div class="muted mt2">' + esc(e.message) + '</div></div>';
+    if (gen !== State.gen) return;
+    c.innerHTML = '<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Error</div><div class="muted mt2">' + esc(e.message) + '</div><button class="btn btn-outline btn-sm mt4" onclick="renderView(\'' + view + '\')">Retry</button></div>';
   }
 }
 
-/* ═══════ VIEW: WALLET ═══════ */
-async function viewWallet(){
-  var c = document.getElementById('view-content');
-  try {
-    var arr = await Promise.all([
-      api('/api/wallet').catch(function(){ return { balance_tiyin: 0 }; }),
-      api('/api/wallet/ledger').catch(function(){ return []; })
-    ]);
-    var wallet = arr[0], ledger = arr[1];
-    
-    c.innerHTML =
-      '<div class="wallet-banner">' +
-        '<div class="wallet-label">Joriy balans</div>' +
-        '<div class="wallet-amount">' + fmtUZS(wallet.balance_tiyin) + '</div>' +
-        '<div class="wallet-actions">' +
-          '<button class="btn btn-sm" onclick="fundDemo(100000)">+ 1,000</button>' +
-          '<button class="btn btn-sm" onclick="fundDemo(1000000)">+ 10,000</button>' +
-          '<button class="btn btn-sm" onclick="fundDemo(10000000)">+ 100,000</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="grid-2 mb4">' +
-        '<div class="card">' +
-          '<h3 class="t-lg fw7 mb4">Balansni to\'ldirish</h3>' +
-          '<div class="field"><label>Summa (UZS)</label><input type="number" class="input" id="amt" placeholder="100000"></div>' +
-          '<button class="btn btn-primary btn-block" onclick="fundCustom()">To\'ldirish</button>' +
-        '</div>' +
-        '<div class="card">' +
-          '<h3 class="t-lg fw7 mb2">Karta ulash</h3>' +
-          '<p class="t-sm muted mb4">Uzcard, Humo, Visa, Mastercard</p>' +
-          '<button class="btn btn-outline btn-block" onclick="toast(\'Tez orada!\',\'success\')">+ Yangi karta</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="table-card">' +
-        '<div class="tc-head"><h3>Ledger yozuvlari</h3><span class="muted t-sm">' + ledger.length + ' yozuv</span></div>' +
-        (ledger.length 
-          ? '<div style="overflow-x:auto"><table><thead><tr><th>Tur</th><th>Summa</th><th>Manba</th><th>Vaqt</th></tr></thead><tbody>' +
-            ledger.map(function(r){
-              var cr = r.direction === 'credit';
-              return '<tr>' +
-                '<td><span class="badge ' + (cr ? 'b-green' : 'b-red') + '">' + (cr ? 'Kirim' : 'Chiqim') + '</span></td>' +
-                '<td style="color:' + (cr ? 'var(--green)' : 'var(--red)') + ';font-weight:600">' + (cr ? '+' : '−') + fmtUZS(r.amount_tiyin) + '</td>' +
-                '<td class="muted t-sm">' + esc(r.ref_type || '—') + '</td>' +
-                '<td class="muted t-sm">' + fmtDate(r.created_at) + '</td>' +
-              '</tr>';
-            }).join('') +
-            '</tbody></table></div>'
-          : '<div class="empty"><h4>Yozuvlar yo\'q</h4><p>Hali birorta tranzaksiya yo\'q</p></div>'
-        ) +
-      '</div>';
-  } catch (e) {
-    c.innerHTML = '<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Xato</div><div class="muted mt2">' + esc(e.message) + '</div></div>';
-  }
-}
+/* ================================================================
+   SECTION 26 — VIEW: OVERVIEW
+   ================================================================ */
+async function viewOverview(c, gen){
+  var results = await Promise.all([
+    api.get('/api/wallet').catch(function(){ return { balance_tiyin: 0, currency: 'UZS' }; }),
+    api.get('/api/p2p/transfers?limit=10').catch(function(){ return []; }),
+    api.get('/api/notifications').catch(function(){ return { items: [], unread: 0 }; })
+  ]);
+  if (gen !== State.gen) return;
 
-async function fundDemo(amount){
-  try {
-    await api('/api/dev/fund', 'POST', { amount_tiyin: amount });
-    toast('+' + fmtUZS(amount));
-    viewWallet();
-  } catch (e) { toast(e.message, 'error'); }
-}
+  var wallet = results[0], transfers = results[1], notifs = results[2];
+  State.wallet = wallet;
 
-async function fundCustom(){
-  var el = document.getElementById('amt');
-  var amt = parseFloat(el.value);
-  if (!amt || amt < 100) return toast('Kamida 100 UZS kiriting', 'error');
-  fundDemo(amt * 100);
-}
+  var sent = transfers.filter(function(t){ return t.from_user_id === State.user.id; });
+  var totalSent = sent.reduce(function(s, t){ return s + t.amount_tiyin; }, 0);
 
-/* ═══════ VIEW: P2P ═══════ */
-async function viewP2P(){
-  var c = document.getElementById('view-content');
   c.innerHTML =
-    '<div class="grid-2">' +
-      '<div class="card">' +
-        '<h3 class="t-lg fw7 mb4">Pul yuborish</h3>' +
-        '<form id="p2pForm">' +
-          '<div class="field"><label>Qabul qiluvchi email</label><input class="input" type="email" name="email" required placeholder="friend@mail.uz"></div>' +
-          '<div class="field"><label>Summa (UZS)</label><input class="input" type="number" name="amount" required min="100" placeholder="50000"></div>' +
-          '<div class="field"><label>Izoh (ixtiyoriy)</label><input class="input" name="note" placeholder="Tushlik uchun"></div>' +
-          '<button type="submit" class="btn btn-primary btn-block" id="p2pBtn">Yuborish (1.5% komissiya)</button>' +
-        '</form>' +
+    '<div class="balance-banner">' +
+      '<div class="balance-label">Current balance</div>' +
+      '<div class="balance-amt">' + fmtTiyin(wallet.balance_tiyin, wallet.currency) + '</div>' +
+      '<div class="balance-meta">' + (wallet.balance_tiyin || 0).toLocaleString('en-US') + ' tiyin · ' + wallet.currency + '</div>' +
+      '<div class="balance-actions">' +
+        '<a href="#/app/wallet" class="btn btn-sm">+ Add funds</a>' +
+        '<a href="#/app/p2p" class="btn btn-sm">Send money</a>' +
       '</div>' +
-      '<div class="card" id="p2p-history"><h3 class="t-lg fw7 mb4">Tarix</h3><div class="muted">Yuklanmoqda...</div></div>' +
-    '</div>';
-  
-  document.getElementById('p2pForm').addEventListener('submit', handleP2P);
-  
-  try {
-    var list = await api('/api/p2p/transfers');
-    var el = document.getElementById('p2p-history');
-    el.innerHTML = '<h3 class="t-lg fw7 mb4">Tarix</h3>' +
-      (list.length 
-        ? '<div style="overflow-x:auto"><table><thead><tr><th>Summa</th><th>Holat</th><th>Vaqt</th></tr></thead><tbody>' +
-          list.slice(0, 15).map(function(t){
-            var inout = t.to_user_id === S.user.id;
+    '</div>' +
+    '<div class="kpis">' +
+      '<div class="kpi"><div class="kpi-label">Sent</div><div class="kpi-value">' + fmtNumber(totalSent) + ' UZS</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Transfers</div><div class="kpi-value">' + transfers.length + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Notifications</div><div class="kpi-value" style="color:var(--cyan)">' + (notifs.unread || 0) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Status</div><div class="kpi-value" style="color:var(--green)">Active</div></div>' +
+    '</div>' +
+    '<div class="table-card">' +
+      '<div class="tc-head"><h3>Recent activity</h3><a href="#/app/p2p" class="btn btn-outline btn-sm">View all</a></div>' +
+      (transfers.length
+        ? '<div class="table-scroll"><table><thead><tr><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
+          transfers.slice(0, 8).map(function(t){
+            var incoming = t.to_user_id === State.user.id;
             return '<tr>' +
-              '<td style="color:' + (inout ? 'var(--green)' : 'var(--text)') + ';font-weight:600">' + (inout ? '+' : '−') + fmtUZS(t.amount_tiyin) + '</td>' +
-              '<td><span class="badge b-green">' + esc(t.status) + '</span></td>' +
+              '<td style="color:' + (incoming ? 'var(--green)' : 'var(--text)') + ';font-weight:600">' + (incoming ? '+' : '−') + fmtTiyin(t.amount_tiyin, t.currency) + '</td>' +
+              '<td><span class="badge ' + (t.status === 'succeeded' ? 'b-green' : 'b-amber') + '"><span class="bd"></span>' + esc(t.status) + '</span></td>' +
               '<td class="muted t-sm">' + fmtDate(t.created_at) + '</td>' +
             '</tr>';
           }).join('') +
           '</tbody></table></div>'
-        : '<div class="empty"><h4>Tranzaksiyalar yo\'q</h4></div>'
-      );
-  } catch (e) {
-    document.getElementById('p2p-history').innerHTML = '<h3 class="t-lg fw7 mb4">Tarix</h3><div class="muted">' + esc(e.message) + '</div>';
-  }
+        : '<div class="empty"><div class="empty-icon">📭</div><h4>No activity yet</h4><p>Make your first transfer to get started</p></div>') +
+    '</div>';
 }
 
-async function handleP2P(e){
-  e.preventDefault();
-  var form = new FormData(e.target);
+/* ================================================================
+   SECTION 27 — VIEW: WALLET
+   ================================================================ */
+async function viewWallet(c, gen){
+  var results = await Promise.all([
+    api.get('/api/wallet').catch(function(){ return { balance_tiyin: 0, currency: 'UZS' }; }),
+    api.get('/api/wallet/all').catch(function(){ return []; }),
+    api.get('/api/wallet/ledger?limit=50').catch(function(){ return []; })
+  ]);
+  if (gen !== State.gen) return;
+
+  var wallet = results[0], allWallets = results[1], ledger = results[2];
+  State.wallet = wallet;
+
+  var chipsHtml = allWallets.length
+    ? '<div class="balances mt4">' +
+      allWallets.map(function(w){
+        return '<div class="balance-chip"><div class="balance-chip-cur">' + w.currency + '</div><div class="balance-chip-val">' + fmtNumber(w.balance_tiyin) + '</div></div>';
+      }).join('') + '</div>'
+    : '';
+
+  c.innerHTML =
+    '<div class="balance-banner">' +
+      '<div class="balance-label">Total balance</div>' +
+      '<div class="balance-amt">' + fmtTiyin(wallet.balance_tiyin, wallet.currency) + '</div>' +
+      chipsHtml.replace('mt4', 'mt4" style="position:relative;z-index:1') +
+    '</div>' +
+    '<div class="grid-2 mb4">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Add funds</h3>' +
+        '<div class="field"><label>Amount (UZS)</label><input type="number" class="input" id="fundAmt" placeholder="100000" min="100"></div>' +
+        '<div class="flex g2">' +
+          '<button class="btn btn-outline btn-sm" onclick="fundDemo(100000)">+ 1,000</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="fundDemo(1000000)">+ 10,000</button>' +
+          '<button class="btn btn-primary btn-sm" onclick="fundCustom()">Add custom</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card">' +
+        '<h3 class="card-title mb2">Link card</h3>' +
+        '<p class="t-sm muted mb4">Uzcard, Humo, Visa, Mastercard</p>' +
+        '<button class="btn btn-outline btn-block" onclick="toast(\'Coming soon\',\'info\')">+ Add card</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="table-card">' +
+      '<div class="tc-head"><h3>Transaction history</h3><button class="btn btn-outline btn-sm" onclick="exportCSV()">📥 Export CSV</button></div>' +
+      (ledger.length
+        ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance</th><th>Description</th></tr></thead><tbody>' +
+          ledger.map(function(r){
+            var cr = r.direction === 'credit';
+            return '<tr>' +
+              '<td class="muted t-xs">' + fmtDateShort(r.created_at) + '</td>' +
+              '<td><span class="badge b-gray">' + esc(r.ref_type || '—') + '</span></td>' +
+              '<td style="color:' + (cr ? 'var(--green)' : 'var(--red)') + ';font-weight:600">' + (cr ? '+' : '−') + fmtTiyin(r.amount_tiyin, r.currency) + '</td>' +
+              '<td class="muted t-sm">' + fmtNumber(r.balance_after_tiyin) + '</td>' +
+              '<td class="muted t-sm trunc" style="max-width:200px">' + esc(r.description || '—') + '</td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody></table></div>'
+        : '<div class="empty"><div class="empty-icon">📭</div><h4>No transactions yet</h4><p>Add funds to get started</p></div>') +
+    '</div>';
+}
+
+async function fundDemo(amount){
+  try {
+    await api.post('/api/dev/fund', { amount_tiyin: amount, currency: 'UZS' });
+    toast('Added ' + (amount / 100).toLocaleString() + ' UZS', 'success');
+    renderView('/wallet');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+function fundCustom(){
+  var el = document.getElementById('fundAmt');
+  var amt = parseFloat(el.value);
+  if (!amt || amt < 100) return toast('Minimum 100 UZS', 'error');
+  fundDemo(Math.round(amt * 100));
+}
+
+function exportCSV(){
+  if (!State.token) return;
+  var url = '/api/export/transactions.csv';
+  fetch(url, { headers: { 'Authorization': 'Bearer ' + State.token } })
+    .then(function(res){
+      if (!res.ok) throw new Error('Export failed');
+      return res.blob();
+    })
+    .then(function(blob){
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'foxpay-transactions.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+      toast('CSV downloaded', 'success');
+    })
+    .catch(function(e){ toast(e.message, 'error'); });
+}
+
+/* ================================================================
+   SECTION 28 — VIEW: P2P
+   ================================================================ */
+async function viewP2P(c, gen){
+  var list = await api.get('/api/p2p/transfers').catch(function(){ return []; });
+  if (gen !== State.gen) return;
+
+  c.innerHTML =
+    '<div class="grid-2">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Send money</h3>' +
+        '<form id="p2pForm" novalidate>' +
+          '<div class="field"><label>Recipient email</label><input class="input" type="email" name="email" required placeholder="friend@email.com"></div>' +
+          '<div class="field"><label>Amount (UZS)</label><input class="input" type="number" name="amount" required min="1" placeholder="50000"></div>' +
+          '<div class="field"><label>Note <span style="color:var(--muted-2);font-weight:400;text-transform:none">(optional)</span></label><input class="input" name="note" placeholder="For lunch"></div>' +
+          '<button type="submit" class="btn btn-primary btn-block" id="p2pBtn">Send (1.5% fee)</button>' +
+        '</form>' +
+      '</div>' +
+      '<div class="table-card">' +
+        '<div class="tc-head"><h3>Transfer history</h3></div>' +
+        (list.length
+          ? '<div class="table-scroll"><table><thead><tr><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
+            list.slice(0, 20).map(function(t){
+              var incoming = t.to_user_id === State.user.id;
+              return '<tr>' +
+                '<td style="color:' + (incoming ? 'var(--green)' : 'var(--text)') + ';font-weight:600">' + (incoming ? '+' : '−') + fmtTiyin(t.amount_tiyin, t.currency) + '</td>' +
+                '<td><span class="badge ' + (t.status === 'succeeded' ? 'b-green' : 'b-amber') + '"><span class="bd"></span>' + esc(t.status) + '</span></td>' +
+                '<td class="muted t-xs">' + fmtDateShort(t.created_at) + '</td>' +
+              '</tr>';
+            }).join('') +
+            '</tbody></table></div>'
+          : '<div class="empty"><h4>No transfers yet</h4></div>') +
+      '</div>' +
+    '</div>';
+
+  document.getElementById('p2pForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    handleP2P(e.target);
+  });
+}
+
+async function handleP2P(form){
+  var fd = new FormData(form);
+  var email = String(fd.get('email') || '').trim().toLowerCase();
+  var amount = parseFloat(fd.get('amount')) || 0;
+  var note = String(fd.get('note') || '');
+
+  if (!isValidEmail(email)) return toast('Please enter a valid email', 'error');
+  if (amount < 1) return toast('Minimum amount is 1 UZS', 'error');
+
   var btn = document.getElementById('p2pBtn');
   var orig = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
-  
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
   try {
-    await api('/api/p2p/transfers', 'POST', {
-      to_email: form.get('email').trim(),
-      amount_tiyin: Math.round(parseFloat(form.get('amount')) * 100),
-      note: form.get('note') || ''
+    var r = await api.post('/api/p2p/transfers', {
+      to_email: email,
+      amount_tiyin: Math.round(amount * 100),
+      note: note
     });
-    toast('O\'tkazma muvaffaqiyatli!');
-    viewP2P();
-  } catch (err) {
-    toast(err.message, 'error');
-    btn.disabled = false; btn.textContent = orig;
+    toast('Sent! New balance: ' + fmtNumber(r.amount_tiyin) + ' UZS', 'success');
+    renderView('/p2p');
+  } catch (e) {
+    toast(e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
   }
 }
 
-/* ═══════ VIEW: DEVELOPERS ═══════ */
-async function viewDev(){
-  var c = document.getElementById('view-content');
+/* ================================================================
+   SECTION 29 — VIEW: PAYMENT INTENTS
+   ================================================================ */
+async function viewIntents(c, gen){
+  var list = await api.get('/api/pay/intents').catch(function(){ return []; });
+  if (gen !== State.gen) return;
+
+  c.innerHTML =
+    '<div class="grid-2">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Create payment intent</h3>' +
+        '<form id="intentForm" novalidate>' +
+          '<div class="field"><label>Amount (UZS)</label><input class="input" type="number" name="amount" required min="100" placeholder="100000"></div>' +
+          '<div class="field"><label>Description</label><input class="input" name="description" placeholder="Course fee"></div>' +
+          '<div class="field"><label>Customer email <span style="color:var(--muted-2);font-weight:400;text-transform:none">(optional)</span></label><input class="input" type="email" name="customer_email" placeholder="client@email.com"></div>' +
+          '<button type="submit" class="btn btn-primary btn-block" id="intentBtn">Create intent</button>' +
+        '</form>' +
+      '</div>' +
+      '<div class="table-card">' +
+        '<div class="tc-head"><h3>Payment intents</h3></div>' +
+        (list.length
+          ? '<div class="table-scroll"><table><thead><tr><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody>' +
+            list.slice(0, 20).map(function(i){
+              var canConfirm = i.status === 'requires_payment';
+              return '<tr>' +
+                '<td class="fw6">' + fmtTiyin(i.amount_tiyin, i.currency) + '</td>' +
+                '<td><span class="badge ' + (i.status === 'succeeded' ? 'b-green' : i.status === 'failed' ? 'b-red' : 'b-amber') + '"><span class="bd"></span>' + esc(i.status) + '</span></td>' +
+                '<td>' + (canConfirm ? '<button class="btn btn-primary btn-xs" onclick="confirmIntent(\'' + esc(i.id) + '\')">Confirm</button>' : '—') + '</td>' +
+              '</tr>';
+            }).join('') +
+            '</tbody></table></div>'
+          : '<div class="empty"><h4>No intents yet</h4></div>') +
+      '</div>' +
+    '</div>';
+
+  document.getElementById('intentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    handleIntent(e.target);
+  });
+}
+
+async function handleIntent(form){
+  var fd = new FormData(form);
+  var amount = parseFloat(fd.get('amount')) || 0;
+  if (amount < 1) return toast('Minimum 1 UZS', 'error');
+
+  var btn = document.getElementById('intentBtn');
+  var orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Creating...';
+
   try {
-    var keys = await api('/api/keys').catch(function(){ return []; });
-    
-    c.innerHTML =
-      '<div class="card mb4">' +
-        '<div class="flex jc-b ai-c mb4">' +
-          '<h3 class="t-lg fw7">API Kalitlar</h3>' +
-          '<button class="btn btn-primary btn-sm" onclick="createKey()">+ Yangi kalit</button>' +
+    await api.post('/api/pay/intents', {
+      amount_tiyin: Math.round(amount * 100),
+      description: String(fd.get('description') || ''),
+      customer_email: fd.get('customer_email') || null
+    });
+    toast('Intent created', 'success');
+    renderView('/intents');
+  } catch (e) {
+    toast(e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
+  }
+}
+
+async function confirmIntent(id){
+  try {
+    await api.post('/api/pay/intents/' + id + '/confirm');
+    toast('Payment confirmed', 'success');
+    renderView('/intents');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ================================================================
+   SECTION 30 — VIEW: STRIPE
+   ================================================================ */
+async function viewStripe(c, gen){
+  var results = await Promise.all([
+    api.get('/api/stripe/status').catch(function(){ return { available: false, configured: false }; }),
+    api.get('/api/stripe/payments').catch(function(){ return []; })
+  ]);
+  if (gen !== State.gen) return;
+
+  var status = results[0], payments = results[1];
+
+  c.innerHTML =
+    '<div class="status-card">' +
+      '<div class="status-icon ' + (status.configured ? 'ok' : 'off') + '">' + (status.configured ? '✓' : '✕') + '</div>' +
+      '<div class="status-info">' +
+        '<div class="status-title">Stripe ' + (status.configured ? 'connected' : 'not configured') + '</div>' +
+        '<div class="status-sub">' + (status.configured ? 'Card payments are active' : 'Set STRIPE_SECRET_KEY in environment to enable') + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="grid-2 mt4">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Create Stripe payment</h3>' +
+        '<form id="stripeForm" novalidate>' +
+          '<div class="field"><label>Amount (cents)</label><input class="input" type="number" name="amount" required min="100" placeholder="1000"></div>' +
+          '<div class="field"><label>Currency</label><select class="select" name="currency"><option value="usd">USD</option><option value="eur">EUR</option><option value="gbp">GBP</option></select></div>' +
+          '<div class="field"><label>Description</label><input class="input" name="description" placeholder="Product purchase"></div>' +
+          '<button type="submit" class="btn btn-primary btn-block" id="stripeBtn" ' + (!status.configured ? 'disabled' : '') + '>Create payment</button>' +
+        '</form>' +
+      '</div>' +
+      '<div class="table-card">' +
+        '<div class="tc-head"><h3>Stripe payments</h3></div>' +
+        (payments.length
+          ? '<div class="table-scroll"><table><thead><tr><th>Amount</th><th>Status</th></tr></thead><tbody>' +
+            payments.slice(0, 10).map(function(p){
+              return '<tr>' +
+                '<td class="fw6">' + (p.amount || 0).toFixed(2) + ' ' + (p.currency || 'usd').toUpperCase() + '</td>' +
+                '<td><span class="badge ' + (p.status === 'succeeded' ? 'b-green' : p.status === 'failed' ? 'b-red' : 'b-amber') + '">' + esc(p.status) + '</span></td>' +
+              '</tr>';
+            }).join('') +
+            '</tbody></table></div>'
+          : '<div class="empty"><h4>No Stripe payments yet</h4></div>') +
+      '</div>' +
+    '</div>';
+
+  if (status.configured) {
+    document.getElementById('stripeForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      handleStripePayment(e.target);
+    });
+  }
+}
+
+async function handleStripePayment(form){
+  var fd = new FormData(form);
+  var amount = parseInt(fd.get('amount')) || 0;
+  if (amount < 100) return toast('Minimum 100 cents', 'error');
+
+  var btn = document.getElementById('stripeBtn');
+  var orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Creating...';
+
+  try {
+    var r = await api.post('/api/stripe/create-payment', {
+      amount_tiyin: amount,
+      currency: fd.get('currency'),
+      description: String(fd.get('description') || '')
+    });
+
+    var modal = openModal({
+      title: 'Stripe payment created',
+      body:
+        '<p class="t-sm muted mb3">Payment intent ID:</p>' +
+        '<div class="code-block mb3">' + esc(r.payment_intent_id) + '</div>' +
+        '<p class="t-sm muted mb2">Client secret (use in Stripe.js):</p>' +
+        '<div class="code-block">' + esc(r.client_secret) + '</div>',
+      footer: '<button class="btn btn-primary" onclick="this.closest(\'.modal-back\').remove()">OK</button>'
+    });
+
+    renderView('/stripe');
+  } catch (e) {
+    toast(e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
+  }
+}
+
+/* ================================================================
+   SECTION 31 — VIEW: J.P. MORGAN
+   ================================================================ */
+async function viewJPM(c, gen){
+  var results = await Promise.all([
+    api.get('/api/jpm/status').catch(function(){ return { configured: false }; }),
+    api.get('/api/jpm/payments').catch(function(){ return []; })
+  ]);
+  if (gen !== State.gen) return;
+
+  var status = results[0], payments = results[1];
+
+  c.innerHTML =
+    '<div class="status-card">' +
+      '<div class="status-icon ' + (status.configured ? 'ok' : 'off') + '">' + (status.configured ? '✓' : '✕') + '</div>' +
+      '<div class="status-info">' +
+        '<div class="status-title">J.P. Morgan ' + (status.configured ? 'connected' : 'not configured') + '</div>' +
+        '<div class="status-sub">' + (status.configured ? 'Enterprise payments active' : 'Set JPM_CLIENT_ID, JPM_CLIENT_SECRET, JPM_MERCHANT_ID to enable') + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="grid-2 mt4">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Create J.P. Morgan payment</h3>' +
+        '<form id="jpmForm" novalidate>' +
+          '<div class="field"><label>Amount</label><input class="input" type="number" name="amount" required min="1" placeholder="100"></div>' +
+          '<div class="field"><label>Currency</label><select class="select" name="currency"><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option></select></div>' +
+          '<div class="field"><label>Description</label><input class="input" name="description" placeholder="Enterprise payment"></div>' +
+          '<button type="submit" class="btn btn-primary btn-block" id="jpmBtn" ' + (!status.configured ? 'disabled' : '') + '>Create payment</button>' +
+        '</form>' +
+      '</div>' +
+      '<div class="table-card">' +
+        '<div class="tc-head"><h3>JPM payments</h3></div>' +
+        (payments.length
+          ? '<div class="table-scroll"><table><thead><tr><th>Amount</th><th>Status</th></tr></thead><tbody>' +
+            payments.slice(0, 10).map(function(p){
+              return '<tr>' +
+                '<td class="fw6">' + (p.amount || 0).toFixed(2) + ' ' + (p.currency || 'USD').toUpperCase() + '</td>' +
+                '<td><span class="badge ' + (p.status === 'succeeded' ? 'b-green' : p.status === 'failed' ? 'b-red' : 'b-amber') + '">' + esc(p.status) + '</span></td>' +
+              '</tr>';
+            }).join('') +
+            '</tbody></table></div>'
+          : '<div class="empty"><h4>No JPM payments yet</h4></div>') +
+      '</div>' +
+    '</div>';
+
+  if (status.configured) {
+    document.getElementById('jpmForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      handleJPMPayment(e.target);
+    });
+  }
+}
+
+async function handleJPMPayment(form){
+  var fd = new FormData(form);
+  var amount = parseFloat(fd.get('amount')) || 0;
+  if (amount < 1) return toast('Minimum amount is 1', 'error');
+
+  var btn = document.getElementById('jpmBtn');
+  var orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Creating...';
+
+  try {
+    var r = await api.post('/api/jpm/create-payment', {
+      amount_tiyin: Math.round(amount * 100),
+      currency: fd.get('currency'),
+      description: String(fd.get('description') || '')
+    });
+    toast('JPM payment created: ' + r.transaction_id, 'success');
+    renderView('/jpm');
+  } catch (e) {
+    toast(e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
+  }
+}
+
+/* ================================================================
+   SECTION 32 — VIEW: NOTIFICATIONS
+   ================================================================ */
+async function viewNotifications(c, gen){
+  var data = await api.get('/api/notifications').catch(function(){ return { items: [], unread: 0 }; });
+  if (gen !== State.gen) return;
+
+  var items = data.items || [], unread = data.unread || 0;
+
+  c.innerHTML =
+    '<div class="flex jc-b ai-c mb4">' +
+      '<div><h3 class="t-xl fw7">Notifications</h3><p class="muted t-sm">' + unread + ' unread</p></div>' +
+      (unread > 0 ? '<button class="btn btn-outline btn-sm" onclick="markAllRead()">Mark all as read</button>' : '') +
+    '</div>' +
+    (items.length
+      ? '<div class="table-card"><div style="padding:0">' +
+        items.map(function(n){
+          var icon = n.type === 'success' ? '✓' : n.type === 'error' ? '✕' : n.type === 'warning' ? '⚠' : 'ℹ';
+          var color = n.type === 'success' ? 'var(--green)' : n.type === 'error' ? 'var(--red)' : n.type === 'warning' ? 'var(--amber)' : 'var(--blue)';
+          return '<div style="display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);' + (n.is_read ? 'opacity:.6' : '') + '">' +
+            '<div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.05);color:' + color + ';display:grid;place-items:center;flex-shrink:0;font-size:16px">' + icon + '</div>' +
+            '<div style="flex:1;min-width:0">' +
+              '<div class="fw6 t-md">' + esc(n.title) + '</div>' +
+              '<div class="t-sm muted mt1">' + esc(n.message) + '</div>' +
+              '<div class="t-xs muted-2 mt2">' + fmtDate(n.created_at) + '</div>' +
+            '</div>' +
+            (!n.is_read ? '<button class="btn btn-ghost btn-sm" onclick="markRead(' + n.id + ')">Mark read</button>' : '') +
+          '</div>';
+        }).join('') +
+        '</div></div>'
+      : '<div class="card"><div class="empty"><div class="empty-icon">🔔</div><h4>No notifications</h4><p>You\'re all caught up</p></div></div>');
+}
+
+async function markRead(id){
+  try {
+    await api.post('/api/notifications/' + id + '/read');
+    renderView('/notifications');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function markAllRead(){
+  try {
+    await api.post('/api/notifications/read-all');
+    toast('All marked as read', 'success');
+    renderView('/notifications');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ================================================================
+   SECTION 33 — VIEW: KYC
+   ================================================================ */
+async function viewKYC(c, gen){
+  var status = await api.get('/api/kyc/status').catch(function(){ return { user_status: 'none', submission: null }; });
+  if (gen !== State.gen) return;
+
+  var userStatus = status.user_status || 'none';
+  var sub = status.submission;
+
+  var statusBadge = function(st){
+    var map = {
+      'none': '<span class="badge b-gray">Not submitted</span>',
+      'pending': '<span class="badge b-amber"><span class="bd"></span>Pending review</span>',
+      'verified': '<span class="badge b-green"><span class="bd"></span>Verified</span>',
+      'rejected': '<span class="badge b-red"><span class="bd"></span>Rejected</span>'
+    };
+    return map[st] || map['none'];
+  };
+
+  var showForm = userStatus === 'none' || userStatus === 'rejected';
+
+  c.innerHTML =
+    '<div class="grid-2">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Verification status</h3>' +
+        '<div class="flex ai-c g3 mb4">' +
+          '<div style="font-size:32px">🔐</div>' +
+          '<div>' + statusBadge(userStatus) + '</div>' +
         '</div>' +
-        (keys.length 
+        (sub ? '<p class="t-sm muted">Submitted: ' + fmtDate(sub.created_at) + '</p>' : '') +
+        (sub && sub.rejection_reason ? '<p class="t-sm mt2" style="color:var(--red)">Reason: ' + esc(sub.rejection_reason) + '</p>' : '') +
+        '<p class="t-sm muted mt4">KYC is required for higher transaction limits and compliance with AML regulations.</p>' +
+      '</div>' +
+      (showForm
+        ? '<div class="card">' +
+          '<h3 class="card-title mb4">Submit verification</h3>' +
+          '<form id="kycForm" novalidate>' +
+            '<div class="field"><label>Full name</label><input class="input" name="full_name" required placeholder="John Doe"></div>' +
+            '<div class="field"><label>Passport number</label><input class="input" name="passport_number" required placeholder="AB1234567"></div>' +
+            '<div class="field"><label>Date of birth</label><input class="input" name="birth_date" type="date" required></div>' +
+            '<div class="field"><label>Address</label><textarea class="textarea" name="address" required placeholder="Tashkent, Uzbekistan"></textarea></div>' +
+            '<button type="submit" class="btn btn-primary btn-block" id="kycBtn">Submit</button>' +
+          '</form>' +
+        '</div>'
+        : '<div class="card"><h3 class="card-title mb4">✓ Submission received</h3><p class="t-sm muted">Your documents are under review. This usually takes up to 24 hours.</p></div>') +
+    '</div>';
+
+  if (showForm) {
+    document.getElementById('kycForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      handleKYC(e.target);
+    });
+  }
+}
+
+async function handleKYC(form){
+  var fd = new FormData(form);
+  var btn = document.getElementById('kycBtn');
+  var orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    await api.post('/api/kyc/submit', {
+      full_name: String(fd.get('full_name') || '').trim(),
+      passport_number: String(fd.get('passport_number') || '').trim(),
+      birth_date: String(fd.get('birth_date') || ''),
+      address: String(fd.get('address') || '').trim()
+    });
+    toast('Submitted for review', 'success');
+    renderView('/kyc');
+  } catch (e) {
+    toast(e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = orig;
+  }
+}
+
+/* ================================================================
+   SECTION 34 — VIEW: ANALYTICS
+   ================================================================ */
+async function viewAnalytics(c, gen){
+  var results = await Promise.all([
+    api.get('/api/analytics/summary').catch(function(){ return {}; }),
+    api.get('/api/analytics/daily?days=7').catch(function(){ return []; })
+  ]);
+  if (gen !== State.gen) return;
+
+  var summary = results[0], daily = results[1];
+
+  var maxVol = Math.max.apply(null, daily.map(function(d){ return d.volume_uzs || 0; }).concat([1]));
+
+  var chartHtml = daily.length
+    ? '<div style="display:flex;align-items:flex-end;gap:8px;height:180px;padding:20px 0">' +
+      daily.map(function(d, i){
+        var h = ((d.volume_uzs || 0) / maxVol) * 100;
+        return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">' +
+          '<div style="width:100%;background:linear-gradient(180deg,var(--fox),rgba(255,107,0,.3));border-radius:4px;height:' + Math.max(h, 4) + '%;min-height:4px"></div>' +
+          '<div class="t-xs muted">' + (d.date ? d.date.slice(5) : '') + '</div>' +
+        '</div>';
+      }).join('') +
+      '</div>'
+    : '<div class="empty"><h4>No data yet</h4></div>';
+
+  c.innerHTML =
+    '<div class="kpis">' +
+      '<div class="kpi"><div class="kpi-label">Total balance</div><div class="kpi-value">' + (summary.balance_uzs || 0).toFixed(0) + ' UZS</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Total sent</div><div class="kpi-value">' + (summary.total_sent_uzs || 0).toFixed(0) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Total received</div><div class="kpi-value">' + (summary.total_received_uzs || 0).toFixed(0) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Transfers</div><div class="kpi-value">' + (summary.transfers_count || 0) + '</div></div>' +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="card-hd"><h3 class="card-title">Last 7 days volume</h3></div>' +
+      chartHtml +
+    '</div>';
+}
+
+/* ================================================================
+   SECTION 35 — VIEW: DEVELOPERS
+   ================================================================ */
+async function viewDevelopers(c, gen){
+  var results = await Promise.all([
+    api.get('/api/keys').catch(function(){ return []; }),
+    api.get('/api/hooks').catch(function(){ return []; })
+  ]);
+  if (gen !== State.gen) return;
+
+  var keys = results[0], hooks = results[1];
+
+  c.innerHTML =
+    '<div class="grid-2">' +
+      '<div class="card">' +
+        '<div class="flex jc-b ai-c mb4">' +
+          '<h3 class="card-title">API keys</h3>' +
+          '<button class="btn btn-primary btn-sm" onclick="createApiKey()">+ New key</button>' +
+        '</div>' +
+        (keys.length
           ? keys.map(function(k){
             return '<div class="flex jc-b ai-c" style="padding:14px 0;border-bottom:1px solid var(--border)">' +
               '<div style="min-width:0">' +
                 '<div class="mono fw6 t-sm">' + esc(k.prefix) + '...</div>' +
-                '<div class="muted t-xs">' + esc(k.label || 'default') + ' • ' + (k.is_active ? 'Faol' : 'O\'chirilgan') + '</div>' +
+                '<div class="t-xs muted">' + esc(k.label || 'default') + ' · ' + (k.is_active ? 'Active' : 'Revoked') + '</div>' +
               '</div>' +
-              (k.is_active ? '<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="revokeKey(' + k.id + ')">O\'chirish</button>' : '') +
+              (k.is_active ? '<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="revokeKey(' + k.id + ')">Revoke</button>' : '') +
             '</div>';
           }).join('')
-          : '<div class="empty"><h4>Kalitlar yo\'q</h4><p>Birinchi API kalitingizni yarating</p></div>'
-        ) +
+          : '<div class="empty"><h4>No keys yet</h4><p>Create your first API key</p></div>') +
       '</div>' +
       '<div class="card">' +
-        '<h3 class="t-lg fw7 mb4">API integratsiya</h3>' +
-        '<p class="t-sm muted mb4">Batafsil hujjat: <a href="/docs" target="_blank" style="color:var(--fox)">/docs</a></p>' +
-        '<div class="code-block">' +
-          'curl -X POST https://YOUR-APP.onrender.com/api/p2p/transfers \\\n' +
-          '  -H "Authorization: Bearer fox_live_..." \\\n' +
-          '  -H "Content-Type: application/json" \\\n' +
-          '  -d \'{"to_email":"friend@mail.uz","amount_tiyin":50000}\'' +
+        '<div class="flex jc-b ai-c mb4">' +
+          '<h3 class="card-title">Webhooks</h3>' +
+          '<button class="btn btn-primary btn-sm" onclick="createWebhook()">+ New webhook</button>' +
         '</div>' +
-      '</div>';
-  } catch (e) {
-    c.innerHTML = '<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Xato</div><div class="muted mt2">' + esc(e.message) + '</div></div>';
-  }
+        (hooks.length
+          ? hooks.map(function(h){
+            return '<div class="flex jc-b ai-c" style="padding:14px 0;border-bottom:1px solid var(--border)">' +
+              '<div style="min-width:0">' +
+                '<div class="t-sm fw6 trunc">' + esc(h.url) + '</div>' +
+                '<div class="t-xs muted">Events: ' + esc(h.events) + '</div>' +
+              '</div>' +
+              '<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteWebhook(' + h.id + ')">Delete</button>' +
+            '</div>';
+          }).join('')
+          : '<div class="empty"><h4>No webhooks yet</h4></div>') +
+      '</div>' +
+    '</div>' +
+    '<div class="card mt4">' +
+      '<h3 class="card-title mb4">Example API call</h3>' +
+      '<div class="code-block">curl -X POST https://your-app.onrender.com/api/p2p/transfers \\\n  -H "Authorization: Bearer fox_live_..." \\\n  -H "Content-Type: application/json" \\\n  -d \'{"to_email":"friend@email.com","amount_tiyin":50000}\'</div>' +
+    '</div>';
 }
 
-async function createKey(){
+async function createApiKey(){
   try {
-    var res = await api('/api/keys', 'POST');
-    openModal(
-      'API Kalit yaratildi',
-      '<p class="t-sm muted mb4">Bu kalit faqat bir marta ko\'rsatiladi. Nusxalab saqlang:</p>' +
-      '<div class="code-block" style="color:#FF6B00">' + esc(res.full_key) + '</div>',
-      '<button class="btn btn-primary" onclick="closeModal();viewDev()">OK, tushundim</button>'
-    );
+    var r = await api.post('/api/keys', { label: 'default', scopes: 'read,write,p2p,collect' });
+    var m = openModal({
+      title: 'API key created',
+      body:
+        '<p class="t-sm muted mb3">Copy this key now. It will not be shown again:</p>' +
+        '<div class="code-block" style="color:var(--fox)">' + esc(r.full_key) + '</div>',
+      footer: '<button class="btn btn-primary" onclick="this.closest(\'.modal-back\').remove();renderView(\'/developers\')">OK</button>'
+    });
   } catch (e) { toast(e.message, 'error'); }
 }
 
 async function revokeKey(id){
-  if (!confirm('Bu kalitni o\'chirasizmi?')) return;
+  if (!confirm('Revoke this API key?')) return;
   try {
-    await api('/api/keys/' + id, 'DELETE');
-    toast('Kalit o\'chirildi');
-    viewDev();
+    await api.del('/api/keys/' + id);
+    toast('Key revoked', 'success');
+    renderView('/developers');
   } catch (e) { toast(e.message, 'error'); }
 }
 
-/* ═══════ EXPOSE ═══════ */
-window.logout = logout;
+function createWebhook(){
+  var body =
+    '<div class="field"><label>URL</label><input class="input" id="hookUrl" placeholder="https://yoursite.com/webhook"></div>' +
+    '<div class="field"><label>Events</label><input class="input" id="hookEvents" value="*" placeholder="* or transfer.succeeded,payment.succeeded"></div>';
+  var footer =
+    '<button class="btn btn-outline" id="hookCancel">Cancel</button>' +
+    '<button class="btn btn-primary" id="hookCreate">Create</button>';
+
+  var m = openModal({ title: 'New webhook', body: body, footer: footer });
+  m.el.querySelector('#hookCancel').addEventListener('click', m.close);
+  m.el.querySelector('#hookCreate').addEventListener('click', async function(){
+    var url = document.getElementById('hookUrl').value.trim();
+    var events = document.getElementById('hookEvents').value.trim() || '*';
+    if (!url.startsWith('http')) return toast('URL must start with http://', 'error');
+    try {
+      await api.post('/api/hooks', { url: url, events: events });
+      m.close();
+      toast('Webhook created', 'success');
+      renderView('/developers');
+    } catch (e) { toast(e.message, 'error'); }
+  });
+}
+
+async function deleteWebhook(id){
+  if (!confirm('Delete this webhook?')) return;
+  try {
+    await api.del('/api/hooks/' + id);
+    toast('Deleted', 'success');
+    renderView('/developers');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ================================================================
+   SECTION 36 — VIEW: SETTINGS
+   ================================================================ */
+function viewSettings(c, gen){
+  var u = State.user || {};
+  c.innerHTML =
+    '<div class="grid-2">' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Profile</h3>' +
+        '<div class="field"><label>Name</label><input class="input" id="sName" value="' + esc(u.name || '') + '"></div>' +
+        '<div class="field"><label>Email</label><input class="input" id="sEmail" type="email" value="' + esc(u.email || '') + '"></div>' +
+        '<div class="field"><label>Phone</label><input class="input" id="sPhone" value="' + esc(u.phone || '') + '" placeholder="+998 90 123 4567"></div>' +
+        '<div class="field"><label>Company</label><input class="input" id="sCompany" value="' + esc(u.company || '') + '"></div>' +
+        '<button class="btn btn-primary" onclick="saveProfile()">Save changes</button>' +
+      '</div>' +
+      '<div class="card">' +
+        '<h3 class="card-title mb4">Security</h3>' +
+        '<div class="setting-row">' +
+          '<div class="setting-info"><h4>Change password</h4><p>Update your password</p></div>' +
+          '<button class="btn btn-outline btn-sm" onclick="showChangePassword()">Change</button>' +
+        '</div>' +
+        '<div class="setting-row">' +
+          '<div class="setting-info"><h4>Theme</h4><p>Current: ' + getTheme() + '</p></div>' +
+          '<button class="btn btn-outline btn-sm" onclick="toggleTheme()">Toggle</button>' +
+        '</div>' +
+        '<div class="setting-row">' +
+          '<div class="setting-info"><h4>Account ID</h4><p class="mono">#' + (u.id || '—') + '</p></div>' +
+        '</div>' +
+        '<div class="setting-row">' +
+          '<div class="setting-info"><h4>Member since</h4><p>' + fmtDate(u.created_at) + '</p></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+async function saveProfile(){
+  var name = document.getElementById('sName').value.trim();
+  var email = document.getElementById('sEmail').value.trim().toLowerCase();
+  var phone = document.getElementById('sPhone').value.trim();
+  var company = document.getElementById('sCompany').value.trim();
+
+  if (!isValidEmail(email)) return toast('Invalid email', 'error');
+  if (name.length < 2) return toast('Name too short', 'error');
+
+  try {
+    var r = await api.put('/api/settings', { name: name, email: email, phone: phone, company: company });
+    State.user = r;
+    localStorage.setItem(USER_KEY, JSON.stringify(r));
+    toast('Saved', 'success');
+    renderDashboard('/settings');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+function showChangePassword(){
+  var body =
+    '<div class="field"><label>Current password</label><input class="input" type="password" id="cpOld"></div>' +
+    '<div class="field"><label>New password</label><input class="input" type="password" id="cpNew" minlength="6"></div>';
+  var footer =
+    '<button class="btn btn-outline" id="cpCancel">Cancel</button>' +
+    '<button class="btn btn-primary" id="cpSave">Change</button>';
+
+  var m = openModal({ title: 'Change password', body: body, footer: footer });
+  m.el.querySelector('#cpCancel').addEventListener('click', m.close);
+  m.el.querySelector('#cpSave').addEventListener('click', async function(){
+    var oldPw = document.getElementById('cpOld').value;
+    var newPw = document.getElementById('cpNew').value;
+    if (newPw.length < 6) return toast('Min 6 characters', 'error');
+    try {
+      await api.post('/api/auth/password', { old_password: oldPw, new_password: newPw });
+      m.close();
+      toast('Password changed', 'success');
+    } catch (e) { toast(e.message, 'error'); }
+  });
+}
+
+/* ================================================================
+   SECTION 37 — ADMIN PANEL
+   ================================================================ */
+var ADMIN_MENU = [
+  { id: '/', label: 'Dashboard', icon: '📊' },
+  { id: '/users', label: 'Users', icon: '👥' },
+  { id: '/kyc', label: 'KYC queue', icon: '🔐' }
+];
+
+function renderAdmin(view){
+  if (!isAdmin()) { toast('Admin only', 'error'); window.location.hash = '#/app'; return; }
+
+  State.activeView = view;
+  var current = ADMIN_MENU.find(function(m){ return m.id === view; }) || ADMIN_MENU[0];
+
+  document.getElementById('app').innerHTML =
+    '<div class="dash">' +
+      '<div class="side-back" id="sideBack"></div>' +
+      '<aside class="sidebar" id="sidebar">' +
+        '<div class="sidebar-logo">' +
+          '<span class="logo-mark">F</span>' +
+          '<span class="logo-text">FOX<span class="accent">PAY</span></span>' +
+        '</div>' +
+        '<div style="padding:6px 10px;font-size:10px;font-weight:700;color:var(--fox);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">ADMIN</div>' +
+        '<nav class="side-nav">' +
+          ADMIN_MENU.map(function(m){
+            return '<a href="#/admin' + (m.id === '/' ? '' : m.id) + '" class="side-item ' + (view === m.id ? 'active' : '') + '">' +
+              '<span class="side-item-icon">' + m.icon + '</span>' +
+              '<span>' + m.label + '</span>' +
+            '</a>';
+          }).join('') +
+          '<div class="side-sep"></div>' +
+          '<a href="#/app" class="side-item"><span class="side-item-icon">👤</span><span>User panel</span></a>' +
+        '</nav>' +
+        '<div class="side-foot">' +
+          '<button class="side-item" style="color:var(--red)" onclick="logout()"><span class="side-item-icon">🚪</span><span>Log out</span></button>' +
+        '</div>' +
+      '</aside>' +
+      '<main class="main">' +
+        '<div class="topbar">' +
+          '<div class="flex ai-c g3">' +
+            '<button class="btn btn-ghost btn-icon" onclick="toggleSidebar()" style="display:none" id="menuBtn">☰</button>' +
+            '<div class="tb-title">' + current.label + ' (admin)</div>' +
+          '</div>' +
+          '<div class="tb-actions">' +
+            '<button class="btn btn-ghost btn-icon" onclick="toggleTheme()">' + (getTheme() === 'dark' ? '☀' : '☾') + '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="content" id="view-content"></div>' +
+      '</main>' +
+    '</div>';
+
+  if (window.innerWidth <= 768) {
+    var mb = document.getElementById('menuBtn');
+    if (mb) mb.style.display = 'inline-flex';
+    var sb = document.getElementById('sideBack');
+    if (sb) sb.onclick = toggleSidebar;
+  }
+
+  renderAdminView(view);
+}
+
+async function renderAdminView(view){
+  var c = document.getElementById('view-content');
+  var gen = ++State.gen;
+  c.innerHTML = '<div class="skel" style="height:120px"></div>';
+
+  try {
+    if (view === '/users') await adminUsers(c, gen);
+    else if (view === '/kyc') await adminKYC(c, gen);
+    else await adminStats(c, gen);
+  } catch (e) {
+    if (gen !== State.gen) return;
+    c.innerHTML = '<div class="card" style="border-color:var(--red)"><div class="fw7" style="color:var(--red)">Error</div><div class="muted mt2">' + esc(e.message) + '</div></div>';
+  }
+}
+
+async function adminStats(c, gen){
+  var stats = await api.get('/api/admin/stats');
+  if (gen !== State.gen) return;
+
+  c.innerHTML =
+    '<div class="kpis">' +
+      '<div class="kpi"><div class="kpi-label">Users</div><div class="kpi-value">' + stats.users + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Active</div><div class="kpi-value" style="color:var(--green)">' + stats.active_users + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Transfers</div><div class="kpi-value">' + stats.transfers + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Intents</div><div class="kpi-value">' + stats.intents + '</div></div>' +
+    '</div>' +
+    '<div class="grid-2">' +
+      '<div class="status-card">' +
+        '<div class="status-icon ' + (stats.stripe_configured ? 'ok' : 'off') + '">' + (stats.stripe_configured ? '✓' : '✕') + '</div>' +
+        '<div class="status-info"><div class="status-title">Stripe</div><div class="status-sub">' + (stats.stripe_configured ? 'Connected' : 'Not configured') + '</div></div>' +
+      '</div>' +
+      '<div class="status-card">' +
+        '<div class="status-icon ' + (stats.jpm_configured ? 'ok' : 'off') + '">' + (stats.jpm_configured ? '✓' : '✕') + '</div>' +
+        '<div class="status-info"><div class="status-title">J.P. Morgan</div><div class="status-sub">' + (stats.jpm_configured ? 'Connected' : 'Not configured') + '</div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+async function adminUsers(c, gen){
+  var users = await api.get('/api/admin/users');
+  if (gen !== State.gen) return;
+
+  c.innerHTML =
+    '<div class="table-card">' +
+      '<div class="tc-head"><h3>Users (' + users.length + ')</h3></div>' +
+      '<div class="table-scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Balance</th><th>KYC</th><th>Status</th><th></th></tr></thead><tbody>' +
+        users.map(function(u){
+          return '<tr>' +
+            '<td class="fw6">' + esc(u.name) + (u.is_admin ? ' <span class="badge b-amber">ADMIN</span>' : '') + '</td>' +
+            '<td class="muted t-sm">' + esc(u.email) + '</td>' +
+            '<td class="fw6">' + fmtNumber(u.balance_uzs * 100) + ' UZS</td>' +
+            '<td><span class="badge b-gray">' + esc(u.kyc_status || 'none') + '</span></td>' +
+            '<td><span class="badge ' + (u.is_active ? 'b-green' : 'b-red') + '">' + (u.is_active ? 'Active' : 'Disabled') + '</span></td>' +
+            '<td>' + (u.is_admin ? '—' : '<button class="btn btn-outline btn-xs" onclick="toggleUser(' + u.id + ')">' + (u.is_active ? 'Disable' : 'Enable') + '</button>') + '</td>' +
+          '</tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+    '</div>';
+}
+
+async function toggleUser(id){
+  try {
+    await api.post('/api/admin/users/' + id + '/toggle');
+    toast('Updated', 'success');
+    renderAdminView('/users');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function adminKYC(c, gen){
+  var pending = await api.get('/api/admin/kyc/pending');
+  if (gen !== State.gen) return;
+
+  c.innerHTML =
+    '<div class="table-card">' +
+      '<div class="tc-head"><h3>Pending KYC submissions (' + pending.length + ')</h3></div>' +
+      (pending.length
+        ? '<div class="table-scroll"><table><thead><tr><th>User</th><th>Full name</th><th>Passport</th><th>Submitted</th><th>Actions</th></tr></thead><tbody>' +
+          pending.map(function(k){
+            return '<tr>' +
+              '<td><div class="fw6">' + esc(k.user_name) + '</div><div class="t-xs muted">' + esc(k.user_email) + '</div></td>' +
+              '<td class="fw6">' + esc(k.full_name) + '</td>' +
+              '<td class="mono t-sm">' + esc(k.passport_number) + '</td>' +
+              '<td class="muted t-xs">' + fmtDateShort(k.created_at) + '</td>' +
+              '<td>' +
+                '<button class="btn btn-success btn-xs" onclick="approveKYC(' + k.id + ')">✓ Approve</button> ' +
+                '<button class="btn btn-danger btn-xs" onclick="rejectKYC(' + k.id + ')">✕ Reject</button>' +
+              '</td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody></table></div>'
+        : '<div class="empty"><h4>No pending submissions</h4><p>All clear</p></div>') +
+    '</div>';
+}
+
+async function approveKYC(id){
+  try {
+    await api.post('/api/admin/kyc/' + id + '/approve');
+    toast('KYC approved', 'success');
+    renderAdminView('/kyc');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function rejectKYC(id){
+  var reason = prompt('Rejection reason:') || 'Documents invalid';
+  try {
+    await api.post('/api/admin/kyc/' + id + '/reject?reason=' + encodeURIComponent(reason));
+    toast('KYC rejected', 'success');
+    renderAdminView('/kyc');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ================================================================
+   SECTION 38 — INIT
+   ================================================================ */
+window.addEventListener('hashchange', route);
+window.addEventListener('load', route);
+
+// Expose functions used by inline handlers
+window.toggleTheme = toggleTheme;
 window.toggleSidebar = toggleSidebar;
+window.logout = logout;
+window.scrollToSection = scrollToSection;
+window.renderView = renderView;
+window.renderAdminView = renderAdminView;
 window.fundDemo = fundDemo;
 window.fundCustom = fundCustom;
-window.createKey = createKey;
+window.exportCSV = exportCSV;
+window.confirmIntent = confirmIntent;
+window.markRead = markRead;
+window.markAllRead = markAllRead;
+window.createApiKey = createApiKey;
 window.revokeKey = revokeKey;
-window.closeModal = closeModal;
-
-/* ═══════ INIT ═══════ */
-window.addEventListener('hashchange', route);
-window.addEventListener('load', function(){
-  document.getElementById('year').textContent = new Date().getFullYear();
-  route();
-});
+window.createWebhook = createWebhook;
+window.deleteWebhook = deleteWebhook;
+window.saveProfile = saveProfile;
+window.showChangePassword = showChangePassword;
+window.toggleUser = toggleUser;
+window.approveKYC = approveKYC;
+window.rejectKYC = rejectKYC;
+window.toast = toast;
 </script>
 </body>
 </html>
